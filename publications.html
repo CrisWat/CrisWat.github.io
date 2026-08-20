@@ -1,0 +1,38 @@
+---
+layout: page
+title: "Publications"
+permalink: /publications/
+eyebrow: "Pubblicazioni"
+description: "Produzione scientifica, analisi geopolitiche e attività divulgativa."
+content_width: wide
+---
+
+<p class="pub-note">
+    Elenco in aggiornamento. È prevista l'integrazione automatica con ADS, ORCID e Google Scholar.
+</p>
+
+{% assign has_profile = false %}
+{% for p in site.data.publications.profiles %}{% if p.url != '' %}{% assign has_profile = true %}{% endif %}{% endfor %}
+{% if has_profile %}
+<div class="pub-profiles">
+    {% for p in site.data.publications.profiles %}{% if p.url != '' %}<a href="{{ p.url }}" target="_blank" rel="noopener noreferrer">{{ p.label }}</a>{% endif %}{% endfor %}
+</div>
+{% endif %}
+
+{% for group in site.data.publications.groups %}
+<section class="pub-group">
+    <h2>{{ group.name }}</h2>
+    <ol class="pub-list">
+        {% for it in group.items %}
+        <li class="pub-item">
+            <span class="pub-year">{{ it.year }}</span>
+            <div class="pub-body">
+                <h3 class="pub-title">{% if it.url != '' %}<a href="{{ it.url }}" target="_blank" rel="noopener noreferrer">{{ it.title }}</a>{% else %}{{ it.title }}{% endif %}</h3>
+                {% if it.authors %}<p class="pub-authors">{{ it.authors }}</p>{% endif %}
+                {% if it.venue %}<p class="pub-venue">{{ it.venue }}</p>{% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+</section>
+{% endfor %}

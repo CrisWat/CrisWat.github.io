@@ -1,0 +1,27 @@
+---
+layout: page
+title: "Projects"
+permalink: /projects/
+eyebrow: "Progetti"
+description: "Ricerca, software, Intelligenza Artificiale e tecnologie spaziali."
+content_width: wide
+---
+
+<div class="card-grid">
+    {% for p in site.data.projects %}
+    <article class="project-card">
+        <div class="project-card-head">
+            <span class="project-cat">{{ p.category }}</span>
+            {% if p.status %}<span class="project-status">{{ p.status }}</span>{% endif %}
+        </div>
+        <h2>{{ p.name }}</h2>
+        {% if p.tagline %}<p class="project-tagline">{{ p.tagline }}</p>{% endif %}
+        <p class="project-desc">{{ p.description }}</p>
+        {% if p.links.size > 0 %}
+        <div class="project-links">
+            {% for l in p.links %}<a href="{{ l.url }}" target="_blank" rel="noopener noreferrer">{{ l.label }} →</a>{% endfor %}
+        </div>
+        {% endif %}
+    </article>
+    {% endfor %}
+</div>

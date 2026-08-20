@@ -1,0 +1,21 @@
+# Aree di ricerca — modifica/aggiungi voci qui.
+- title: "Stellar Spectroscopy"
+  summary: >-
+    Caratterizzazione fisica e chimica delle popolazioni stellari attraverso spettroscopia
+    ad alta risoluzione: derivazione di abbondanze chimiche e parametri stellari e cinematici
+    per stelle giganti fredde e calde.
+
+- title: "Machine Learning for Stellar Spectroscopy"
+  summary: >-
+    Reti neurali e machine learning per la determinazione automatica di parametri stellari e
+    abbondanze chimiche dagli spettri, in vista delle grandi survey spettroscopiche (MOONS, ANDES).
+
+- title: "Bayesian Methods & Data Analysis"
+  summary: >-
+    Metodi statistici e computazionali per inferenza, fitting e analisi di dataset complessi;
+    standard di qualità per misurazioni accurate e pipeline per big data.
+
+- title: "Space Intelligence"
+  summary: >-
+    Metodologie quantitative e tecnologie per l'osservazione e l'analisi del dominio spaziale:
+    object detection su oggetti in LEO/MEO, SSA/SST e derivazione di parametri orbitali.

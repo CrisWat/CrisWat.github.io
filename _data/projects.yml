@@ -1,0 +1,51 @@
+# Progetti — modifica/aggiungi voci qui; la pagina /projects/ si aggiorna da sola.
+- name: "N2RED"
+  tagline: "Neural Networks for Accurate Stellar Parameters and Chemical Abundances"
+  category: "Ricerca · IA"
+  status: "In corso · PI"
+  description: >-
+    Progetto INAF (Mini-Grant Ricerca Fondamentale 2023, 19k euro) di cui sono Principal
+    Investigator: architetture di reti neurali per l'estrazione accurata di parametri stellari
+    e abbondanze chimiche dagli spettri, ottimizzate per le survey spettroscopiche future.
+  links: []
+
+- name: "MOONS"
+  tagline: "MOONS GTO Galactic Survey — VLT"
+  category: "Astrofisica · Survey"
+  status: "Collaborazione"
+  description: >-
+    Attività scientifica e strumenti computazionali per il MOONS GTO Galactic Survey
+    (spettrografo multi-oggetto VLT-MOONS): pianificazione delle osservazioni, selezione
+    dei target con machine learning e analisi delle abbondanze chimiche.
+  links: []
+
+- name: "LEOgistic Space Solutions"
+  tagline: "Space Traffic Management — startup deep-tech"
+  category: "Impresa · Space Tech"
+  status: "2022–2023 · CEO & Co-founder"
+  description: >-
+    Startup per collision avoidance e produzione di dati per la gestione del traffico spaziale:
+    algoritmi di IA per l'object detection in orbita e hardware per il tracciamento di satelliti
+    attivi. Premiata con 150k euro (Scientifica VC) per l'uso dell'IA.
+  links: []
+
+- name: "Space Intelligence"
+  tagline: "SpaceINT — osservazione e sicurezza del dominio spaziale"
+  category: "Intelligence"
+  status: "In corso"
+  description: >-
+    Software e codici di IA per il riconoscimento di satelliti e detriti in LEO/MEO, produzione
+    di dati per Space Situational Awareness (SSA) e Space Surveillance & Tracking (SST), e analisi
+    del trasferimento tecnologico nell'industria spaziale.
+  links: []
+
+- name: "Repository pubbliche"
+  tagline: "Codice e strumenti open source"
+  category: "Software"
+  status: "Continuo"
+  description: >-
+    Strumenti scientifici in Python/Fortran e progetti software pubblici, integrati
+    progressivamente in questa sezione.
+  links:
+    - label: "GitHub"
+      url: "https://github.com/CrisWat"

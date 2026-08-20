@@ -1,0 +1,20 @@
+---
+layout: page
+title: "Research"
+permalink: /research/
+eyebrow: "Ricerca scientifica"
+description: "Astrofisica stellare, spettroscopia, metodi quantitativi e Intelligenza Artificiale."
+content_width: wide
+---
+
+<div class="research-list">
+    {% for area in site.data.research %}
+    <article class="research-item">
+        <span class="research-num">{% assign n = forloop.index %}{% if n < 10 %}0{{ n }}{% else %}{{ n }}{% endif %}</span>
+        <div class="research-body">
+            <h2>{{ area.title }}</h2>
+            <p>{{ area.summary }}</p>
+        </div>
+    </article>
+    {% endfor %}
+</div>
