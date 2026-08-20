@@ -1494,16 +1494,44 @@ button:focus-visible {
     .hero-grid {
         grid-template-columns: 1fr;
         align-content: start;
-        gap: 1.8rem;
+        gap: 1.4rem;
         padding-top: 7.5rem;
         padding-bottom: 9rem;
         text-align: left;
     }
 
+    /* i figli del blocco testo entrano nella griglia per poter riordinare la foto */
+    .hero-content {
+        display: contents;
+    }
+
+    .hero-tag {
+        display: none; /* kicker mono ridondante col ruolo, nascosto su mobile */
+    }
+
+    .hero h1 {
+        order: 1;
+        margin-bottom: 0;
+    }
+
     .hero-visual {
-        order: -1;
-        width: min(44%, 168px);
+        order: 2;
+        width: min(46%, 172px);
         justify-self: start;
+    }
+
+    .hero-role {
+        order: 3;
+        margin-bottom: 0;
+    }
+
+    .hero-description {
+        order: 4;
+        margin-bottom: 0;
+    }
+
+    .hero-actions {
+        order: 5;
     }
 
     .signal-grid {
