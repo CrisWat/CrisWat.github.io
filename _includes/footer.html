@@ -1,25 +1,56 @@
 <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="footer-inner container">
 
-        <div>
-            <strong>Cristiano Fanelli</strong>
-            <p>Astrofisico · Analista di Intelligence</p>
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <h3 class="serif">Cristiano Fanelli</h3>
+                <p class="role mono">Astrofisico · Analista di Intelligence</p>
+                <p>Ricerca scientifica, Intelligenza Artificiale, Space Intelligence e analisi strategica. Dallo spettro al segnale, dal dato alla decisione.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Sezioni</h4>
+                <ul>
+                    <li><a href="{{ '/research/' | relative_url }}">Research</a></li>
+                    <li><a href="{{ '/intelligence/' | relative_url }}">Intelligence</a></li>
+                    <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
+                    <li><a href="{{ '/cv/' | relative_url }}">CV</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Altro</h4>
+                <ul>
+                    <li><a href="{{ '/publications/' | relative_url }}">Publications</a></li>
+                    <li><a href="{{ '/attivita-pubblica/' | relative_url }}">Attività pubblica</a></li>
+                    <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
+                    <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contatti</h4>
+                <ul>
+                    <li><a href="{{ '/contact/' | relative_url }}">Contatti</a></li>
+                    <li><a href="{{ site.data.profiles.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    <li><a href="{{ site.data.profiles.github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                </ul>
+            </div>
+
         </div>
 
-        <div class="footer-meta">
-            <a href="/contact/">Contatti</a>
-            <a
-                href="https://github.com/CrisWat"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                GitHub
-            </a>
+        <div class="footer-bottom">
+            <span>&copy; {{ site.time | date: "%Y" }} Cristiano Fanelli</span>
+            <div class="social">
+                <a href="{{ site.data.profiles.linkedin }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14M8.5 18V10H6v8h2.5M7.25 8.7A1.4 1.4 0 1 0 7.25 6a1.4 1.4 0 0 0 0 2.7M18 18v-4.7c0-2.3-1.5-3.5-3.5-3.5-1 0-2.2.6-2.7 1.5V10h-2.5v8h2.5v-4.5c0-1 .8-1.8 1.8-1.8s1.7.8 1.7 1.8V18H18Z"/></svg>
+                </a>
+                <a href="{{ site.data.profiles.github }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 22 12 10 10 0 0 0 12 2Z"/></svg>
+                </a>
+            </div>
         </div>
-
-        <p class="footer-copyright">
-            &copy; {{ site.time | date: "%Y" }} Cristiano Fanelli
-        </p>
 
     </div>
 </footer>

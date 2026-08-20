@@ -11,12 +11,18 @@
         content="width=device-width, initial-scale=1"
     >
 
-    <meta
-        name="theme-color"
-        content="#f4f1ea"
-    >
+    <meta name="theme-color" content="#050D1A">
+
+    <script>document.documentElement.className += " js";</script>
 
     {% seo %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+    >
 
     <link
         rel="stylesheet"
@@ -27,6 +33,15 @@
 
 <body>
 
+    {% if page.url == '/' %}
+    <div id="loader" aria-hidden="true">
+        <div class="loader-spin"></div>
+        <div class="mono">Inizializzazione coordinate · attendere</div>
+    </div>
+    {% endif %}
+
+    <a class="skip-link" href="#main-content">Salta al contenuto</a>
+
     {% include header.html %}
 
     <main id="main-content">
@@ -35,10 +50,8 @@
 
     {% include footer.html %}
 
-    <script
-        src="{{ '/assets/js/main.js' | relative_url }}"
-        defer
-    ></script>
+    <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/js/galaxy.js' | relative_url }}" defer></script>
 
 </body>
 
