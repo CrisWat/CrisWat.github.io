@@ -41,6 +41,11 @@
             cx = window.innerWidth / 2;
             cy = window.innerHeight / 2;
             scale = Math.min(window.innerWidth, window.innerHeight) * 0.45;
+            if (window.innerWidth < 768) {
+                // su smartphone: galassia più ampia e centrata nello spazio libero sotto il contenuto
+                cy = window.innerHeight * 0.6;
+                scale = window.innerWidth * 0.62;
+            }
         }
 
         function createStar() {

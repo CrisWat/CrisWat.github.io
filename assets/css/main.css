@@ -1493,14 +1493,16 @@ button:focus-visible {
 
     .hero-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
-        padding-top: 8rem;
+        align-content: start;
+        gap: 1.8rem;
+        padding-top: 7.5rem;
+        padding-bottom: 9rem;
         text-align: left;
     }
 
     .hero-visual {
         order: -1;
-        width: min(78%, 300px);
+        width: min(44%, 168px);
         justify-self: start;
     }
 
