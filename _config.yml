@@ -1,6 +1,15 @@
 title: "Cristiano Fanelli"
 description: "Astrofisico e Analista di Intelligence"
 
+author:
+  name: "Cristiano Fanelli"
+
+social:
+  name: "Cristiano Fanelli"
+  links:
+    - "https://github.com/CrisWat"
+    - "https://www.linkedin.com/in/cristiano-fanelli-b881859a"
+
 lang: "it-IT"
 timezone: "Europe/Rome"
 

@@ -1,0 +1,41 @@
+---
+layout: default
+---
+
+<article class="post">
+
+    <header class="post-header">
+        <div class="container content-narrow">
+
+            <p class="eyebrow">
+                {{ page.category | default: "Blog" }}
+            </p>
+
+            <h1>{{ page.title }}</h1>
+
+            <p class="post-meta">
+                <time datetime="{{ page.date | date_to_xmlschema }}">
+                    {{ page.date | date: "%d/%m/%Y" }}
+                </time>
+                {% if page.reading_time %}
+                    <span aria-hidden="true">·</span>
+                    {{ page.reading_time }}
+                {% endif %}
+            </p>
+
+        </div>
+    </header>
+
+    <div class="post-content">
+        <div class="container content-narrow">
+            {{ content }}
+        </div>
+    </div>
+
+    <footer class="post-footer">
+        <div class="container content-narrow">
+            <a href="{{ '/blog/' | relative_url }}">← Tutti gli articoli</a>
+        </div>
+    </footer>
+
+</article>

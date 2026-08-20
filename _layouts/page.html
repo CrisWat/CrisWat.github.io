@@ -23,7 +23,7 @@ layout: default
 </section>
 
 <section class="page-content">
-    <div class="container content-narrow">
+    <div class="container {% if page.content_width == 'wide' %}content-wide{% elsif page.content_width == 'full' %}content-full{% else %}content-narrow{% endif %}">
         {{ content }}
     </div>
 </section>
