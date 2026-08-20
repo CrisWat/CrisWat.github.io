@@ -1,0 +1,179 @@
+---
+layout: default
+---
+
+{% assign cv = site.data.cv %}
+
+<article class="cv">
+
+    <header class="cv-hero">
+        <div class="container">
+
+            <p class="eyebrow">Curriculum Vitae</p>
+
+            <h1>Cristiano Fanelli</h1>
+
+            <p class="cv-tagline">{{ cv.tagline }}</p>
+
+            <div class="cv-contact">
+                <span>{{ cv.contact.location }}</span>
+                <a href="{{ cv.contact.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="{{ cv.contact.github }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <button id="email-reveal" class="cv-contact-link" type="button">Mostra email</button>
+                <span id="email-container" class="cv-contact-email" aria-live="polite"></span>
+            </div>
+
+            <div class="cv-actions">
+                <a class="button button-primary" href="{{ cv.pdf | relative_url }}" download>
+                    Scarica il CV (PDF)
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <nav class="cv-nav" aria-label="Sezioni del curriculum">
+        <div class="container cv-nav-inner">
+            <a href="#profilo">Profilo</a>
+            <a href="#esperienza">Esperienza</a>
+            <a href="#ricerca">Ricerca</a>
+            <a href="#formazione">Formazione</a>
+            <a href="#progetti">Progetti &amp; finanziamenti</a>
+            <a href="#riconoscimenti">Riconoscimenti</a>
+            <a href="#didattica">Didattica</a>
+            <a href="#competenze">Competenze</a>
+        </div>
+    </nav>
+
+    <div class="cv-body container">
+
+        <section id="profilo" class="cv-section">
+            <h2>Profilo</h2>
+            <p class="cv-lead">{{ cv.profile }}</p>
+        </section>
+
+        <section id="esperienza" class="cv-section">
+            <h2>Esperienza professionale</h2>
+            <div class="cv-timeline">
+                {% for job in cv.experience %}
+                <article class="cv-item">
+                    <div class="cv-item-head">
+                        <h3>{{ job.role }}</h3>
+                        <span class="cv-period{% if job.current %} is-current{% endif %}">{{ job.period }}</span>
+                    </div>
+                    <p class="cv-org">{{ job.org }}{% if job.place %} · {{ job.place }}{% endif %}</p>
+                    <p class="cv-desc">{{ job.description }}</p>
+                    {% if job.keywords %}
+                    <ul class="cv-tags">
+                        {% for k in job.keywords %}<li>{{ k }}</li>{% endfor %}
+                    </ul>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="ricerca" class="cv-section">
+            <h2>Attività di ricerca</h2>
+            {% for area in cv.research %}
+            <div class="cv-block">
+                <h3>{{ area.area }}</h3>
+                <ul class="cv-list">
+                    {% for p in area.points %}<li>{{ p }}</li>{% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+            <div class="cv-block">
+                <h3>Esperienza osservativa</h3>
+                <ul class="cv-list">
+                    {% for o in cv.observing %}<li>{{ o }}</li>{% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        <section id="formazione" class="cv-section">
+            <h2>Formazione</h2>
+            <div class="cv-timeline">
+                {% for e in cv.education %}
+                <article class="cv-item">
+                    <div class="cv-item-head">
+                        <h3>{{ e.degree }}</h3>
+                        <span class="cv-period">{{ e.period }}</span>
+                    </div>
+                    <p class="cv-org">{{ e.org }}</p>
+                    {% if e.thesis %}<p class="cv-thesis"><em>Tesi:</em> {{ e.thesis }}</p>{% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="progetti" class="cv-section">
+            <h2>Progetti e finanziamenti</h2>
+            <div class="cv-cards">
+                {% for f in cv.funding %}
+                <article class="cv-card">
+                    <div class="cv-card-top">
+                        <h3>{{ f.title }}</h3>
+                        {% if f.detail %}<span class="cv-badge">{{ f.detail }}</span>{% endif %}
+                    </div>
+                    <p class="cv-org">{{ f.org }}</p>
+                    <p>{{ f.description }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="riconoscimenti" class="cv-section">
+            <h2>Riconoscimenti</h2>
+            <div class="cv-cards">
+                {% for a in cv.awards %}
+                <article class="cv-card">
+                    <div class="cv-card-top">
+                        <h3>{{ a.title }}</h3>
+                        {% if a.period %}<span class="cv-badge">{{ a.period }}</span>{% endif %}
+                    </div>
+                    <p class="cv-org">{{ a.org }}</p>
+                    <p>{{ a.description }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="didattica" class="cv-section">
+            <h2>Didattica</h2>
+            <div class="cv-timeline">
+                {% for t in cv.teaching %}
+                <article class="cv-item">
+                    <div class="cv-item-head">
+                        <h3>{{ t.role }}</h3>
+                        <span class="cv-period">{{ t.period }}</span>
+                    </div>
+                    <p class="cv-org">{{ t.org }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="competenze" class="cv-section">
+            <h2>Competenze</h2>
+            <div class="cv-skills">
+                {% for s in cv.skills %}
+                <div class="cv-skill-group">
+                    <h3>{{ s.group }}</h3>
+                    <ul class="cv-list">
+                        {% for it in s.items %}<li>{{ it }}</li>{% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="cv-download-foot">
+            <a class="button button-primary" href="{{ cv.pdf | relative_url }}" download>
+                Scarica il CV completo (PDF)
+            </a>
+        </div>
+
+    </div>
+
+</article>
