@@ -1,0 +1,23 @@
+title: "Cristiano Fanelli"
+description: "Astrofisico e Analista di Intelligence"
+
+lang: "it-IT"
+timezone: "Europe/Rome"
+
+url: "https://www.fanellicristiano.it"
+baseurl: ""
+
+permalink: "/blog/:year/:month/:day/:title/"
+
+markdown: kramdown
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - AGENTS.md
+  - vendor

@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Jekyll build
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Bundler
+.bundle/
+vendor/
+
+# Editors
+.vscode/
+.idea/
+
+# Temporary files
+*.swp
+*.tmp
