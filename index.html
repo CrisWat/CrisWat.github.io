@@ -4,239 +4,137 @@ title: "Cristiano Fanelli"
 description: "Astrofisico e Analista di Intelligence"
 ---
 
-<section class="hero">
+<section class="hero" id="home">
+
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <canvas id="galaxy" aria-hidden="true"></canvas>
 
     <div class="container hero-grid">
 
         <div class="hero-content">
 
-            <p class="eyebrow">
-                Scienza · Intelligence · Tecnologia
-            </p>
+            <div class="hero-tag reveal">
+                <span class="line" aria-hidden="true"></span>
+                <span class="mono">Astrofisico · Analista di Intelligence · INAF Bologna</span>
+            </div>
 
-            <h1>
+            <h1 class="reveal">
                 Cristiano
                 <span>Fanelli</span>
             </h1>
 
-            <p class="hero-role">
+            <p class="hero-role reveal">
                 Astrofisico
                 <span aria-hidden="true">·</span>
                 Analista di Intelligence
             </p>
 
-            <p class="hero-description">
-                Ricerca scientifica, Intelligenza Artificiale,
-                Space Intelligence e analisi strategica.
+            <p class="hero-description reveal">
+                Ricerca scientifica, Intelligenza Artificiale, Space Intelligence
+                e analisi strategica. Dallo spettro al segnale, dal dato alla decisione.
             </p>
 
-            <div class="hero-actions">
-
-                <a
-                    class="button button-primary"
-                    href="/research/"
-                >
+            <div class="hero-actions reveal">
+                <a class="button button-primary" href="{{ '/research/' | relative_url }}">
                     Esplora la ricerca
+                    <span class="arrow" aria-hidden="true">→</span>
                 </a>
-
-                <a
-                    class="button button-secondary"
-                    href="/intelligence/"
-                >
+                <a class="button button-secondary" href="{{ '/intelligence/' | relative_url }}">
                     Intelligence
                 </a>
-
-                <a
-                    class="button button-secondary"
-                    href="/cv/"
-                >
+                <a class="button button-secondary" href="{{ '/cv/' | relative_url }}">
                     Curriculum
                 </a>
-
             </div>
 
         </div>
 
-        <div class="hero-visual">
-
+        <div class="hero-visual reveal">
             <div class="hero-photo-frame">
-
                 <img
                     src="{{ '/assets/images/cristianofanelli.jpg' | relative_url }}"
                     alt="Ritratto di Cristiano Fanelli"
-                    width="570"
-                    height="712"
+                    width="420"
+                    height="525"
                     loading="eager"
                     decoding="async"
                 >
-
             </div>
-
-            <div
-                class="hero-orbit hero-orbit-one"
-                aria-hidden="true"
-            ></div>
-
-            <div
-                class="hero-orbit hero-orbit-two"
-                aria-hidden="true"
-            ></div>
-
+            <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
+            <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
         </div>
 
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+        <span>Scorri</span>
+        <div class="dot"></div>
     </div>
 
 </section>
 
 
-<section class="domains">
-
+<section class="domains" id="ambiti">
     <div class="container">
 
-        <div class="section-heading">
-
-            <p class="eyebrow">
-                Ambiti
-            </p>
-
-            <h2>
-                Leggere sistemi complessi attraverso i dati.
-            </h2>
-
+        <div class="section-heading reveal">
+            <p class="eyebrow">Ambiti</p>
+            <h2 class="serif">Leggere sistemi complessi attraverso i dati.</h2>
         </div>
-
 
         <div class="domain-grid">
 
-            <article class="domain-card">
-
-                <span class="domain-number">
-                    01
-                </span>
-
-                <h3>
-                    Astrofisica & AI
-                </h3>
-
-                <p>
-                    Spettroscopia stellare, abbondanze chimiche,
-                    metodi di analisi dati, machine learning
-                    e reti neurali.
-                </p>
-
-                <a href="/research/">
-                    Research →
-                </a>
-
+            <article class="domain-card reveal">
+                <div class="orbit" aria-hidden="true">
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-core">AI</div>
+                </div>
+                <span class="domain-number">01</span>
+                <h3 class="serif">Astrofisica &amp; AI</h3>
+                <p>Spettroscopia stellare, abbondanze chimiche, metodi di analisi dati, machine learning e reti neurali.</p>
+                <a href="{{ '/research/' | relative_url }}">Research →</a>
             </article>
 
-
-            <article class="domain-card">
-
-                <span class="domain-number">
-                    02
-                </span>
-
-                <h3>
-                    Space Intelligence
-                </h3>
-
-                <p>
-                    Tecnologie spaziali, Space Situational
-                    Awareness, oggetti orbitali e analisi
-                    strategica del dominio spaziale.
-                </p>
-
-                <a href="/intelligence/">
-                    Intelligence →
-                </a>
-
+            <article class="domain-card reveal">
+                <div class="orbit" aria-hidden="true">
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-core">SP</div>
+                </div>
+                <span class="domain-number">02</span>
+                <h3 class="serif">Space Intelligence</h3>
+                <p>Tecnologie spaziali, Space Situational Awareness, oggetti orbitali e analisi strategica del dominio spaziale.</p>
+                <a href="{{ '/intelligence/' | relative_url }}">Intelligence →</a>
             </article>
 
-
-            <article class="domain-card">
-
-                <span class="domain-number">
-                    03
-                </span>
-
-                <h3>
-                    Analisi & società
-                </h3>
-
-                <p>
-                    Geopolitica, tecnologia, sicurezza,
-                    processi decisionali e attività pubblica.
-                </p>
-
-                <a href="/attivita-pubblica/">
-                    Attività pubblica →
-                </a>
-
+            <article class="domain-card reveal">
+                <div class="orbit" aria-hidden="true">
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-core">PP</div>
+                </div>
+                <span class="domain-number">03</span>
+                <h3 class="serif">Analisi &amp; società</h3>
+                <p>Geopolitica, tecnologia, sicurezza, processi decisionali e attività pubblica.</p>
+                <a href="{{ '/attivita-pubblica/' | relative_url }}">Attività pubblica →</a>
             </article>
 
         </div>
-
     </div>
-
 </section>
 
 
-<section class="signal-section">
-
+<section class="signal-section" id="metodo">
     <div class="container signal-grid">
 
-        <div>
-
-            <p class="eyebrow">
-                Metodo
-            </p>
-
-            <h2>
-                Dallo spettro al segnale.
-                Dal dato alla decisione.
-            </h2>
-
+        <div class="reveal">
+            <p class="eyebrow">Metodo</p>
+            <h2 class="serif">Dallo spettro al segnale. Dal dato alla decisione.</h2>
         </div>
 
-        <div
-            class="signal-graphic"
-            aria-hidden="true"
-        >
-            <svg
-                viewBox="0 0 600 180"
-                role="presentation"
-            >
-                <polyline
-                    points="
-                    0,110
-                    35,106
-                    60,112
-                    90,101
-                    110,107
-                    130,45
-                    143,128
-                    165,105
-                    205,101
-                    230,107
-                    255,73
-                    270,112
-                    300,102
-                    345,105
-                    375,55
-                    390,125
-                    415,106
-                    455,102
-                    490,105
-                    520,84
-                    535,111
-                    565,104
-                    600,108
-                    "
-                />
+        <div class="signal-graphic reveal" aria-hidden="true">
+            <svg viewBox="0 0 600 180" role="presentation">
+                <polyline points="0,110 35,106 60,112 90,101 110,107 130,45 143,128 165,105 205,101 230,107 255,73 270,112 300,102 345,105 375,55 390,125 415,106 455,102 490,105 520,84 535,111 565,104 600,108" />
             </svg>
         </div>
 
     </div>
-
 </section>
