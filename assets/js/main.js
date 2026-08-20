@@ -32,13 +32,13 @@ if (emailReveal && emailContainer) {
         () => {
 
             const user = [
-                "fanelli",
-                "cristiano"
+                "cristiano",
+                "fanelli"
             ].join(".");
 
             const domain = [
-                "gmail",
-                "com"
+                "inaf",
+                "it"
             ].join(".");
 
             const address =
