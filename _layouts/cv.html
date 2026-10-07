@@ -23,11 +23,13 @@ layout: default
                 <span id="email-container" class="cv-contact-email" aria-live="polite"></span>
             </div>
 
+            {% if cv.pdf != "" %}
             <div class="cv-actions">
                 <a class="button button-primary" href="{{ cv.pdf | relative_url }}" download>
                     Scarica il CV (PDF)
                 </a>
             </div>
+            {% endif %}
 
         </div>
     </header>
@@ -168,11 +170,13 @@ layout: default
             </div>
         </section>
 
+        {% if cv.pdf != "" %}
         <div class="cv-download-foot">
             <a class="button button-primary" href="{{ cv.pdf | relative_url }}" download>
                 Scarica il CV completo (PDF)
             </a>
         </div>
+        {% endif %}
 
     </div>
 
