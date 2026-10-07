@@ -2,35 +2,41 @@
 
 (function () {
 
-    /* ---- Mobile menu ---- */
+    /* ---- Menu mobile ---- */
     const toggle = document.querySelector(".menu-toggle");
     const nav = document.querySelector("#site-navigation");
+    const label = toggle ? toggle.querySelector(".menu-label") : null;
+
+    const setMenu = (open) => {
+        toggle.setAttribute("aria-expanded", String(open));
+        nav.classList.toggle("is-open", open);
+        document.body.style.overflow = open ? "hidden" : "";
+        if (label) label.textContent = open ? "Chiudi" : "Menu";
+    };
 
     if (toggle && nav) {
         toggle.addEventListener("click", () => {
-            const open = toggle.getAttribute("aria-expanded") === "true";
-            toggle.setAttribute("aria-expanded", String(!open));
-            nav.classList.toggle("is-open");
+            setMenu(toggle.getAttribute("aria-expanded") !== "true");
         });
         nav.querySelectorAll("a").forEach((a) => {
-            a.addEventListener("click", () => {
-                nav.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-            });
+            a.addEventListener("click", () => setMenu(false));
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && nav.classList.contains("is-open")) setMenu(false);
         });
     }
 
-    /* ---- Header scrolled state ---- */
+    /* ---- Header: bordo quando si scorre ---- */
     const header = document.querySelector("#site-header");
     if (header) {
         const onScroll = () => {
-            header.classList.toggle("scrolled", window.scrollY > 50);
+            header.classList.toggle("scrolled", window.scrollY > 10);
         };
         onScroll();
         window.addEventListener("scroll", onScroll, { passive: true });
     }
 
-    /* ---- Reveal on scroll ---- */
+    /* ---- Comparsa morbida delle sezioni ---- */
     const reveals = document.querySelectorAll(".reveal");
     if (reveals.length) {
         if ("IntersectionObserver" in window) {
@@ -41,22 +47,14 @@
                         io.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+            }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
             reveals.forEach((el) => io.observe(el));
         } else {
             reveals.forEach((el) => el.classList.add("visible"));
         }
     }
 
-    /* ---- Cosmic loader (home only) ---- */
-    const loader = document.getElementById("loader");
-    if (loader) {
-        const hide = () => loader.classList.add("done");
-        window.addEventListener("load", () => setTimeout(hide, 500));
-        setTimeout(hide, 3000); // fallback in caso di load lento
-    }
-
-    /* ---- Email reveal (indirizzo non in chiaro nel sorgente) ---- */
+    /* ---- Email (indirizzo non in chiaro nel sorgente) ---- */
     const emailReveal = document.querySelector("#email-reveal");
     const emailContainer = document.querySelector("#email-container");
     if (emailReveal && emailContainer) {

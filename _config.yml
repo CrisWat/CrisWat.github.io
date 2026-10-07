@@ -1,5 +1,6 @@
 title: "Cristiano Fanelli"
-description: "Astrofisico e Analista di Intelligence"
+tagline: "Astrofisico e ricercatore pubblico a Bologna"
+description: "Astrofisico e ricercatore pubblico a Bologna. Intelligenza artificiale, spazio e tecnologie al servizio delle persone: l'IA va governata, non subita."
 
 author:
   name: "Cristiano Fanelli"
@@ -7,10 +8,11 @@ author:
 social:
   name: "Cristiano Fanelli"
   links:
-    - "https://github.com/CrisWat"
     - "https://www.linkedin.com/in/cristiano-fanelli-b881859a"
+    - "https://github.com/CrisWat"
 
 lang: "it-IT"
+locale: "it_IT"
 timezone: "Europe/Rome"
 
 url: "https://www.fanellicristiano.it"
@@ -23,6 +25,18 @@ markdown: kramdown
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+# Immagine usata nelle anteprime dei link (WhatsApp, Facebook, LinkedIn).
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: "/assets/images/og-cristiano-fanelli.jpg"
+
+twitter:
+  card: "summary_large_image"
 
 exclude:
   - Gemfile
@@ -30,3 +44,6 @@ exclude:
   - README.md
   - AGENTS.md
   - vendor
+  - _backup-claude
+  - CV_Cristiano_Fanelli.pdf
+  - CV_Fanelli_Cristiano.pdf

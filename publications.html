@@ -1,15 +1,14 @@
 ---
 layout: page
-title: "Publications"
-permalink: /publications/
-eyebrow: "Pubblicazioni"
-description: "Produzione scientifica, analisi geopolitiche e attività divulgativa."
+title: "Scritti e pubblicazioni"
+heading: "Scritti"
+permalink: /scritti/
+redirect_from: /publications/
+eyebrow: "Scritti e pubblicazioni"
+description: "Articoli di divulgazione, analisi su spazio e geopolitica e pubblicazioni scientifiche di Cristiano Fanelli."
+intro: "Divulgazione per tutti, analisi su spazio e tecnologia, ricerca scientifica: tre modi di raccontare lo stesso lavoro."
 content_width: wide
 ---
-
-<p class="pub-note">
-    Elenco in aggiornamento. È prevista l'integrazione automatica con ADS, ORCID e Google Scholar.
-</p>
 
 {% assign has_profile = false %}
 {% for p in site.data.publications.profiles %}{% if p.url != '' %}{% assign has_profile = true %}{% endif %}{% endfor %}
@@ -22,6 +21,7 @@ content_width: wide
 {% for group in site.data.publications.groups %}
 <section class="pub-group">
     <h2>{{ group.name }}</h2>
+    {% if group.intro %}<p class="pub-group-intro">{{ group.intro }}</p>{% endif %}
     <ol class="pub-list">
         {% for it in group.items %}
         <li class="pub-item">

@@ -5,40 +5,48 @@
 <head>
 
     <meta charset="utf-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
-
-    <meta name="theme-color" content="#050D1A">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#FAF6EF">
 
     <script>document.documentElement.className += " js";</script>
 
     {% seo %}
 
+    <link rel="icon" href="{{ '/assets/images/favicon.svg' | relative_url }}" type="image/svg+xml">
+    <link rel="icon" href="{{ '/assets/images/favicon-32.png' | relative_url }}" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
-    <link
-        rel="stylesheet"
-        href="{{ '/assets/css/main.css' | relative_url }}"
-    >
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+    {% if page.url == '/' %}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Cristiano Fanelli",
+        "jobTitle": "Astrofisico e ricercatore",
+        "worksFor": { "@type": "Organization", "name": "INAF — Istituto Nazionale di Astrofisica" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Bologna", "addressCountry": "IT" },
+        "url": "{{ site.url }}",
+        "image": "{{ site.url }}/assets/images/cristianofanelli.jpg",
+        "sameAs": [
+            "{{ site.data.profiles.linkedin }}",
+            "{{ site.data.profiles.github }}"
+        ]
+    }
+    </script>
+    {% endif %}
 
 </head>
 
 <body>
-
-    {% if page.url == '/' %}
-    <div id="loader" aria-hidden="true">
-        <div class="loader-spin"></div>
-        <div class="mono">Inizializzazione coordinate · attendere</div>
-    </div>
-    {% endif %}
 
     <a class="skip-link" href="#main-content">Salta al contenuto</a>
 
@@ -51,7 +59,6 @@
     {% include footer.html %}
 
     <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
-    <script src="{{ '/assets/js/galaxy.js' | relative_url }}" defer></script>
 
 </body>
 

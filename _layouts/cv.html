@@ -7,6 +7,7 @@ layout: default
 <article class="cv">
 
     <header class="cv-hero">
+        {% include sky.html %}
         <div class="container">
 
             <p class="eyebrow">Curriculum Vitae</p>
@@ -23,11 +24,13 @@ layout: default
                 <span id="email-container" class="cv-contact-email" aria-live="polite"></span>
             </div>
 
+            {% if cv.pdf != "" %}
             <div class="cv-actions">
                 <a class="button button-primary" href="{{ cv.pdf | relative_url }}" download>
                     Scarica il CV (PDF)
                 </a>
             </div>
+            {% endif %}
 
         </div>
     </header>
@@ -38,7 +41,7 @@ layout: default
             <a href="#esperienza">Esperienza</a>
             <a href="#ricerca">Ricerca</a>
             <a href="#formazione">Formazione</a>
-            <a href="#progetti">Progetti &amp; finanziamenti</a>
+            <a href="#progetti">Progetti e finanziamenti</a>
             <a href="#riconoscimenti">Riconoscimenti</a>
             <a href="#didattica">Didattica</a>
             <a href="#competenze">Competenze</a>
@@ -168,11 +171,13 @@ layout: default
             </div>
         </section>
 
+        {% if cv.pdf != "" %}
         <div class="cv-download-foot">
             <a class="button button-primary" href="{{ cv.pdf | relative_url }}" download>
                 Scarica il CV completo (PDF)
             </a>
         </div>
+        {% endif %}
 
     </div>
 

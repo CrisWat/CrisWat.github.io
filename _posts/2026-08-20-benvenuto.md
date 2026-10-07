@@ -3,9 +3,9 @@ layout: post
 title: "Benvenuti"
 date: 2026-08-20
 category: "Nota"
-description: "Analisi e approfondimenti su scienza, tecnologia, intelligence e geopolitica."
+description: "Uno spazio per parlare di intelligenza artificiale, tecnologia, clima, ricerca e sicurezza in modo comprensibile."
 ---
 
-Questo spazio raccoglierà analisi e approfondimenti su scienza, tecnologia, intelligence e geopolitica: dagli spettri stellari al dominio orbitale, dai metodi di Intelligenza Artificiale ai processi decisionali.
+Questo spazio raccoglie riflessioni su intelligenza artificiale, tecnologie emergenti, clima, ricerca e sicurezza: temi tecnici che riguardano la vita di tutti e che meritano di essere spiegati con parole semplici.
 
-Gli articoli saranno pubblicati occasionalmente. Per la produzione scientifica e le analisi già pubblicate, si veda la sezione [Publications](/publications/).
+Per le idee e le proposte su questi temi, si veda la pagina [Idee](/idee/). Per gli articoli già pubblicati altrove, la pagina [Scritti](/scritti/).

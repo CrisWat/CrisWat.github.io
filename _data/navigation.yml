@@ -1,32 +1,18 @@
-- title: "Home"
-  url: "/"
+- title: "Idee"
+  url: "/idee/"
 
-- title: "About"
-  url: "/about/"
+- title: "Chi sono"
+  url: "/chi-sono/"
 
-- title: "Research"
-  url: "/research/"
+- title: "Ricerca e lavoro"
+  url: "/ricerca/"
 
-- title: "Publications"
-  url: "/publications/"
-
-- title: "Projects"
-  url: "/projects/"
-
-- title: "Teaching & Talks"
-  url: "/teaching/"
-
-- title: "CV"
-  url: "/cv/"
-
-- title: "Intelligence"
-  url: "/intelligence/"
-
-- title: "Attività pubblica"
-  url: "/attivita-pubblica/"
+- title: "Scritti"
+  url: "/scritti/"
 
 - title: "Blog"
   url: "/blog/"
 
-- title: "Contact"
-  url: "/contact/"
+- title: "Contatti"
+  url: "/contatti/"
+  cta: true

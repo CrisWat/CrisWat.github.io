@@ -1,0 +1,81 @@
+# =====================================================================
+# I cinque temi. Usati in home (schede) e nella pagina /idee/.
+# BOZZA da rivedere: proposte e testi vanno confermati da Cristiano.
+# =====================================================================
+
+- id: "ia"
+  title: "IA governata"
+  card: "L'intelligenza artificiale entra già in decisioni che ci riguardano: la selezione di un curriculum, una pratica, il supporto a una diagnosi. Deve essere trasparente e aiutare chi lavora."
+  lead: "L'intelligenza artificiale va governata, non subita."
+  problem: >-
+    Algoritmi e sistemi di IA entrano negli uffici pubblici, negli ospedali, nelle scuole e
+    nei luoghi di lavoro. Spesso chi ne subisce le decisioni non sa come funzionano, chi ne
+    risponde e a chi rivolgersi quando sbagliano.
+  proposals:
+    - "Trasparenza: ogni sistema di IA usato da un ente pubblico va dichiarato e spiegato in parole semplici. Quelli che incidono su diritti e servizi essenziali vanno verificati da esperti indipendenti, applicando fino in fondo le regole europee (AI Act)."
+    - "Una persona che risponde: dietro ogni decisione presa con l'aiuto di un algoritmo deve esserci qualcuno a cui chiedere spiegazioni e presentare ricorso."
+    - "Formazione: percorsi per dipendenti pubblici, insegnanti e personale sanitario, perché l'IA alleggerisca il lavoro invece di sostituire le persone."
+  why: "Costruisco reti neurali ogni giorno all'INAF e ho coordinato un tavolo di lavoro su sviluppo, ricerca e investimenti per un documento di proposte sull'IA. So cosa può fare e dove sbaglia."
+  why_link: "/ricerca/"
+
+- id: "tecnologie"
+  title: "Tecnologie emergenti"
+  card: "Satelliti, supercomputer e dati sono le infrastrutture di questo secolo. Bologna ne ospita alcune delle più importanti d'Europa: devono portare lavoro e servizi a tutti."
+  lead: "Spazio, supercalcolo e dati: chi li controlla, chi ne beneficia."
+  problem: >-
+    Le tecnologie strategiche sono concentrate nelle mani di poche grandi aziende,
+    spesso fuori dall'Europa. E i benefici dei grandi investimenti pubblici non sempre
+    arrivano a piccole imprese, scuole, ospedali e cittadini.
+  proposals:
+    - "Aprire il supercalcolo pubblico: accesso semplice e a costi sostenibili per piccole imprese, scuole, ospedali e pubblica amministrazione."
+    - "Dati pubblici utili: i dati raccolti con risorse pubbliche, protetti e anonimizzati dove serve, devono essere a disposizione di ricerca, servizi e imprese del territorio."
+    - "Autonomia europea: investire in tecnologie europee per non dipendere da pochi fornitori, nello spazio come nel cloud."
+  why: "Ho lavorato al CINECA sui sistemi di supercalcolo e ho co-fondato e guidato una startup spaziale a Bologna. Conosco opportunità e ostacoli di chi prova a fare innovazione qui."
+  why_link: "/progetti/"
+
+- id: "clima"
+  title: "Clima e ambiente"
+  card: "I satelliti misurano piogge, suolo e temperature. Sono dati preziosi per prevenire alluvioni e siccità, se arrivano a chi decide sul territorio."
+  lead: "Guardare la Terra dallo spazio per proteggerla."
+  problem: >-
+    L'Emilia-Romagna ha vissuto alluvioni drammatiche. I dati per prevenire e gestire questi
+    eventi esistono e crescono ogni anno: la sfida è renderli davvero utili a chi lavora sul
+    territorio. Intanto anche l'orbita intorno alla Terra si riempie di detriti: un
+    inquinamento che non vediamo.
+  proposals:
+    - "Dati satellitari per i Comuni: portare i dati europei di osservazione della Terra (programma Copernicus) negli uffici tecnici e nella protezione civile, con strumenti semplici e formazione."
+    - "Un digitale sostenibile: i nuovi data center devono usare energia rinnovabile e recuperare il calore che producono."
+    - "Un'orbita pulita: sostenere regole europee e internazionali che limitino i detriti spaziali."
+  why: "Non sono un climatologo: il mio contributo riguarda i dati, l'intelligenza artificiale e lo spazio. Al master in Istituzioni e Politiche Spaziali, con l'Agenzia Spaziale Italiana, ho scritto la tesi sulla sostenibilità delle attività spaziali nel lungo periodo."
+  why_link: "/spazio-e-sicurezza/"
+
+- id: "ricerca"
+  title: "Ricerca pubblica e giovani"
+  card: "La ricerca pubblica produce conoscenza, imprese e lavoro qualificato. Ma vive di contratti precari che spingono molti giovani a partire."
+  lead: "Chi studia e fa ricerca in Italia non deve essere costretto ad andarsene."
+  problem: >-
+    Dopo il dottorato si passano anni tra assegni e contratti a termine. Molti dei giovani
+    ricercatori più preparati lasciano l'Italia o la ricerca, e con loro se ne va
+    l'investimento pubblico fatto nella loro formazione.
+  proposals:
+    - "Percorsi chiari dopo il dottorato, con tempi certi per la stabilizzazione."
+    - "Più dottorati con le imprese e collaborazioni tra ricerca e territorio, perché le competenze restino qui."
+    - "Diritto allo studio e alloggi a prezzi sostenibili nelle città universitarie come Bologna."
+  why: "Ho fatto il dottorato a Bologna, poi l'assegnista, e oggi sono ricercatore a tempo determinato. Sono stato rappresentante dei dottorandi in Giunta e Consiglio di Dipartimento."
+  why_link: "/chi-sono/"
+
+- id: "sicurezza"
+  title: "Sicurezza"
+  card: "La sicurezza è prevenzione, legalità e presenza dello Stato: città in cui nessuno debba avere paura, senza sacrificare diritti, libertà e coesione sociale."
+  lead: "La sicurezza è prevenzione, legalità e presenza dello Stato: città in cui nessuno debba avere paura, senza sacrificare diritti, libertà e coesione sociale."
+  problem: >-
+    La paura cresce dove lo Stato è lontano: quartieri senza servizi, truffe online contro
+    anziani e famiglie, infrastrutture da cui dipende la vita quotidiana e che vanno
+    protette meglio.
+  proposals:
+    - "Prevenzione prima di tutto: servizi sociali ed educativi, luoghi di aggregazione e presenza delle forze dell'ordine nei quartieri."
+    - "Sicurezza digitale per tutti: proteggere cittadini, anziani e piccole imprese da truffe online, furti di dati e disinformazione."
+    - "Tecnologia con regole: videosorveglianza e IA solo con limiti chiari, controlli indipendenti e rispetto della privacy."
+    - "Infrastrutture protette: satelliti, reti e servizi essenziali messi al sicuro con una strategia europea, nel rispetto dell'uso pacifico dello spazio."
+  why: "Sulla sicurezza dei quartieri contano soprattutto l'esperienza e l'ascolto di chi ci vive. Il mio contributo riguarda la sicurezza digitale e delle infrastrutture tecnologiche, che studio e insegno da anni: la tecnologia può proteggere, ma solo se è governata."
+  why_link: "/spazio-e-sicurezza/"

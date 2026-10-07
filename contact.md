@@ -1,20 +1,20 @@
 ---
 layout: page
-title: "Contact"
-permalink: /contact/
+title: "Contatti"
+permalink: /contatti/
+redirect_from: /contact/
 eyebrow: "Contatti"
-description: "Contatti professionali e profili pubblici."
+description: "Contatta Cristiano Fanelli per incontri, scuole, dibattiti, interviste o collaborazioni."
+intro: "Per incontri pubblici, scuole, dibattiti, interviste o collaborazioni, scrivimi: rispondo personalmente."
 ---
 
-## Contatti
+## Scrivimi
 
-Per contatti professionali è possibile utilizzare il pulsante seguente.
-
-<button id="email-reveal" class="button button-primary" type="button">Mostra indirizzo email</button>
+<button id="email-reveal" class="button button-primary" type="button">Mostra l'indirizzo email</button>
 
 <p id="email-container" class="contact-email" aria-live="polite"></p>
 
-## Profili
+## Dove trovarmi
 
 - [LinkedIn](https://www.linkedin.com/in/cristiano-fanelli-b881859a)
 - [GitHub](https://github.com/CrisWat)

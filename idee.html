@@ -1,0 +1,46 @@
+---
+layout: page
+title: "Idee"
+heading: "Le mie idee"
+permalink: /idee/
+eyebrow: "Idee e proposte"
+description: "Cinque temi su cui Cristiano Fanelli, astrofisico e ricercatore a Bologna, propone idee concrete: IA governata, tecnologie emergenti, clima, ricerca pubblica e sicurezza."
+intro: "La tecnologia può allargare le disuguaglianze o ridurle: dipende da come la governiamo. Per ogni tema trovi il problema, cosa propongo e perché me ne occupo."
+content_width: wide
+---
+
+<ul class="ideas-index" aria-label="Vai al tema">
+    {% for t in site.data.temi %}
+    <li><a href="#{{ t.id }}">{{ forloop.index }}. {{ t.title }}</a></li>
+    {% endfor %}
+</ul>
+
+{% for t in site.data.temi %}
+<article class="idea" id="{{ t.id }}">
+    <span class="idea-num" aria-hidden="true">{{ forloop.index }}</span>
+    <div>
+        <h2>{{ t.title }}</h2>
+        <p class="idea-lead">{{ t.lead }}</p>
+        <div class="idea-cols">
+            <div>
+                <h3>Il problema</h3>
+                <p>{{ t.problem }}</p>
+            </div>
+            <div>
+                <h3>Cosa propongo</h3>
+                <ul>
+                    {% for p in t.proposals %}<li>{{ p }}</li>{% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="idea-why">
+            <strong>Perché me ne occupo.</strong> {{ t.why }}
+            {% if t.why_link %}<a href="{{ t.why_link | relative_url }}">Approfondisci</a>{% endif %}
+        </div>
+    </div>
+</article>
+{% endfor %}
+
+<div class="callout">
+    <p>Hai un'idea, una critica o un'esperienza da raccontare su uno di questi temi? <a href="{{ '/contatti/' | relative_url }}">Scrivimi</a>: queste proposte crescono anche con il confronto.</p>
+</div>

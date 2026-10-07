@@ -1,20 +1,48 @@
 ---
 layout: page
-title: "Research"
-permalink: /research/
-eyebrow: "Ricerca scientifica"
-description: "Astrofisica stellare, spettroscopia, metodi quantitativi e Intelligenza Artificiale."
+title: "Ricerca e lavoro"
+permalink: /ricerca/
+redirect_from: /research/
+eyebrow: "Ricerca e lavoro"
+description: "Ricerca di Cristiano Fanelli all'INAF di Bologna: spettroscopia stellare, intelligenza artificiale, analisi dei dati e osservazione dello spazio."
+intro: "Dallo spettro al segnale, dal dato alla decisione: il filo che lega la mia ricerca sulle stelle al lavoro su IA, spazio e politiche pubbliche."
 content_width: wide
 ---
 
 <div class="research-list">
     {% for area in site.data.research %}
     <article class="research-item">
-        <span class="research-num">{% assign n = forloop.index %}{% if n < 10 %}0{{ n }}{% else %}{{ n }}{% endif %}</span>
+        <span class="research-num" aria-hidden="true">{{ forloop.index }}</span>
         <div class="research-body">
             <h2>{{ area.title }}</h2>
+            {% if area.plain %}<p class="research-plain">{{ area.plain }}</p>{% endif %}
             <p>{{ area.summary }}</p>
         </div>
     </article>
     {% endfor %}
+</div>
+
+<h2 style="margin-top:4rem">Approfondisci</h2>
+
+<div class="hub-grid">
+    <a class="hub-card" href="{{ '/progetti/' | relative_url }}">
+        <h3>Progetti</h3>
+        <p>N2RED, MOONS, la startup LEOgistic e il lavoro sulla sorveglianza dello spazio.</p>
+        <span>Vai ai progetti →</span>
+    </a>
+    <a class="hub-card" href="{{ '/spazio-e-sicurezza/' | relative_url }}">
+        <h3>Spazio, sicurezza e autonomia europea</h3>
+        <p>Satelliti, detriti e infrastrutture da cui dipende la vita quotidiana.</p>
+        <span>Vai alla sezione →</span>
+    </a>
+    <a class="hub-card" href="{{ '/didattica/' | relative_url }}">
+        <h3>Didattica e divulgazione</h3>
+        <p>Università di Bologna, scuola di geopolitica, Rivista Futura.</p>
+        <span>Vai alla didattica →</span>
+    </a>
+    <a class="hub-card" href="{{ '/cv/' | relative_url }}">
+        <h3>Curriculum</h3>
+        <p>Il percorso completo: esperienze, formazione, progetti e competenze.</p>
+        <span>Vai al curriculum →</span>
+    </a>
 </div>

@@ -1,21 +1,27 @@
 # Aree di ricerca — modifica/aggiungi voci qui.
-- title: "Stellar Spectroscopy"
+- title: "Spettroscopia stellare"
+  plain: "Leggere la luce delle stelle per ricostruire la storia della nostra Galassia."
   summary: >-
-    Caratterizzazione fisica e chimica delle popolazioni stellari attraverso spettroscopia
-    ad alta risoluzione: derivazione di abbondanze chimiche e parametri stellari e cinematici
-    per stelle giganti fredde e calde.
+    Caratterizzazione fisica e chimica delle popolazioni stellari con spettroscopia ad alta
+    risoluzione: abbondanze chimiche, temperatura, gravità e moto di stelle giganti fredde e
+    calde, osservate con grandi telescopi in Italia e all'estero.
 
-- title: "Machine Learning for Stellar Spectroscopy"
+- title: "Intelligenza artificiale per lo studio delle stelle"
+  plain: "Insegnare a una rete neurale a leggere gli spettri, per analizzare in modo automatico i dati delle grandi survey."
   summary: >-
-    Reti neurali e machine learning per la determinazione automatica di parametri stellari e
-    abbondanze chimiche dagli spettri, in vista delle grandi survey spettroscopiche (MOONS, ANDES).
+    Reti neurali e machine learning per ricavare in modo automatico parametri stellari e
+    abbondanze chimiche dagli spettri, in vista delle grandi survey dei prossimi anni (MOONS
+    al Very Large Telescope, ANDES all'Extremely Large Telescope).
 
-- title: "Bayesian Methods & Data Analysis"
+- title: "Metodi statistici e analisi dei dati"
+  plain: "Misure affidabili, incertezze dichiarate, risultati verificabili."
   summary: >-
-    Metodi statistici e computazionali per inferenza, fitting e analisi di dataset complessi;
-    standard di qualità per misurazioni accurate e pipeline per big data.
+    Metodi statistici e computazionali (anche bayesiani) per inferenza e analisi di grandi
+    insiemi di dati, con standard di qualità per misure accurate e pipeline automatiche.
 
-- title: "Space Intelligence"
+- title: "Osservazione dello spazio vicino alla Terra"
+  plain: "Sapere cosa gira in orbita per evitare collisioni tra satelliti e detriti."
   summary: >-
-    Metodologie quantitative e tecnologie per l'osservazione e l'analisi del dominio spaziale:
-    object detection su oggetti in LEO/MEO, SSA/SST e derivazione di parametri orbitali.
+    Metodi quantitativi e IA per riconoscere satelliti e detriti in orbita bassa e media da
+    osservazioni ottiche e ricavarne le orbite, a supporto della sorveglianza dello spazio
+    (Space Surveillance and Tracking).

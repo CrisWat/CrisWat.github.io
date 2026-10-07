@@ -1,23 +1,27 @@
 ---
 layout: page
-title: "Attività pubblica"
-permalink: /attivita-pubblica/
-eyebrow: "Società"
-description: "Tecnologia, ricerca, partecipazione e politiche pubbliche."
+title: "Impegno pubblico"
+permalink: /impegno-pubblico/
+redirect_from: /attivita-pubblica/
+section: /chi-sono/
+eyebrow: "Impegno pubblico"
+description: "Politiche pubbliche sull'intelligenza artificiale, rappresentanza nella ricerca e divulgazione: l'impegno pubblico di Cristiano Fanelli."
+intro: "Partecipo al dibattito pubblico su tecnologia, ricerca e società con un'idea semplice: le competenze tecniche devono servire a scelte migliori per tutti."
 ---
 
-## Impegno pubblico
+## Politiche sull'intelligenza artificiale
 
-Partecipo al dibattito pubblico su ricerca, tecnologia e società, con particolare attenzione al rapporto tra intelligenza artificiale, processi decisionali, sovranità tecnologica e sicurezza nazionale.
+Nel 2023 ho fatto parte, come esperto, della delegazione IDIA (Dentro l'Intelligenza Artificiale) che ha redatto un documento di proposte sull'IA aperto alla consultazione pubblica. Ho coordinato il tavolo di lavoro su sviluppo, ricerca e investimenti.
 
-## Intelligenza Artificiale e policy
+## Rappresentanza nella ricerca
 
-- **National Expert IA — IDIA** (Dentro l'Intelligenza Artificiale): membro della delegazione per la redazione di un documento di policy sull'IA per la consultazione pubblica; coordinatore del tavolo di lavoro su sviluppo, ricerca e investimenti.
-
-## Ricerca e università
-
-Analisi e proposte sul sistema della ricerca e dell'alta formazione, a partire dall'esperienza diretta come ricercatore e come rappresentante dei dottorandi negli organi di dipartimento (2019–2021).
+Dal 2019 al 2021 sono stato rappresentante dei dottorandi nella Giunta e nel Consiglio di Dipartimento, all'Università di Bologna, e ho organizzato i seminari settimanali dei dottorandi. Conosco dall'interno i problemi di chi fa ricerca all'inizio della carriera.
 
 ## Divulgazione
 
-Scrivo regolarmente su **Rivista Futura** e su quaderni geopolitici, rendendo accessibili concetti tecnici complessi e offrendo una lettura strategica delle dinamiche tecnologiche in atto. Gli articoli più recenti sono raccolti nella sezione [Publications](/publications/).
+Scrivo su **Rivista Futura** e su quaderni di analisi geopolitica, per rendere accessibili temi tecnici complessi e mostrare cosa significano per la vita di tutti. Gli articoli sono raccolti in [Scritti](/scritti/).
+
+<div class="page-links">
+    <a class="button button-primary" href="{{ '/idee/' | relative_url }}">Le mie idee <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="button button-secondary" href="{{ '/contatti/' | relative_url }}">Invitami a un incontro</a>
+</div>

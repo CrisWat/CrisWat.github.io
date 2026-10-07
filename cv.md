@@ -2,5 +2,6 @@
 layout: cv
 title: "Curriculum"
 permalink: /cv/
-description: "Percorso professionale, ricerca, formazione, progetti e competenze di Cristiano Fanelli."
+section: /ricerca/
+description: "Curriculum di Cristiano Fanelli: esperienze, ricerca, formazione, progetti, didattica e competenze."
 ---

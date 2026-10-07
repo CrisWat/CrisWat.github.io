@@ -3,18 +3,17 @@
 # Modifica qui i testi: il layout /cv/ si aggiorna automaticamente.
 # =====================================================================
 
-tagline: "AI / Machine Learning · Space Intelligence · Astrofisica"
+tagline: "Intelligenza artificiale · Spazio · Astrofisica"
 
 profile: >-
-  Astrofisico con dottorato di ricerca e specialista di Intelligenza Artificiale e Machine
-  Learning, con forte esperienza in signal/spectral processing, data modeling e reti neurali.
-  Analista di intelligence focalizzato sulla Space Intelligence (SpaceINT): progetto e sviluppo
-  di algoritmi di IA per il riconoscimento di satelliti e detriti orbitali e per la Space
-  Situational Awareness. Autore di analisi di intelligence e geopolitica su space economy,
-  sicurezza e gestione del traffico spaziale. Comprovata capacità di trasferire metodi dalla
-  spettroscopia astrofisica ad altri domini ad alta complessità. Esperienza imprenditoriale
-  come co-fondatore e CEO di una startup deep-tech nel Space Traffic Management, premiata con
-  un finanziamento di 150.000 euro per l'uso dell'IA.
+  Astrofisico con dottorato di ricerca, ricercatore all'INAF di Bologna, specializzato in
+  intelligenza artificiale e machine learning per l'analisi di segnali e spettri, con esperienza
+  in modellazione dei dati e reti neurali. Si occupa di sicurezza e geopolitica dello spazio: algoritmi di IA per
+  riconoscere satelliti e detriti in orbita, analisi su economia dello spazio, sicurezza delle
+  infrastrutture e gestione del traffico spaziale. Ha portato metodi nati in astrofisica in altri
+  campi, anche come co-fondatore e amministratore delegato di una startup deep-tech nella gestione
+  del traffico spaziale. Ha coordinato il tavolo su sviluppo, ricerca e investimenti per un
+  documento di proposte sull'intelligenza artificiale.
 
 contact:
   location: "Bologna, Italia"
@@ -23,7 +22,8 @@ contact:
   linkedin: "https://www.linkedin.com/in/cristiano-fanelli-b881859a"
   github: "https://github.com/CrisWat"
 
-pdf: "/assets/documents/CV_Cristiano_Fanelli.pdf"
+# Lasciare vuoto finché non c'è la versione pubblica del CV (senza recapiti personali).
+pdf: ""
 
 # --- Esperienza professionale -----------------------------------------
 experience:
@@ -32,12 +32,12 @@ experience:
     place: "Bologna, Italia"
     period: "01/2025 – Attuale"
     current: true
-    keywords: ["Machine Learning", "Deep Learning", "Neural Networks", "Spettroscopia", "Big Data"]
+    keywords: ["Machine learning", "Deep learning", "Reti neurali", "Spettroscopia", "Big data"]
     description: >-
       Sviluppo di reti neurali artificiali e pipeline di machine learning per l'estrazione
       automatica di parametri stellari e abbondanze chimiche da spettri ad alta risoluzione,
-      in vista delle prossime grandi survey spettroscopiche. Principal Investigator (PI) di un
-      progetto finanziato (19k euro). Sviluppo di strumenti software in Python e Fortran per il
+      in vista delle prossime grandi survey spettroscopiche. Responsabile scientifico (PI) del
+      progetto INAF N2RED. Sviluppo di strumenti software in Python e Fortran per il
       calcolo di spettri sintetici e modelli atmosferici. Contributo al MOONS GTO Galactic
       Survey (VLT-MOONS) e collaborazione con il team ANDES sull'integrazione di tecniche
       avanzate di ML.
@@ -45,47 +45,46 @@ experience:
     org: "LEOgistic Space Solutions S.r.l. — startup deep-tech"
     place: "Bologna, Italia"
     period: "03/2022 – 10/2023"
-    keywords: ["Startup", "AI algorithms", "Object detection", "Satellite tracking", "Space Traffic Management", "Venture Capital"]
+    keywords: ["Startup", "Algoritmi di IA", "Object detection", "Tracciamento satelliti", "Traffico spaziale"]
     description: >-
-      Co-fondatore e CEO di una startup focalizzata su collision avoidance, infrastruttura
+      Co-fondatore e CEO di una startup focalizzata sulla prevenzione delle collisioni in orbita, infrastruttura
       spaziale e produzione di dati per la gestione del traffico spaziale. Direzione tecnica e
       strategica: algoritmi di IA per il rilevamento di oggetti in orbita, progettazione hardware
       per il tracciamento di satelliti attivi, roadmap di prodotto e gestione del team e dei
-      rapporti con gli investitori. Vincitore del concorso Scientifica International (150k euro).
-  - role: "Docente — Space Intelligence & Aerospazio"
+      rapporti con gli investitori. Startup premiata al Super Sapiens Day 2022 di Scientifica Venture Capital.
+  - role: "Docente — Space Intelligence e aerospazio"
     org: "DOMìNI — Scuola di Geopolitica"
     place: "Roma, Italia"
     period: "04/2024 – Attuale"
     current: true
-    keywords: ["Space Intelligence", "Defense technology", "Aerospace"]
+    keywords: ["Space Intelligence", "Aerospazio", "Tecnologie emergenti"]
     description: >-
-      Ruolo didattico sugli incroci tra intelligence, tecnologia della difesa e aerospazio, con
-      particolare attenzione alle applicazioni tecniche della Space Intelligence e delle
-      tecnologie emergenti.
+      Insegnamento di Space Intelligence e aerospazio: tecnologie spaziali, tecnologie
+      emergenti e loro conseguenze per la sicurezza.
   - role: "Consigliere direttivo — Space Intelligence"
     org: "AIAIG — Associazione Analisti di Intelligence e Geopolitica"
     place: "Roma, Italia"
     period: "09/2023 – Attuale"
     current: true
-    keywords: ["Intelligence analysis", "SpaceINT", "Threat assessment", "Report"]
+    keywords: ["Analisi geopolitica", "Space Intelligence", "Report tecnico-analitici"]
     description: >-
-      Coordinamento delle attività di Space Intelligence e supporto ai processi di raccolta e
-      analisi delle informazioni: valutazione delle minacce, stesura di report tecnico-analitici
-      e formazione dei soci sui temi della sicurezza e delle tecnologie spaziali.
+      Coordinamento delle attività di Space Intelligence: analisi sulla sicurezza delle
+      tecnologie e delle infrastrutture spaziali, stesura di report tecnico-analitici e
+      formazione dei soci.
   - role: "Assegnista di ricerca in Astrofisica e IA"
     org: "INAF — Istituto Nazionale di Astrofisica"
     place: "Bologna, Italia"
     period: "01/2023 – 12/2024"
-    keywords: ["Machine Learning", "Spettroscopia", "Big Data", "Neural Networks"]
+    keywords: ["Machine learning", "Spettroscopia", "Big data", "Reti neurali"]
     description: >-
       Analisi di spettri ottici e infrarossi con spettrografi a echelle; sviluppo di strumenti
       Python/Fortran per spettri sintetici, modelli atmosferici e riduzione/analisi dei dati.
-      PI del progetto INAF (19k euro) su reti neurali per l'analisi spettrale.
+      Responsabile scientifico del progetto INAF N2RED sulle reti neurali per l'analisi spettrale.
   - role: "Specialista di High Performance Computing"
     org: "CINECA"
     place: "Bologna, Italia"
     period: "07/2022 – 12/2022"
-    keywords: ["HPC", "Parallel Computing", "Code optimization", "User support"]
+    keywords: ["HPC", "Calcolo parallelo", "Ottimizzazione del codice", "Supporto agli utenti"]
     description: >-
       Team di supporto utenti per la creazione e manutenzione di cluster HPC: installazione di
       librerie e software scientifico, debug, ottimizzazione del codice e supporto agli utenti.
@@ -99,12 +98,12 @@ research:
       - "Derivazione di abbondanze chimiche e parametri stellari/cinematici (temperatura efficace, gravità, velocità radiale, micro/macro-turbolenza, rotazione) per stelle giganti fredde e calde."
       - "Sviluppo di software in Python e Fortran per spettri sintetici (trasporto radiativo), modelli atmosferici e riduzione/analisi degli spettri."
       - "Preparazione di proposte osservative con selezione delle configurazioni ottimali dello spettrografo."
-  - area: "Space Intelligence (SpaceINT)"
+  - area: "Spazio e sicurezza"
     points:
-      - "Sicurezza dell'industria spaziale: satelliti, veicoli di lancio e piattaforme orbitali."
+      - "Sicurezza delle infrastrutture spaziali: satelliti, lanciatori e piattaforme orbitali."
       - "Analisi di satelliti e detriti in LEO/MEO tramite osservazioni ottiche e data processing, con derivazione di parametri orbitali."
       - "Sviluppo di software e codici IA per il riconoscimento automatico di satelliti e detriti spaziali."
-      - "Produzione di dati e prodotti informativi per Space Situational Awareness (SSA) e Space Surveillance & Tracking (SST)."
+      - "Produzione di dati per la conoscenza e la sorveglianza dello spazio (Space Situational Awareness, SSA, e Space Surveillance & Tracking, SST)."
       - "Analisi del trasferimento tecnologico nell'industria spaziale (SST/SSA) tra Italia, Francia, Cina e India."
 
 observing:
@@ -154,25 +153,21 @@ awards:
   - title: "Artificial Intelligence Grant — INAF"
     org: "INAF"
     period: "02/2024"
-    description: "Finanziamento di 19k euro per la progettazione di una rete neurale per l'estrazione di parametri stellari e abbondanze chimiche dagli spettri."
-  - title: "National Expert IA Member — IDIA"
+    description: "Finanziamento INAF per una rete neurale che ricava parametri stellari e abbondanze chimiche dagli spettri (progetto N2RED)."
+  - title: "Esperto IA — IDIA"
     org: "IDIA — Dentro l'Intelligenza Artificiale"
     period: "11/2023"
-    description: "Esperto nella delegazione per la redazione di un documento di policy sull'IA per la consultazione pubblica; coordinatore del tavolo su sviluppo, ricerca e investimenti."
-  - title: "Super Sapiens Day 2022 — Scientifica VC"
-    org: "Scientifica Venture Capital"
-    period: "07/2022"
-    description: "Vincitore (150k euro) per l'uso dell'IA nella gestione del traffico spaziale, come CEO di LEOgistic Space Solutions S.r.l."
+    description: "Esperto nella delegazione che ha redatto un documento di proposte sull'IA per la consultazione pubblica; coordinatore del tavolo su sviluppo, ricerca e investimenti."
 
 # --- Didattica -------------------------------------------------------
 teaching:
   - role: "Tutor universitario — Computational Astrophysics and Statistics"
-    org: "Università di Bologna, Master in Astrofisica e Cosmologia"
+    org: "Università di Bologna, laurea magistrale in Astrofisica e Cosmologia"
     period: "09/2023 – Attuale"
   - role: "Tutor universitario — Ottica Astronomica"
     org: "Università di Bologna, Corso di Laurea in Astronomia"
     period: "10/2019 – 06/2022"
-  - role: 'Tutor — Master "Space Institutions and Policies"'
+  - role: 'Tutor — Master "Istituzioni e Politiche Spaziali"'
     org: "SIOI & ASI, Roma"
     period: "01/2018 – 07/2018"
 
@@ -180,7 +175,7 @@ teaching:
 skills:
   - group: "Linguaggi"
     items:
-      - "Python (proficient: numpy, pandas, matplotlib, astropy, scipy)"
+      - "Python avanzato (numpy, pandas, matplotlib, astropy, scipy)"
       - "Fortran 77/90/95"
   - group: "Machine Learning & Deep Learning"
     items:
@@ -201,7 +196,7 @@ skills:
     items:
       - "Calcolo parallelo, ottimizzazione e parallelizzazione"
       - "Gestione e manutenzione di cluster HPC (CINECA)"
-  - group: "Space Intelligence & IA applicata"
+  - group: "Spazio e IA applicata"
     items:
       - "Object detection su oggetti orbitali (LEO/MEO)"
       - "Tracciamento satelliti, dati per Space Traffic Management"

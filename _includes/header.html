@@ -2,8 +2,8 @@
     <nav class="nav container" aria-label="Navigazione principale">
 
         <a class="logo" href="{{ '/' | relative_url }}">
-            <span class="logo-mark">CF</span>
-            <span class="logo-coord">44°29′N · 11°20′E</span>
+            <span class="logo-name">Cristiano Fanelli</span>
+            <span class="logo-role">Astrofisico · Bologna</span>
         </a>
 
         <button
@@ -11,22 +11,18 @@
             type="button"
             aria-expanded="false"
             aria-controls="site-navigation"
-            aria-label="Apri il menu"
         >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span class="menu-label">Menu</span>
         </button>
 
         <ul id="site-navigation" class="nav-links">
             {% for item in site.data.navigation %}
-                <li>
+                <li{% if item.cta %} class="nav-cta"{% endif %}>
                     <a
                         href="{{ item.url | relative_url }}"
-                        {% if page.url == item.url %}aria-current="page"{% endif %}
-                    >
-                        {{ item.title }}
-                    </a>
+                        {% if page.url == item.url or page.section == item.url %}aria-current="page"{% endif %}
+                    >{{ item.title }}</a>
                 </li>
             {% endfor %}
         </ul>

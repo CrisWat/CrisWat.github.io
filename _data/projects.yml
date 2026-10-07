@@ -1,51 +1,39 @@
-# Progetti — modifica/aggiungi voci qui; la pagina /projects/ si aggiorna da sola.
+# Progetti — modifica/aggiungi voci qui; la pagina /progetti/ si aggiorna da sola.
 - name: "N2RED"
-  tagline: "Neural Networks for Accurate Stellar Parameters and Chemical Abundances"
-  category: "Ricerca · IA"
-  status: "In corso · PI"
+  tagline: "Reti neurali per misurare con precisione composizione e proprietà delle stelle"
+  category: "Ricerca · Intelligenza artificiale"
+  status: "In corso · Responsabile scientifico"
   description: >-
-    Progetto INAF (Mini-Grant Ricerca Fondamentale 2023, 19k euro) di cui sono Principal
-    Investigator: architetture di reti neurali per l'estrazione accurata di parametri stellari
-    e abbondanze chimiche dagli spettri, ottimizzate per le survey spettroscopiche future.
+    Progetto INAF (Mini-Grant Ricerca Fondamentale 2023, 19.000 euro) di cui sono responsabile
+    scientifico: reti neurali che ricavano parametri stellari e abbondanze chimiche dagli spettri,
+    pensate per le grandi survey dei prossimi anni.
   links: []
 
 - name: "MOONS"
-  tagline: "MOONS GTO Galactic Survey — VLT"
-  category: "Astrofisica · Survey"
+  tagline: "MOONS GTO Galactic Survey al Very Large Telescope"
+  category: "Astrofisica · Grandi survey"
   status: "Collaborazione"
   description: >-
-    Attività scientifica e strumenti computazionali per il MOONS GTO Galactic Survey
-    (spettrografo multi-oggetto VLT-MOONS): pianificazione delle osservazioni, selezione
-    dei target con machine learning e analisi delle abbondanze chimiche.
+    Contributo scientifico e strumenti di calcolo per la survey galattica di MOONS, il nuovo
+    spettrografo multi-oggetto del Very Large Telescope: pianificazione delle osservazioni,
+    selezione dei bersagli con il machine learning e analisi delle abbondanze chimiche.
   links: []
 
 - name: "LEOgistic Space Solutions"
-  tagline: "Space Traffic Management — startup deep-tech"
-  category: "Impresa · Space Tech"
-  status: "2022–2023 · CEO & Co-founder"
+  tagline: "Startup bolognese per la gestione del traffico spaziale"
+  category: "Impresa · Tecnologia spaziale"
+  status: "2022–2023 · Co-fondatore e AD"
   description: >-
-    Startup per collision avoidance e produzione di dati per la gestione del traffico spaziale:
-    algoritmi di IA per l'object detection in orbita e hardware per il tracciamento di satelliti
-    attivi. Premiata con 150k euro (Scientifica VC) per l'uso dell'IA.
+    Startup per evitare collisioni in orbita e produrre dati per la gestione del traffico spaziale:
+    algoritmi di IA per riconoscere gli oggetti in orbita e hardware per seguire i satelliti attivi.
+    Premiata al Super Sapiens Day 2022 di Scientifica Venture Capital (150.000 euro).
   links: []
 
-- name: "Space Intelligence"
-  tagline: "SpaceINT — osservazione e sicurezza del dominio spaziale"
-  category: "Intelligence"
+- name: "Sorveglianza dello spazio"
+  tagline: "Osservare satelliti e detriti per un'orbita sicura e sostenibile"
+  category: "Spazio e sicurezza"
   status: "In corso"
   description: >-
-    Software e codici di IA per il riconoscimento di satelliti e detriti in LEO/MEO, produzione
-    di dati per Space Situational Awareness (SSA) e Space Surveillance & Tracking (SST), e analisi
-    del trasferimento tecnologico nell'industria spaziale.
+    Software e IA per riconoscere satelliti e detriti in orbita bassa e media, dati per la
+    sorveglianza dello spazio e analisi del trasferimento tecnologico nell'industria spaziale.
   links: []
-
-- name: "Repository pubbliche"
-  tagline: "Codice e strumenti open source"
-  category: "Software"
-  status: "Continuo"
-  description: >-
-    Strumenti scientifici in Python/Fortran e progetti software pubblici, integrati
-    progressivamente in questa sezione.
-  links:
-    - label: "GitHub"
-      url: "https://github.com/CrisWat"
