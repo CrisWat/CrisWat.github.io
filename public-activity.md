@@ -22,10 +22,10 @@ Sono iscritto al Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: part
 <figure class="photo-gallery">
     <div class="photo-gallery-grid">
         <img src="{{ '/assets/images/nova-intervento.jpg' | relative_url }}" alt="Cristiano Fanelli, con il microfono, interviene davanti ai partecipanti" width="800" height="1000" loading="lazy" decoding="async">
-        <img src="{{ '/assets/images/nova-ascolto.jpg' | relative_url }}" alt="Cristiano Fanelli ascolta una partecipante che prende la parola" width="800" height="1000" loading="lazy" decoding="async">
+        <img src="{{ '/assets/images/nova-dialogo.jpg' | relative_url }}" alt="Cristiano Fanelli in dialogo con due partecipanti" width="800" height="1000" loading="lazy" decoding="async">
         <img src="{{ '/assets/images/nova-gruppi.jpg' | relative_url }}" alt="Cristiano Fanelli al computer insieme a una partecipante durante il lavoro nei gruppi" width="800" height="1000" loading="lazy" decoding="async">
     </div>
-    <figcaption>Da facilitatore all'incontro NOVA di Bologna in Open Space Technology: interventi, ascolto, lavoro nei gruppi.</figcaption>
+    <figcaption>Da facilitatore all'incontro NOVA di Bologna in Open Space Technology: interventi, dialogo, lavoro nei gruppi.</figcaption>
 </figure>
 
 <figure class="photo-gallery photo-gallery-wide">

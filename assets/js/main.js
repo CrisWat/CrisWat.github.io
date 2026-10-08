@@ -59,7 +59,7 @@
     const emailContainer = document.querySelector("#email-container");
     if (emailReveal && emailContainer) {
         emailReveal.addEventListener("click", () => {
-            const user = ["consulting", "fanelli"].join(".");
+            const user = ["fanelli", "cristiano"].join(".");
             const domain = ["gmail", "com"].join(".");
             const address = user + "@" + domain;
             const link = document.createElement("a");

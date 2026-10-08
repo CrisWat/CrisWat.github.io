@@ -1542,6 +1542,21 @@ h4 {
     font-size: 1.1rem;
     color: var(--ink-soft);
     margin-bottom: 1.2rem;
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+/* nel blog i testi sono giustificati (con sillabazione per evitare buchi) */
+.post-list li > p:not(.post-meta) {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.post-source,
+.post-source-foot {
+    text-align: left !important;
 }
 
 .post-content h2 {
