@@ -1,29 +1,28 @@
 /* =====================================================================
-   TEMA "Chiaro istituzionale"
-   Bianco, blu deciso, caratteri senza grazie (Inter), foto grandi.
+   TEMA "Avorio e terracotta", caratteri senza grazie (Inter), foto grandi.
    Richiamo leggero al cielo con costellazioni a tratto sottile
    (solo decorative, mai sotto al testo).
    ===================================================================== */
 
 :root {
-    --bg: #FFFFFF;            /* bianco */
-    --bg-alt: #F3F6FA;        /* grigio-azzurro chiarissimo per le sezioni alternate */
-    --bg-deep: #0F2547;       /* blu notte (footer, bande scure) */
-    --card: #FFFFFF;
+    --bg: #FAF6EF;            /* avorio */
+    --bg-alt: #F2EADD;        /* sabbia chiara per le sezioni alternate */
+    --bg-deep: #1B2433;       /* blu notte (footer, bande scure) */
+    --card: #FFFDF9;
 
-    --ink: #172033;           /* testo principale */
-    --ink-soft: #3B4558;      /* testo secondario */
-    --ink-muted: #5A6475;     /* note, date */
-    --line: #DDE3EC;
-    --line-strong: #C3CCD9;
+    --ink: #1B2433;           /* testo principale */
+    --ink-soft: #3A4354;      /* testo secondario */
+    --ink-muted: #5B6372;     /* note, date */
+    --line: #E3D8C8;
+    --line-strong: #CDBFA9;
 
-    --accent: #1A4FB8;        /* blu: bottoni, accenti grandi */
-    --accent-dark: #173B7A;   /* blu scuro: link e testo piccolo */
-    --accent-tint: #E7EEFA;   /* sfondo tenue blu */
-    --decor: #8FB0EA;         /* azzurro: solo decorativo */
+    --accent: #B4532F;        /* terracotta: bottoni, accenti grandi */
+    --accent-dark: #943F20;   /* terracotta scura: link e testo piccolo */
+    --accent-tint: #F4E1D6;   /* sfondo tenue terracotta */
+    --decor: #C8893F;         /* ocra: solo decorativo */
 
-    --on-deep: #F3F6FB;
-    --on-deep-soft: rgba(243, 246, 251, 0.78);
+    --on-deep: #F5EFE3;
+    --on-deep-soft: rgba(245, 239, 227, 0.78);
 
     --container: 1200px;
     --content: 740px;
@@ -142,7 +141,7 @@ h4 {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(250, 246, 239, 0.92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid transparent;
@@ -151,7 +150,7 @@ h4 {
 
 .site-header.scrolled {
     border-bottom-color: var(--line);
-    box-shadow: 0 6px 24px rgba(15, 37, 71, 0.05);
+    box-shadow: 0 6px 24px rgba(27, 36, 51, 0.05);
 }
 
 .nav {
@@ -226,8 +225,8 @@ h4 {
 .nav-links .nav-cta a {
     padding: 0.55rem 1.1rem;
     border-radius: 999px;
-    background: var(--accent);
-    color: #fff;
+    background: var(--ink);
+    color: var(--bg);
 }
 
 .nav-links .nav-cta a::after {
@@ -293,7 +292,7 @@ h4 {
 .button-primary:hover {
     background: var(--accent-dark);
     transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(26, 79, 184, 0.22);
+    box-shadow: 0 10px 24px rgba(180, 83, 47, 0.22);
 }
 
 .button-secondary {
@@ -318,7 +317,7 @@ h4 {
     color: var(--accent-dark);
     font-weight: 600;
     text-decoration: none;
-    border-bottom: 1.5px solid rgba(23, 59, 122, 0.3);
+    border-bottom: 1.5px solid rgba(148, 63, 32, 0.3);
     transition: border-color 0.2s ease;
 }
 
@@ -396,7 +395,7 @@ h4 {
     font-size: clamp(1.45rem, 2.6vw, 2.05rem);
     line-height: 1.22;
     letter-spacing: -0.02em;
-    color: var(--accent);
+    color: var(--accent-dark);
     margin-bottom: 1.4rem;
     max-width: 22ch;
 }
@@ -436,7 +435,7 @@ h4 {
     aspect-ratio: 4 / 5;
     overflow: hidden;
     border-radius: 18px;
-    box-shadow: 0 24px 60px rgba(15, 37, 71, 0.16);
+    box-shadow: 0 24px 60px rgba(27, 36, 51, 0.16);
     background: var(--bg-alt);
 }
 
@@ -545,7 +544,7 @@ h4 {
 .theme-card:hover {
     transform: translateY(-3px);
     border-color: var(--line-strong);
-    box-shadow: 0 14px 34px rgba(15, 37, 71, 0.08);
+    box-shadow: 0 14px 34px rgba(27, 36, 51, 0.08);
 }
 
 .theme-num {
@@ -628,7 +627,7 @@ h4 {
     font-family: var(--font-display);
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--accent-dark);
 }
 
 /* lavoro */
@@ -744,7 +743,6 @@ h4 {
     position: relative;
     overflow: hidden;
     padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 3.5rem);
-    background: var(--bg-alt);
     border-bottom: 1px solid var(--line);
 }
 
@@ -1012,7 +1010,7 @@ h4 {
     position: sticky;
     top: 72px;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(250, 246, 239, 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
 }
@@ -1460,7 +1458,7 @@ h4 {
 .pub-title a {
     color: var(--ink) !important;
     text-decoration: none;
-    border-bottom: 1.5px solid rgba(23, 59, 122, 0.3);
+    border-bottom: 1.5px solid rgba(148, 63, 32, 0.3);
 }
 
 .pub-title a:hover {
@@ -1608,7 +1606,7 @@ h4 {
     grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 2.5rem;
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(243, 246, 251, 0.14);
+    border-bottom: 1px solid rgba(245, 239, 227, 0.14);
 }
 
 .footer-brand h3 {
@@ -1681,7 +1679,7 @@ h4 {
     height: 40px;
     display: grid;
     place-items: center;
-    border: 1px solid rgba(243, 246, 251, 0.25);
+    border: 1px solid rgba(245, 239, 227, 0.25);
     border-radius: 50%;
     color: var(--on-deep);
     text-decoration: none;
@@ -1690,7 +1688,7 @@ h4 {
 
 .social a:hover {
     border-color: var(--on-deep);
-    background: rgba(243, 246, 251, 0.08);
+    background: rgba(245, 239, 227, 0.08);
 }
 
 /* ===================== REVEAL ===================== */
@@ -1842,7 +1840,7 @@ button:focus-visible {
     .hero-photo-frame {
         aspect-ratio: 4 / 3;
         border-radius: 16px;
-        box-shadow: 0 12px 30px rgba(15, 37, 71, 0.14);
+        box-shadow: 0 12px 30px rgba(27, 36, 51, 0.14);
     }
 
     .hero-photo-frame img {
@@ -1985,7 +1983,7 @@ button:focus-visible {
     aspect-ratio: 3 / 2;
     object-fit: cover;
     border-radius: 14px;
-    box-shadow: 0 16px 40px rgba(15, 37, 71, 0.12);
+    box-shadow: 0 16px 40px rgba(27, 36, 51, 0.12);
 }
 
 .why-photo figcaption,
@@ -2005,7 +2003,7 @@ button:focus-visible {
     width: 100%;
     height: auto;
     border-radius: 14px;
-    box-shadow: 0 16px 40px rgba(15, 37, 71, 0.12);
+    box-shadow: 0 16px 40px rgba(27, 36, 51, 0.12);
 }
 
 .page-figure-right {
