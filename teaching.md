@@ -17,7 +17,7 @@ intro: "Spiegare la scienza e la tecnologia a studenti, professionisti e cittadi
 - **Tutor di Ottica Astronomica**, laurea in Astronomia, Università di Bologna (2019–2022).
 - **Tutor del master "Istituzioni e Politiche Spaziali"**, SIOI e Agenzia Spaziale Italiana, Roma (2018).
 
-Per corsi e formazione su geopolitica, spazio e intelligence da fonti aperte: [Analisi e formazione](/analisi-e-formazione/).
+Per corsi e formazione su space economy, politiche spaziali, tecnologie emergenti e intelligence: [Analisi e formazione](/analisi-e-formazione/).
 
 ## Divulgazione e incontri
 
