@@ -25,7 +25,15 @@ Sono iscritto al Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: part
         <img src="{{ '/assets/images/nova-ascolto.jpg' | relative_url }}" alt="Cristiano Fanelli ascolta una partecipante che prende la parola" width="800" height="1000" loading="lazy" decoding="async">
         <img src="{{ '/assets/images/nova-gruppi.jpg' | relative_url }}" alt="Cristiano Fanelli al computer insieme a una partecipante durante il lavoro nei gruppi" width="800" height="1000" loading="lazy" decoding="async">
     </div>
-    <figcaption>Da facilitatore all'incontro NOVA in Open Space Technology: interventi, ascolto, lavoro nei gruppi.</figcaption>
+    <figcaption>Da facilitatore all'incontro NOVA di Bologna in Open Space Technology: interventi, ascolto, lavoro nei gruppi.</figcaption>
+</figure>
+
+<figure class="photo-gallery photo-gallery-wide">
+    <div class="photo-gallery-grid">
+        <img src="{{ '/assets/images/summer-school-intervento.jpg' | relative_url }}" alt="Cristiano Fanelli interviene al microfono, con il mare sullo sfondo" width="1200" height="800" loading="lazy" decoding="async">
+        <img src="{{ '/assets/images/summer-school-gruppo.jpg' | relative_url }}" alt="Foto di gruppo dei partecipanti alla summer school, all'aperto" width="1200" height="800" loading="lazy" decoding="async">
+    </div>
+    <figcaption>Alla summer school del Movimento 5 Stelle a Diamante.</figcaption>
 </figure>
 
 Per me l'appartenenza politica non è un fine, ma un mezzo per trasformare le idee in cambiamenti concreti. Le competenze individuali acquistano valore quando vengono messe al servizio di un progetto collettivo.

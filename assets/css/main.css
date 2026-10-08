@@ -2038,6 +2038,14 @@ button:focus-visible {
     border-radius: 12px;
 }
 
+.photo-gallery-wide .photo-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.photo-gallery-wide .photo-gallery-grid img {
+    aspect-ratio: 3 / 2;
+}
+
 @media (max-width: 640px) {
     .page-figure-right {
         float: none;
@@ -2059,5 +2067,15 @@ button:focus-visible {
         grid-column: 1 / -1;
         aspect-ratio: 4 / 3;
         object-position: center 30%;
+    }
+
+    .photo-gallery-wide .photo-gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-gallery-wide .photo-gallery-grid img,
+    .photo-gallery-wide .photo-gallery-grid img:first-child {
+        aspect-ratio: 3 / 2;
+        object-position: center;
     }
 }
