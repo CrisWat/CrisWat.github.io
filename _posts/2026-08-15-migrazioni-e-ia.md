@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Migrazioni e IA: prevedere senza disumanizzare"
-date: 2026-10-08 05:00:00 +0200
+date: 2026-08-15 09:00:00 +0200
 category: "IA governata"
 description: "L'intelligenza artificiale può aiutare a leggere i flussi migratori per scenari, ma non deve diventare il decisore: il vero problema resta politico."
 fonte: "HegoMag"
-fonte_url: ""
+fonte_url: "https://www.hegomag.com/edicola"
+fonte_numero: "agosto 2026"
 reading_time: "2 minuti di lettura"
 ---
 

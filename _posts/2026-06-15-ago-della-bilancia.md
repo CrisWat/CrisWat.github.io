@@ -1,11 +1,13 @@
 ---
 layout: post
 title: "L'ago della bilancia ha smesso di oscillare"
-date: 2026-10-08 04:00:00 +0200
+date: 2026-06-15 09:00:00 +0200
 category: "IA governata"
 description: "L'intelligenza artificiale non è neutra: orienta le decisioni e gira su infrastrutture in poche mani. E l'Europa regola ciò che non possiede."
 fonte: "HegoMag"
-fonte_url: ""
+fonte_url: "https://www.hegomag.com/posts/lago-della-bilancia-ha-smesso-di-oscillare"
+fonte_numero: "giugno 2026"
+fonte_diretto: true
 reading_time: "2 minuti di lettura"
 ---
 

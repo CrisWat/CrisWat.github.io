@@ -19,6 +19,15 @@ Sono iscritto al Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: part
 - **IDIA, Dentro l'Intelligenza Artificiale (2023).** All'evento nazionale promosso dal Movimento 5 Stelle ho coordinato, come esperto, il gruppo di lavoro su ricerca, sviluppo e investimenti. Ho scritto il documento finale insieme a due deputati e a un'esperta ex senatrice: un documento di indirizzo politico poi aperto alla consultazione pubblica. [Leggi il documento "Gli orizzonti dell'Intelligenza Artificiale"](https://www.movimento5stelle.eu/Documento-finale-IDIA.pdf). Alla seconda edizione, a Napoli, ho coordinato una task force che ha partecipato all'organizzazione e ho tenuto un intervento per il Network Giovani.
 - **Referente giovani a Bologna (2022–2023).** Sono stato il primo referente giovani del gruppo territoriale di Bologna.
 
+<figure class="photo-gallery">
+    <div class="photo-gallery-grid">
+        <img src="{{ '/assets/images/nova-intervento.jpg' | relative_url }}" alt="Cristiano Fanelli, con il microfono, interviene davanti ai partecipanti" width="800" height="1000" loading="lazy" decoding="async">
+        <img src="{{ '/assets/images/nova-ascolto.jpg' | relative_url }}" alt="Cristiano Fanelli ascolta una partecipante che prende la parola" width="800" height="1000" loading="lazy" decoding="async">
+        <img src="{{ '/assets/images/nova-gruppi.jpg' | relative_url }}" alt="Cristiano Fanelli al computer insieme a una partecipante durante il lavoro nei gruppi" width="800" height="1000" loading="lazy" decoding="async">
+    </div>
+    <figcaption>Da facilitatore all'incontro NOVA in Open Space Technology: interventi, ascolto, lavoro nei gruppi.</figcaption>
+</figure>
+
 Per me l'appartenenza politica non è un fine, ma un mezzo per trasformare le idee in cambiamenti concreti. Le competenze individuali acquistano valore quando vengono messe al servizio di un progetto collettivo.
 
 ## Attivismo civico
@@ -35,7 +44,7 @@ Faccio volontariato dal 2008: prima con Special Olympics a Roma, per l'inclusion
 
 ## Divulgazione
 
-Scrivo su **Rivista Futura** e su quaderni di analisi geopolitica, per rendere accessibili temi tecnici complessi e mostrare cosa significano per la vita di tutti. Faccio divulgazione e sensibilizzazione ambientale nelle scuole medie e superiori. Gli articoli sono raccolti in [Scritti](/scritti/).
+Scrivo su **Rivista Futura**, sulla rivista **HegoMag** e su quaderni di analisi geopolitica, per rendere accessibili temi tecnici complessi e mostrare cosa significano per la vita di tutti. Faccio divulgazione e sensibilizzazione ambientale nelle scuole medie e superiori. Gli articoli sono raccolti in [Scritti](/scritti/).
 
 <div class="page-links">
     <a class="button button-primary" href="{{ '/idee/' | relative_url }}">Le mie idee <span class="arrow" aria-hidden="true">→</span></a>

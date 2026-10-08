@@ -29,7 +29,7 @@ content_width: wide
             <div class="pub-body">
                 <h3 class="pub-title">{% if it.url and it.url != '' %}<a href="{{ it.url }}" target="_blank" rel="noopener noreferrer">{{ it.title }}</a>{% elsif it.blog %}<a href="{{ it.blog | relative_url }}">{{ it.title }}</a>{% else %}{{ it.title }}{% endif %}</h3>
                 {% if it.authors %}<p class="pub-authors">{{ it.authors }}</p>{% endif %}
-                {% if it.venue %}<p class="pub-venue">{{ it.venue }}{% if it.blog and it.url and it.url != '' %} · <a href="{{ it.blog | relative_url }}">sintesi sul blog</a>{% endif %}</p>{% endif %}
+                {% if it.venue %}<p class="pub-venue">{% if it.venue_url %}<a href="{{ it.venue_url }}" target="_blank" rel="noopener noreferrer">{{ it.venue }}</a>{% else %}{{ it.venue }}{% endif %}{% if it.blog and it.url and it.url != '' %} · <a href="{{ it.blog | relative_url }}">sintesi sul blog</a>{% endif %}</p>{% endif %}
             </div>
         </li>
         {% endfor %}

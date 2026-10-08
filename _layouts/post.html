@@ -13,7 +13,7 @@ layout: default
                 {% if page.reading_time %}<span aria-hidden="true"> · </span>{{ page.reading_time }}{% endif %}
             </p>
             {% if page.fonte %}
-            <p class="post-source">Tratto dall'articolo pubblicato su {% if page.fonte_url and page.fonte_url != "" %}<a href="{{ page.fonte_url }}" target="_blank" rel="noopener noreferrer">{{ page.fonte }}</a>{% else %}<strong>{{ page.fonte }}</strong>{% endif %}.</p>
+            <p class="post-source">Tratto dall'articolo pubblicato su {% if page.fonte_url and page.fonte_url != "" %}<a href="{{ page.fonte_url }}" target="_blank" rel="noopener noreferrer">{{ page.fonte }}</a>{% else %}<strong>{{ page.fonte }}</strong>{% endif %}{% if page.fonte_numero %}, numero di {{ page.fonte_numero }}{% endif %}.</p>
             {% endif %}
         </div>
     </header>
@@ -22,7 +22,7 @@ layout: default
         <div class="container content-narrow">
             {{ content }}
             {% if page.fonte_url and page.fonte_url != "" %}
-            <p class="post-source-foot"><a href="{{ page.fonte_url }}" target="_blank" rel="noopener noreferrer">Leggi l'articolo completo su {{ page.fonte }} →</a></p>
+            <p class="post-source-foot"><a href="{{ page.fonte_url }}" target="_blank" rel="noopener noreferrer">{% if page.fonte_diretto or page.fonte_numero == nil %}Leggi l'articolo completo su {{ page.fonte }} →{% else %}Leggi l'articolo completo nel numero di {{ page.fonte_numero }} di {{ page.fonte }} →{% endif %}</a></p>
             {% endif %}
         </div>
     </div>

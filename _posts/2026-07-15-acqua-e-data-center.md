@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Falde, server e potere digitale: la questione idrica dei data center"
-date: 2026-10-08 06:00:00 +0200
+date: 2026-07-15 09:00:00 +0200
 category: "Clima e ambiente"
 description: "Il cloud non è una nuvola: i data center consumano energia, suolo e acqua. La domanda non è se costruirli, ma chi decide dove e con quali regole."
 fonte: "HegoMag"
-fonte_url: ""
+fonte_url: "https://www.hegomag.com/edicola"
+fonte_numero: "luglio 2026"
 reading_time: "2 minuti di lettura"
 ---
 

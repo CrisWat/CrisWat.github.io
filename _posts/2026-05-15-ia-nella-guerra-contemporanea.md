@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Dalla kill chain all'inganno visivo: l'IA nella guerra contemporanea"
-date: 2026-10-08 08:00:00 +0200
+date: 2026-05-15 09:00:00 +0200
 category: "Tecnologie emergenti"
 description: "L'intelligenza artificiale accorcia le catene decisionali della guerra, ma apre nuove vulnerabilità: dall'AI authority bias alle esche che ingannano gli algoritmi."
 fonte: "HegoMag"
-fonte_url: ""
+fonte_url: "https://www.hegomag.com/edicola"
+fonte_numero: "maggio 2026"
 reading_time: "2 minuti di lettura"
 ---
 

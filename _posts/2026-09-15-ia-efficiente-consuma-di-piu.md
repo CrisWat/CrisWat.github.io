@@ -1,11 +1,12 @@
 ---
 layout: post
 title: "Un'IA efficiente è un'IA che consuma di più"
-date: 2026-10-08 07:00:00 +0200
+date: 2026-09-15 09:00:00 +0200
 category: "Clima e ambiente"
 description: "Il caso DeepSeek e il paradosso di Jevons: perché un'intelligenza artificiale più efficiente non sarà più leggera, e perché la domanda vera è dove consuma."
 fonte: "HegoMag"
-fonte_url: ""
+fonte_url: "https://www.hegomag.com/edicola"
+fonte_numero: "settembre 2026"
 reading_time: "2 minuti di lettura"
 ---
 
