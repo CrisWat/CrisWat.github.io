@@ -1,0 +1,82 @@
+---
+layout: page
+title: "Analisi e formazione"
+heading: "Geopolitica, spazio e intelligence da fonti aperte"
+permalink: /analisi-e-formazione/
+section: /ricerca/
+eyebrow: "Analisi e formazione"
+description: "Cristiano Fanelli, analista e formatore in geopolitica, spazio e intelligence da fonti aperte: formazione e analisi per enti, scuole, aziende e associazioni."
+intro: "Accanto alla ricerca, lavoro come analista e formatore. Aiuto persone e organizzazioni a leggere scenari complessi, dallo spazio all'intelligenza artificiale, partendo da fonti aperte e verificabili."
+content_width: wide
+---
+
+<h2>Cosa faccio</h2>
+
+<div class="work-grid offer-grid">
+    <article class="work-card">
+        <h3>Formazione</h3>
+        <p>A DOMìNI, la scuola di analisi geopolitica del Centro Studi AMIStaDeS, insegno geopolitica dello spazio, intelligence e Space Economy, e ho ideato il diploma in Space Intelligence. Per il progetto europeo Erasmus+ ANALYST ho curato un modulo su teoria dell'intelligence e tecniche di analisi strutturata.</p>
+    </article>
+    <article class="work-card">
+        <h3>Analisi</h3>
+        <p>Scrivo analisi e report tecnico-analitici su spazio, tecnologie emergenti e sicurezza delle infrastrutture, per l'AIAIG e per il Centro Studi AMIStaDeS. Sulla rivista HegoMag scrivo di intelligenza artificiale, potere e geopolitica.</p>
+    </article>
+    <article class="work-card">
+        <h3>Comunità professionale</h3>
+        <p>Sono consigliere direttivo dell'AIAIG, l'Associazione Italiana Analisti di Intelligence e Geopolitica. Ho fondato e coordino il gruppo Space Intelligence, che produce report tecnico-analitici e fa formazione per i soci.</p>
+    </article>
+</div>
+
+<h2>I temi</h2>
+
+<ul class="topic-list">
+    <li><strong>Geopolitica ed economia dello spazio</strong>: lanciatori, satelliti, autonomia europea.</li>
+    <li><strong>Sicurezza delle infrastrutture spaziali</strong> e sorveglianza dell'orbita.</li>
+    <li><strong>Intelligenza artificiale nell'analisi e nelle decisioni</strong>: cosa può fare e quali rischi porta, come la fiducia eccessiva nelle risposte delle macchine (<em>AI authority bias</em>).</li>
+    <li><strong>Tecnologie emergenti e filiere critiche</strong>: calcolo, semiconduttori, catene di fornitura.</li>
+    <li><strong>Intelligence da fonti aperte (OSINT)</strong> e tecniche di analisi strutturata.</li>
+    <li><strong>Scenari</strong>: come costruirli e usarli per prepararsi e decidere.</li>
+</ul>
+
+<h2>Come lavoro</h2>
+
+<p>Parto da fonti aperte e verificabili e uso tecniche di analisi strutturata per separare i fatti dalle ipotesi. Dal lavoro di ricercatore porto il metodo scientifico e gli strumenti di analisi dei dati. L'intelligenza artificiale è un supporto utile, non il decisore: la uso con spirito critico, conoscendone i limiti.</p>
+
+<p>Mi sono formato in intelligence d'impresa e OSINT con Intellego e CISINT (2021) e in politiche spaziali con il master in Istituzioni e Politiche Spaziali della SIOI e dell'Agenzia Spaziale Italiana (2018).</p>
+
+<section class="offer-box">
+    <h2>Per enti e organizzazioni</h2>
+    <p>Posso proporre:</p>
+    <ul>
+        <li>lezioni e corsi, anche in moduli brevi;</li>
+        <li>workshop pratici su fonti aperte e analisi strutturata;</li>
+        <li>briefing e report su temi specifici;</li>
+        <li>interventi a convegni, dibattiti e incontri pubblici.</li>
+    </ul>
+    <p>Per università e scuole, enti pubblici, aziende, associazioni e centri studi.</p>
+    <div class="page-links">
+        <a class="button button-primary" href="{{ '/contatti/' | relative_url }}">Scrivimi <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="button button-secondary" href="{{ '/cv/' | relative_url }}">Curriculum</a>
+    </div>
+</section>
+
+<h2>Analisi pubblicate</h2>
+
+{% for group in site.data.publications.groups %}{% if group.name == "Analisi su spazio, tecnologia e geopolitica" %}
+<ol class="pub-list">
+    {% for it in group.items %}
+    <li class="pub-item">
+        <span class="pub-year">{{ it.year }}</span>
+        <div class="pub-body">
+            <h3 class="pub-title">{% if it.url and it.url != '' %}<a href="{{ it.url }}" target="_blank" rel="noopener noreferrer">{{ it.title }}</a>{% else %}{{ it.title }}{% endif %}</h3>
+            {% if it.authors %}<p class="pub-authors">{{ it.authors }}</p>{% endif %}
+            {% if it.venue %}<p class="pub-venue">{{ it.venue }}</p>{% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ol>
+{% endif %}{% endfor %}
+
+<p><a class="text-link" href="{{ '/scritti/' | relative_url }}">Tutti gli scritti, compresi gli articoli su HegoMag →</a></p>
+
+<p class="offer-note">La mia posizione su spazio, difesa e corsa agli armamenti è nella pagina <a href="{{ '/spazio-e-sicurezza/' | relative_url }}">Spazio, sicurezza e autonomia europea</a>.</p>

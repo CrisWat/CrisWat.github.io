@@ -633,7 +633,7 @@ h4 {
 /* lavoro */
 .work-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.2rem;
 }
 
@@ -2089,5 +2089,56 @@ button:focus-visible {
     .photo-gallery-wide .photo-gallery-grid img:first-child {
         aspect-ratio: 3 / 2;
         object-position: center;
+    }
+}
+
+
+/* ===================== ANALISI E FORMAZIONE ===================== */
+
+.page-content .offer-grid {
+    margin: 1.2rem 0 3rem;
+}
+
+.page-content .offer-grid h3 {
+    margin-top: 0;
+}
+
+.page-content .offer-grid p {
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.page-content .topic-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem 2.4rem;
+    margin-bottom: 3rem;
+}
+
+.offer-box {
+    margin: 3rem 0;
+    padding: clamp(1.6rem, 4vw, 2.6rem);
+    background: var(--bg-alt);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+}
+
+.offer-box h2 {
+    margin-top: 0 !important;
+}
+
+.offer-box .page-links {
+    margin-top: 1.6rem;
+}
+
+.offer-note {
+    margin-top: 2.5rem;
+    color: var(--ink-muted);
+    font-size: 0.98rem;
+}
+
+@media (max-width: 760px) {
+    .page-content .topic-list {
+        grid-template-columns: 1fr;
     }
 }

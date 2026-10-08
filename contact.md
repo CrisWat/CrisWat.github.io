@@ -4,8 +4,8 @@ title: "Contatti"
 permalink: /contatti/
 redirect_from: /contact/
 eyebrow: "Contatti"
-description: "Contatta Cristiano Fanelli per incontri, scuole, dibattiti, interviste o collaborazioni."
-intro: "Per incontri pubblici, scuole, dibattiti, interviste o collaborazioni, scrivimi: rispondo personalmente."
+description: "Contatta Cristiano Fanelli per incontri, scuole, dibattiti, interviste, formazione o collaborazioni."
+intro: "Per incontri pubblici, scuole, dibattiti, interviste, formazione o collaborazioni, scrivimi: rispondo personalmente."
 ---
 
 ## Scrivimi

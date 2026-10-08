@@ -24,7 +24,8 @@ Nel frattempo ho lavorato al CINECA sul supercalcolo e sono entrato all'INAF: pr
 ## Cosa faccio oggi
 
 - **Ricerca.** Sviluppo reti neurali che leggono gli spettri delle stelle, cioè la loro luce scomposta nei colori, per ricavarne composizione chimica, temperatura e altre proprietà. Sono responsabile scientifico di un progetto INAF su questi metodi.
-- **Spazio e sicurezza.** Studio come osservare e proteggere satelliti e infrastrutture spaziali. Ho ideato il diploma in Space Intelligence della scuola DOMìNI, dove insegno geopolitica dello spazio, intelligence e Space Economy, e sono consigliere direttivo dell'AIAIG, dove ho fondato il gruppo Space Intelligence.
+- **Spazio e sicurezza.** Studio come osservare e proteggere satelliti e infrastrutture spaziali.
+- **Analisi e formazione.** Sono analista e formatore in geopolitica, spazio e intelligence da fonti aperte. Ho ideato il diploma in Space Intelligence della scuola DOMìNI, dove insegno geopolitica dello spazio, intelligence e Space Economy, e sono consigliere direttivo dell'AIAIG, dove ho fondato il gruppo Space Intelligence. [Leggi di più](/analisi-e-formazione/).
 - **Divulgazione.** Scrivo su Rivista Futura e HegoMag, faccio didattica all'Università di Bologna e divulgazione ambientale nelle scuole medie e superiori.
 - **Impegno politico.** Sono iscritto al Movimento 5 Stelle dal 2018. Alle elezioni del Consiglio nazionale di dicembre 2025 sono stato il candidato più votato in Emilia-Romagna. Ho contribuito a scrivere il documento finale di IDIA sull'intelligenza artificiale e coordino la task force su IA e tecnologie emergenti del Network Giovani. [Leggi di più](/impegno-pubblico/).
 
