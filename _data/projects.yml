@@ -24,10 +24,13 @@
   category: "Impresa · Tecnologia spaziale"
   status: "2022–2023 · Co-fondatore e AD"
   description: >-
-    Startup per evitare collisioni in orbita e produrre dati per la gestione del traffico spaziale:
-    algoritmi di IA per riconoscere gli oggetti in orbita e hardware per seguire i satelliti attivi.
-    Premiata al Super Sapiens Day 2022 di Scientifica Venture Capital (150.000 euro).
-  links: []
+    Startup che usava l'intelligenza artificiale per monitorare i detriti spaziali e prevenire le
+    collisioni in orbita, con hardware per seguire i satelliti attivi. Tra i 4 vincitori su 83
+    progetti al Super Sapiens Day 2022, ha ricevuto un'offerta di investimento pre-seed da
+    150.000 euro in cambio di quote: ho scelto di rinunciare e di tornare alla ricerca pubblica.
+  links:
+    - label: "Super Sapiens Day"
+      url: "https://supersapiensday.it/en/"
 
 - name: "Sorveglianza dello spazio"
   tagline: "Osservare satelliti e detriti per un'orbita sicura e sostenibile"

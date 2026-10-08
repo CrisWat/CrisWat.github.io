@@ -1,81 +1,84 @@
 # =====================================================================
 # I cinque temi. Usati in home (schede) e nella pagina /idee/.
-# BOZZA da rivedere: proposte e testi vanno confermati da Cristiano.
+# Testi tratti dalle risposte di Cristiano (ottobre 2026), accorciati per il web.
 # =====================================================================
 
 - id: "ia"
   title: "IA governata"
-  card: "L'intelligenza artificiale entra già in decisioni che ci riguardano: la selezione di un curriculum, una pratica, il supporto a una diagnosi. Deve essere trasparente e aiutare chi lavora."
+  card: "Perché un cittadino deve perdere ore per trovare una visita specialistica? L'intelligenza artificiale pubblica può semplificare la vita, se è trasparente e sotto controllo umano."
   lead: "L'intelligenza artificiale va governata, non subita."
   problem: >-
-    Algoritmi e sistemi di IA entrano negli uffici pubblici, negli ospedali, nelle scuole e
-    nei luoghi di lavoro. Spesso chi ne subisce le decisioni non sa come funzionano, chi ne
-    risponde e a chi rivolgersi quando sbagliano.
+    L'intelligenza artificiale entra già in sanità, scuola, lavoro e uffici pubblici. Può far
+    risparmiare tempo e risorse, ma deve essere al servizio delle persone, non il contrario.
+    Intanto un cittadino perde ancora ore a cercare una visita specialistica.
   proposals:
-    - "Trasparenza: ogni sistema di IA usato da un ente pubblico va dichiarato e spiegato in parole semplici. Quelli che incidono su diritti e servizi essenziali vanno verificati da esperti indipendenti, applicando fino in fondo le regole europee (AI Act)."
-    - "Una persona che risponde: dietro ogni decisione presa con l'aiuto di un algoritmo deve esserci qualcuno a cui chiedere spiegazioni e presentare ricorso."
-    - "Formazione: percorsi per dipendenti pubblici, insegnanti e personale sanitario, perché l'IA alleggerisca il lavoro invece di sostituire le persone."
-  why: "Costruisco reti neurali ogni giorno all'INAF e ho coordinato un tavolo di lavoro su sviluppo, ricerca e investimenti per un documento di proposte sull'IA. So cosa può fare e dove sbaglia."
+    - "Sistemi pubblici intelligenti che semplifichino la vita quotidiana. Per esempio, una prenotazione sanitaria che trovi subito le disponibilità, recuperi gli appuntamenti cancellati e ottimizzi le agende, rispettando sempre le priorità cliniche."
+    - "Ogni algoritmo usato dalla Pubblica Amministrazione deve essere trasparente, verificabile e soggetto al controllo umano, senza rinunciare ai diritti, alla privacy e alla responsabilità delle decisioni."
+  why: "Costruisco reti neurali ogni giorno all'INAF e ho contribuito a scrivere il documento finale di IDIA sull'intelligenza artificiale. Conosco le potenzialità dell'IA e so dove sbaglia: deve aiutare le persone, non sostituirsi a loro."
   why_link: "/ricerca/"
 
 - id: "tecnologie"
   title: "Tecnologie emergenti"
-  card: "Satelliti, supercomputer e dati sono le infrastrutture di questo secolo. Bologna ne ospita alcune delle più importanti d'Europa: devono portare lavoro e servizi a tutti."
-  lead: "Spazio, supercalcolo e dati: chi li controlla, chi ne beneficia."
+  card: "Spazio, supercalcolo e intelligenza artificiale sono strategici per il futuro e per la nostra autonomia. Il valore che producono deve diventare un beneficio collettivo."
+  lead: "Non basta sviluppare nuove tecnologie: il valore che producono deve diventare un beneficio collettivo."
   problem: >-
-    Le tecnologie strategiche sono concentrate nelle mani di poche grandi aziende,
-    spesso fuori dall'Europa. E i benefici dei grandi investimenti pubblici non sempre
-    arrivano a piccole imprese, scuole, ospedali e cittadini.
+    Spazio, supercalcolo, intelligenza artificiale, semiconduttori, cloud e dati pubblici sono
+    tecnologie strategiche, non solo per l'economia ma per l'autonomia tecnologica del Paese.
+    Eppure l'accesso alle infrastrutture più avanzate resta spesso riservato a pochi grandi
+    soggetti.
   proposals:
-    - "Aprire il supercalcolo pubblico: accesso semplice e a costi sostenibili per piccole imprese, scuole, ospedali e pubblica amministrazione."
-    - "Dati pubblici utili: i dati raccolti con risorse pubbliche, protetti e anonimizzati dove serve, devono essere a disposizione di ricerca, servizi e imprese del territorio."
-    - "Autonomia europea: investire in tecnologie europee per non dipendere da pochi fornitori, nello spazio come nel cloud."
-  why: "Ho lavorato al CINECA sui sistemi di supercalcolo e ho co-fondato e guidato una startup spaziale a Bologna. Conosco opportunità e ostacoli di chi prova a fare innovazione qui."
+    - "Un programma nazionale di accesso condiviso alle infrastrutture tecnologiche: università, centri di ricerca, startup, piccole imprese e amministrazioni devono poter usare supercalcolo, cloud sicuro e dati pubblici interoperabili, con procedure semplici e trasparenti."
+    - "Unire dati satellitari e supercalcolo per monitorare il territorio e prevenire il rischio idrogeologico."
+  why: "Da ricercatore so quanto conti avere accesso a infrastrutture avanzate. Ho lavorato al CINECA sul supercalcolo e ho co-fondato una startup spaziale a Bologna."
   why_link: "/progetti/"
 
 - id: "clima"
   title: "Clima e ambiente"
-  card: "I satelliti misurano piogge, suolo e temperature. Sono dati preziosi per prevenire alluvioni e siccità, se arrivano a chi decide sul territorio."
-  lead: "Guardare la Terra dallo spazio per proteggerla."
+  card: "La crisi climatica è una questione di giustizia sociale e generazionale: rischia di colpire di più chi ha contribuito di meno."
+  lead: "Difendere l'ambiente significa impedire che il benessere di pochi, oggi, venga pagato con il futuro di molti, domani."
   problem: >-
-    L'Emilia-Romagna ha vissuto alluvioni drammatiche. I dati per prevenire e gestire questi
-    eventi esistono e crescono ogni anno: la sfida è renderli davvero utili a chi lavora sul
-    territorio. Intanto anche l'orbita intorno alla Terra si riempie di detriti: un
-    inquinamento che non vediamo.
+    La crisi climatica è una delle più grandi questioni di giustizia sociale e generazionale
+    del nostro tempo. Rischia di amplificare le disuguaglianze: chi ha contribuito meno al
+    problema, di solito le fasce più povere, ne pagherà il prezzo più alto, mentre chi ha
+    inquinato di più ha più risorse per proteggersi. Non può più essere trattata come una
+    questione secondaria, separata dall'economia e dalle politiche sociali.
   proposals:
-    - "Dati satellitari per i Comuni: portare i dati europei di osservazione della Terra (programma Copernicus) negli uffici tecnici e nella protezione civile, con strumenti semplici e formazione."
-    - "Un digitale sostenibile: i nuovi data center devono usare energia rinnovabile e recuperare il calore che producono."
-    - "Un'orbita pulita: sostenere regole europee e internazionali che limitino i detriti spaziali."
-  why: "Non sono un climatologo: il mio contributo riguarda i dati, l'intelligenza artificiale e lo spazio. Al master in Istituzioni e Politiche Spaziali, con l'Agenzia Spaziale Italiana, ho scritto la tesi sulla sostenibilità delle attività spaziali nel lungo periodo."
-  why_link: "/spazio-e-sicurezza/"
+    - "Usare i dati satellitari per monitorare il territorio, prevenire i rischi ambientali e orientare gli investimenti pubblici."
+    - "Tenere insieme transizione ecologica, redistribuzione delle risorse e tutela delle persone più vulnerabili: la tecnologia, da sola, non basta."
+    - "Educazione ambientale nelle scuole, perché stiamo parlando soprattutto del futuro dei ragazzi."
+  why: "Come ricercatore lavoro con analisi dei dati, modelli scientifici e intelligenza artificiale, e mi sono occupato di sostenibilità delle attività spaziali. Faccio divulgazione ambientale nelle scuole medie e superiori."
+  why_link: "/didattica/"
 
 - id: "ricerca"
   title: "Ricerca pubblica e giovani"
-  card: "La ricerca pubblica produce conoscenza, imprese e lavoro qualificato. Ma vive di contratti precari che spingono molti giovani a partire."
-  lead: "Chi studia e fa ricerca in Italia non deve essere costretto ad andarsene."
+  card: "Non voglio un Paese in cui il futuro di un ragazzo dipenda dal conto in banca dei suoi genitori. Scuola, università e ricerca devono rimettere in moto l'ascensore sociale."
+  lead: "La ricerca non è una voce di spesa: è un investimento sulla stabilità, sulla sicurezza e sulla prosperità del Paese."
   problem: >-
-    Dopo il dottorato si passano anni tra assegni e contratti a termine. Molti dei giovani
-    ricercatori più preparati lasciano l'Italia o la ricerca, e con loro se ne va
-    l'investimento pubblico fatto nella loro formazione.
+    Se per affermarti devi sopportare anni di precarietà, trasferimenti e instabilità
+    economica, chi non ha una famiglia in grado di sostenerlo parte svantaggiato. L'ascensore
+    sociale si ferma e il merito rischia di diventare un privilegio di chi può permettersi di
+    aspettare. Intanto formiamo talenti e li costringiamo a cercare altrove le condizioni per
+    lavorare.
   proposals:
-    - "Percorsi chiari dopo il dottorato, con tempi certi per la stabilizzazione."
-    - "Più dottorati con le imprese e collaborazioni tra ricerca e territorio, perché le competenze restino qui."
-    - "Diritto allo studio e alloggi a prezzi sostenibili nelle città universitarie come Bologna."
-  why: "Ho fatto il dottorato a Bologna, poi l'assegnista, e oggi sono ricercatore a tempo determinato. Sono stato rappresentante dei dottorandi in Giunta e Consiglio di Dipartimento."
+    - "Un piano nazionale pluriennale di reclutamento e finanziamento della ricerca pubblica: investimenti strutturali, concorsi regolari e trasparenti, percorsi professionali prevedibili per i giovani ricercatori."
+    - "Investire nell'istruzione pubblica, garantire opportunità reali e contrastare la precarietà in tutta la società, non solo nell'università."
+  why: "Conosco il precariato della ricerca perché lo vivo: dopo il dottorato e due anni da assegnista, oggi sono ricercatore a tempo determinato. Sono stato rappresentante di studenti e dottorandi in Dipartimento e sono iscritto all'ADI."
   why_link: "/chi-sono/"
 
 - id: "sicurezza"
   title: "Sicurezza"
   card: "La sicurezza è prevenzione, legalità e presenza dello Stato: città in cui nessuno debba avere paura, senza sacrificare diritti, libertà e coesione sociale."
-  lead: "La sicurezza è prevenzione, legalità e presenza dello Stato: città in cui nessuno debba avere paura, senza sacrificare diritti, libertà e coesione sociale."
+  lead: "Essere dalla parte di chi chiede sicurezza significa anche essere dalla parte di chi chiede dignità, inclusione e opportunità."
   problem: >-
-    La paura cresce dove lo Stato è lontano: quartieri senza servizi, truffe online contro
-    anziani e famiglie, infrastrutture da cui dipende la vita quotidiana e che vanno
-    protette meglio.
+    La sicurezza è un diritto: camminare per strada senza paura, tornare a casa la sera
+    tranquilli, vivere il proprio quartiere. A Bologna penso alla zona della stazione e alla
+    Bolognina, dove convivono problemi di sicurezza, fragilità sociali e una comunità che ha
+    diritto di vivere serenamente i propri spazi. Non bastano interventi straordinari: serve un
+    lavoro quotidiano, senza confondere la povertà con la delinquenza.
   proposals:
-    - "Prevenzione prima di tutto: servizi sociali ed educativi, luoghi di aggregazione e presenza delle forze dell'ordine nei quartieri."
-    - "Sicurezza digitale per tutti: proteggere cittadini, anziani e piccole imprese da truffe online, furti di dati e disinformazione."
-    - "Tecnologia con regole: videosorveglianza e IA solo con limiti chiari, controlli indipendenti e rispetto della privacy."
-    - "Infrastrutture protette: satelliti, reti e servizi essenziali messi al sicuro con una strategia europea, nel rispetto dell'uso pacifico dello spazio."
-  why: "Sulla sicurezza dei quartieri contano soprattutto l'esperienza e l'ascolto di chi ci vive. Il mio contributo riguarda la sicurezza digitale e delle infrastrutture tecnologiche, che studio e insegno da anni: la tecnologia può proteggere, ma solo se è governata."
-  why_link: "/spazio-e-sicurezza/"
+    - "Rafforzare la sicurezza integrata con presìdi stabili di prossimità, coordinando forze dell'ordine, Polizia locale, servizi sociali, scuole e associazioni: più presenza in strada, illuminazione, recupero degli spazi abbandonati, interventi sulle dipendenze."
+    - "Forze dell'ordine con personale, risorse e strumenti adeguati."
+    - "Sport accessibile a tutti: sostegno alle associazioni sportive dilettantistiche, palestre scolastiche aperte oltre l'orario delle lezioni, programmi gratuiti o a costo ridotto nei quartieri più fragili."
+    - "Obiettivi misurabili e risultati pubblici, perché i cittadini possano verificare se le politiche funzionano davvero."
+  why: "Credo che uno Stato forte sia quello che sa prevenire, proteggere e non abbandonare i propri cittadini. Da volontario con Special Olympics ho visto quanto lo sport sappia includere e far crescere: la sicurezza di una comunità si costruisce anche dando ai giovani un posto in cui crescere."
+  why_link: "/impegno-pubblico/"

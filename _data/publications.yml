@@ -4,6 +4,10 @@
 profiles:
   - label: "Rivista Futura — profilo autore"
     url: "https://futuramag.it/author/cristianofanelli/"
+  - label: "Pagina all'Università di Bologna"
+    url: "https://www.unibo.it/sitoweb/cristiano.fanelli3/"
+  - label: "Pagina all'INAF-OAS"
+    url: "https://www.oas.inaf.it/en/user/cristiano.fanelli/"
   - label: "ADS"
     url: ""
   - label: "ORCID"

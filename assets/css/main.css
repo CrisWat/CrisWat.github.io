@@ -410,6 +410,15 @@ h4 {
     margin-bottom: 2rem;
 }
 
+.hero-values {
+    margin: -0.6rem 0 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
@@ -593,6 +602,32 @@ h4 {
     font-size: clamp(1.3rem, 2vw, 1.6rem);
     line-height: 1.4;
     color: var(--ink);
+}
+
+/* valori */
+.values-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.values-grid li {
+    padding: 1.6rem 1.7rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+}
+
+.values-grid strong {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--terra-dark);
 }
 
 /* lavoro */
@@ -1785,6 +1820,11 @@ button:focus-visible {
         transform-origin: 50% 22%;
     }
 
+    .hero-values {
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+    }
+
     .hero .eyebrow {
         display: none; /* su mobile lo dice gia' la didascalia accanto alla foto */
     }
@@ -1805,7 +1845,8 @@ button:focus-visible {
     }
 
     .why-grid,
-    .work-grid {
+    .work-grid,
+    .values-grid {
         grid-template-columns: 1fr;
     }
 

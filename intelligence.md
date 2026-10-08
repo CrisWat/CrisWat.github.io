@@ -22,9 +22,14 @@ Intorno alla Terra girano migliaia di satelliti attivi e una quantità crescente
 
 ## Come la penso
 
-Lo spazio è un bene comune. Deve restare un luogo di cooperazione e di usi pacifici, regolato da norme internazionali e protetto dai detriti come proteggiamo l'aria e l'acqua. L'Europa deve avere le proprie capacità, perché i servizi da cui dipendono cittadini, ospedali e imprese non siano in mano a pochi attori esterni.
+Da astrofisico conosco bene il valore strategico dello spazio, ma credo che non debba diventare un nuovo terreno di scontro militare. Bisogna distinguere tra l'uso delle infrastrutture spaziali per la sicurezza e la difesa, che considero legittimo, e una corsa agli armamenti nello spazio, che è un'altra cosa.
+
+Le tecnologie a doppio uso, come i satelliti per le comunicazioni, la navigazione e l'osservazione della Terra, sono una risorsa fondamentale, ma devono essere accompagnate da regole internazionali, trasparenza e controllo democratico.
+
+**La vera sfida è garantire la nostra autonomia tecnologica e la sicurezza delle infrastrutture strategiche senza alimentare nuove escalation militari.** Lo spazio deve rimanere un patrimonio dell'umanità, un luogo di ricerca, cooperazione e sviluppo pacifico, da preservare anche per le generazioni future.
 
 ## Dove insegno e collaboro
 
-- **DOMìNI, Scuola di Geopolitica** (Roma): sono docente di Space Intelligence e aerospazio, cioè dello studio di ciò che accade nello spazio e delle sue conseguenze per la sicurezza e l'economia.
-- **AIAIG, Associazione Analisti di Intelligence e Geopolitica**: un'associazione di analisti e studiosi in cui sono consigliere direttivo e coordino le attività di Space Intelligence.
+- **DOMìNI, Scuola di Analisi Geopolitica** del Centro Studi AMIStaDeS: propongo e tengo percorsi formativi su economia dello spazio (Space Economy), Space Intelligence e geopolitica dello spazio.
+- **Centro Studi AMIStaDeS**, centro studi indipendente di analisi geopolitica e relazioni internazionali: ho svolto attività di analisi e formazione e ho curato un modulo sulle tecniche di analisi strutturata per il progetto europeo Erasmus+ ANALYST.
+- **AIAIG, Associazione Italiana Analisti di Intelligence e Geopolitica**: associazione professionale dedicata alla formazione e alla tutela degli analisti. Sono membro del Consiglio Direttivo.

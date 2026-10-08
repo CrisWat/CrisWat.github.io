@@ -17,4 +17,6 @@ intro: "Per incontri pubblici, scuole, dibattiti, interviste o collaborazioni, s
 ## Dove trovarmi
 
 - [LinkedIn](https://www.linkedin.com/in/cristiano-fanelli-b881859a)
-- [GitHub](https://github.com/CrisWat)
+- [Instagram](https://www.instagram.com/cris_f91/)
+- [Pagina personale all'Università di Bologna](https://www.unibo.it/sitoweb/cristiano.fanelli3/)
+- [Pagina personale all'INAF, Osservatorio di Astrofisica e Scienza dello Spazio di Bologna](https://www.oas.inaf.it/en/user/cristiano.fanelli/)

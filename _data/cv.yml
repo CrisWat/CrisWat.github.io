@@ -17,8 +17,8 @@ profile: >-
 
 contact:
   location: "Bologna, Italia"
-  email_user: "cristiano.fanelli"
-  email_domain: "inaf.it"
+  email_user: "consulting.fanelli"
+  email_domain: "gmail.com"
   linkedin: "https://www.linkedin.com/in/cristiano-fanelli-b881859a"
   github: "https://github.com/CrisWat"
 
@@ -51,26 +51,31 @@ experience:
       spaziale e produzione di dati per la gestione del traffico spaziale. Direzione tecnica e
       strategica: algoritmi di IA per il rilevamento di oggetti in orbita, progettazione hardware
       per il tracciamento di satelliti attivi, roadmap di prodotto e gestione del team e dei
-      rapporti con gli investitori. Startup premiata al Super Sapiens Day 2022 di Scientifica Venture Capital.
+      rapporti con gli investitori. Tra i 4 vincitori su 83 progetti al Super Sapiens Day 2022
+      (Scientifica Venture Capital), con un'offerta di investimento pre-seed di 150.000 euro in
+      cambio di quote e di un posto nel CdA: offerta declinata per tornare alla ricerca pubblica.
   - role: "Docente — Space Intelligence e aerospazio"
-    org: "DOMìNI — Scuola di Geopolitica"
+    org: "DOMìNI — Scuola di Analisi Geopolitica (Centro Studi AMIStaDeS)"
     place: "Roma, Italia"
     period: "04/2024 – Attuale"
     current: true
     keywords: ["Space Intelligence", "Aerospazio", "Tecnologie emergenti"]
     description: >-
-      Insegnamento di Space Intelligence e aerospazio: tecnologie spaziali, tecnologie
-      emergenti e loro conseguenze per la sicurezza.
+      Progettazione e docenza di percorsi formativi su Space Economy, Space Intelligence e
+      geopolitica dello spazio. Per il Centro Studi AMIStaDeS anche attività di analisi e un
+      modulo su teoria dell'intelligence e tecniche di analisi strutturata per il progetto
+      europeo Erasmus+ ANALYST.
   - role: "Consigliere direttivo — Space Intelligence"
-    org: "AIAIG — Associazione Analisti di Intelligence e Geopolitica"
+    org: "AIAIG — Associazione Italiana Analisti di Intelligence e Geopolitica"
     place: "Roma, Italia"
     period: "09/2023 – Attuale"
     current: true
     keywords: ["Analisi geopolitica", "Space Intelligence", "Report tecnico-analitici"]
     description: >-
-      Coordinamento delle attività di Space Intelligence: analisi sulla sicurezza delle
-      tecnologie e delle infrastrutture spaziali, stesura di report tecnico-analitici e
-      formazione dei soci.
+      Membro del Consiglio Direttivo dell'associazione professionale dedicata alla
+      valorizzazione, formazione e tutela degli analisti di intelligence e geopolitica.
+      Coordinamento delle attività di Space Intelligence: report tecnico-analitici e formazione
+      dei soci.
   - role: "Assegnista di ricerca in Astrofisica e IA"
     org: "INAF — Istituto Nazionale di Astrofisica"
     place: "Bologna, Italia"
@@ -134,11 +139,7 @@ funding:
   - title: "N2RED — Neural Networks for Accurate Stellar Parameters and Chemical Abundances"
     org: "INAF — Mini-Grant Ricerca Fondamentale 2023 (Decreto n. 2/2023)"
     detail: "PI · 19.000 €"
-    description: "Reti neurali per l'estrazione accurata di parametri stellari e abbondanze chimiche dagli spettri, ottimizzate per le survey spettroscopiche future."
-  - title: "Super Sapiens Day 2022"
-    org: "Scientifica Venture Capital"
-    detail: "20/07/2022 · 150.000 €"
-    description: "Premio per l'uso dell'IA nella gestione del traffico spaziale, in qualità di CEO di LEOgistic Space Solutions S.r.l."
+    description: "Reti neurali per l'estrazione accurata di parametri stellari e abbondanze chimiche dagli spettri, ottimizzate per le survey spettroscopiche future. Vinto nel 2023, fondi erogati nel 2024."
   - title: "Borsa Marco Polo — ML tool per selezione target MOONS"
     org: "Observatoire de la Côte d'Azur — Laboratorio Lagrange, Nizza (FR)"
     detail: "10/2022 – 12/2022"
@@ -150,14 +151,14 @@ funding:
 
 # --- Riconoscimenti --------------------------------------------------
 awards:
-  - title: "Artificial Intelligence Grant — INAF"
-    org: "INAF"
-    period: "02/2024"
-    description: "Finanziamento INAF per una rete neurale che ricava parametri stellari e abbondanze chimiche dagli spettri (progetto N2RED)."
+  - title: "Super Sapiens Day 2022 — progetto vincitore"
+    org: "Scientifica Venture Capital"
+    period: "07/2022"
+    description: "LEOgistic tra i 4 vincitori su 83 progetti, con un'offerta di investimento pre-seed di 150.000 euro (quote e posto nel CdA), declinata per tornare alla ricerca pubblica."
   - title: "Esperto IA — IDIA"
     org: "IDIA — Dentro l'Intelligenza Artificiale"
     period: "11/2023"
-    description: "Esperto nella delegazione che ha redatto un documento di proposte sull'IA per la consultazione pubblica; coordinatore del tavolo su sviluppo, ricerca e investimenti."
+    description: "Evento nazionale promosso dal Movimento 5 Stelle: coordinatore del tavolo su ricerca, sviluppo e investimenti e co-autore del documento finale, aperto alla consultazione pubblica."
 
 # --- Didattica -------------------------------------------------------
 teaching:
