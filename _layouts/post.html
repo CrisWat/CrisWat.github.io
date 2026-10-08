@@ -12,12 +12,18 @@ layout: default
                 <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d/%m/%Y" }}</time>
                 {% if page.reading_time %}<span aria-hidden="true"> · </span>{{ page.reading_time }}{% endif %}
             </p>
+            {% if page.fonte %}
+            <p class="post-source">Tratto dall'articolo pubblicato su {% if page.fonte_url and page.fonte_url != "" %}<a href="{{ page.fonte_url }}" target="_blank" rel="noopener noreferrer">{{ page.fonte }}</a>{% else %}<strong>{{ page.fonte }}</strong>{% endif %}.</p>
+            {% endif %}
         </div>
     </header>
 
     <div class="post-content">
         <div class="container content-narrow">
             {{ content }}
+            {% if page.fonte_url and page.fonte_url != "" %}
+            <p class="post-source-foot"><a href="{{ page.fonte_url }}" target="_blank" rel="noopener noreferrer">Leggi l'articolo completo su {{ page.fonte }} →</a></p>
+            {% endif %}
         </div>
     </div>
 
