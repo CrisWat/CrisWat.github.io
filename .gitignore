@@ -17,3 +17,6 @@ vendor/
 # Temporary files
 *.swp
 *.tmp
+
+# Materiali privati per il lavoro sul sito (mai pubblicati)
+_materiali/
