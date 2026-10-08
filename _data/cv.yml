@@ -23,7 +23,7 @@ contact:
   github: "https://github.com/CrisWat"
 
 # Lasciare vuoto finché non c'è la versione pubblica del CV (senza recapiti personali).
-pdf: ""
+pdf: "/assets/documents/cristiano-fanelli-cv.pdf"
 
 # --- Esperienza professionale -----------------------------------------
 experience:
