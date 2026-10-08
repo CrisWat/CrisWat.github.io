@@ -54,15 +54,15 @@ experience:
       rapporti con gli investitori. Tra i 4 vincitori su 83 progetti al Super Sapiens Day 2022
       (Scientifica Venture Capital), con un'offerta di investimento pre-seed di 150.000 euro in
       cambio di quote e di un posto nel CdA: offerta declinata per tornare alla ricerca pubblica.
-  - role: "Docente — Space Intelligence e aerospazio"
+  - role: "Docente — Geopolitica dello spazio, intelligence e Space Economy"
     org: "DOMìNI — Scuola di Analisi Geopolitica (Centro Studi AMIStaDeS)"
     place: "Roma, Italia"
     period: "04/2024 – Attuale"
     current: true
     keywords: ["Space Intelligence", "Aerospazio", "Tecnologie emergenti"]
     description: >-
-      Progettazione e docenza di percorsi formativi su Space Economy, Space Intelligence e
-      geopolitica dello spazio. Per il Centro Studi AMIStaDeS anche attività di analisi e un
+      Ideatore del diploma in Space Intelligence; docenza di geopolitica dello spazio,
+      intelligence e Space Economy. Per il Centro Studi AMIStaDeS anche attività di analisi e un
       modulo su teoria dell'intelligence e tecniche di analisi strutturata per il progetto
       europeo Erasmus+ ANALYST.
   - role: "Consigliere direttivo — Space Intelligence"
@@ -72,10 +72,10 @@ experience:
     current: true
     keywords: ["Analisi geopolitica", "Space Intelligence", "Report tecnico-analitici"]
     description: >-
-      Membro del Consiglio Direttivo dell'associazione professionale dedicata alla
-      valorizzazione, formazione e tutela degli analisti di intelligence e geopolitica.
-      Coordinamento delle attività di Space Intelligence: report tecnico-analitici e formazione
-      dei soci.
+      Consigliere direttivo, con delega alla Segreteria Associati, dell'associazione
+      professionale dedicata alla valorizzazione, formazione e tutela degli analisti di
+      intelligence e geopolitica. Fondatore e coordinatore del gruppo Space Intelligence:
+      report tecnico-analitici e formazione dei soci.
   - role: "Assegnista di ricerca in Astrofisica e IA"
     org: "INAF — Istituto Nazionale di Astrofisica"
     place: "Bologna, Italia"
@@ -159,6 +159,10 @@ awards:
     org: "IDIA — Dentro l'Intelligenza Artificiale"
     period: "11/2023"
     description: "Evento nazionale promosso dal Movimento 5 Stelle: coordinatore del tavolo su ricerca, sviluppo e investimenti e co-autore del documento finale, aperto alla consultazione pubblica."
+  - title: "Borsa di dottorato FRONTIERA"
+    org: "Università di Bologna"
+    period: "2018"
+    description: "Borsa di dottorato del programma di eccellenza FRONTIERA."
 
 # --- Didattica -------------------------------------------------------
 teaching:

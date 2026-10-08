@@ -58,7 +58,7 @@ description: "Cristiano Fanelli, astrofisico e ricercatore INAF a Bologna. Il fu
 <section class="proof" aria-label="In breve">
     <div class="container">
         <ul class="proof-list">
-            <li><strong>Ricerca pubblica</strong>Sono ricercatore all'INAF. A Bologna dal 2011, ho studiato lavorando fino al dottorato</li>
+            <li><strong>Ricerca pubblica</strong>Sono ricercatore all'INAF. All'università mi sono mantenuto lavorando la sera come barista</li>
             <li><strong>Intelligenza artificiale</strong>Sono responsabile scientifico di un progetto INAF sulle reti neurali</li>
             <li><strong>Spazio e impresa</strong>Ho co-fondato una startup spaziale, tra i 4 vincitori su 83 al Super Sapiens Day 2022</li>
             <li><strong>Politiche pubbliche</strong>Ho contribuito a scrivere il documento finale di IDIA sull'intelligenza artificiale</li>
@@ -158,7 +158,13 @@ description: "Cristiano Fanelli, astrofisico e ricercatore INAF a Bologna. Il fu
         {% assign divulgazione = site.data.publications.groups[0] %}
         {% assign profilo_futura = site.data.publications.profiles[0].url %}
         <ul class="writing-list reveal">
-            {% for it in divulgazione.items limit: 3 %}
+            {% for post in site.posts limit: 3 %}{% if post.category != "Nota" %}
+            <li>
+                <span class="writing-date">Blog · {{ post.date | date: "%d/%m/%Y" }}</span>
+                <span class="writing-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></span>
+            </li>
+            {% endif %}{% endfor %}
+            {% for it in divulgazione.items limit: 2 %}
             <li>
                 <span class="writing-date">{{ it.venue }}</span>
                 {% assign link = it.url | default: profilo_futura %}<span class="writing-title"><a href="{{ link }}" target="_blank" rel="noopener noreferrer">{{ it.title }}</a></span>

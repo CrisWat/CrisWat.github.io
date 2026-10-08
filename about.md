@@ -10,7 +10,7 @@ intro: "Sono un astrofisico e un ricercatore pubblico. Lavoro all'Istituto Nazio
 
 ## Il mio percorso
 
-Sono romano. Dopo il diploma all'istituto tecnico aeronautico, nel 2011 mi sono trasferito a Bologna, dove ho studiato lavorando: laurea in Astronomia, magistrale in Astrofisica e Cosmologia e dottorato, concluso nel 2022. Nel frattempo ho frequentato un master in Istituzioni e Politiche Spaziali con l'Agenzia Spaziale Italiana.
+Sono romano e sono cresciuto in una famiglia di origini semplici, dove ho imparato presto il valore del lavoro e del sacrificio. Dopo il diploma all'istituto tecnico aeronautico, nel 2011 mi sono trasferito a Bologna. Durante l'università mi sono mantenuto lavorando la sera come barista: laurea in Astronomia, magistrale in Astrofisica e Cosmologia e infine il dottorato, con una borsa del programma di eccellenza FRONTIERA, concluso nel 2022. Nel frattempo ho frequentato un master in Istituzioni e Politiche Spaziali con l'Agenzia Spaziale Italiana.
 
 Negli ultimi mesi del dottorato ho co-fondato LEOgistic, una startup che usava l'intelligenza artificiale per monitorare i detriti spaziali e prevenire le collisioni in orbita. Il progetto è stato tra i 4 vincitori su 83 al Super Sapiens Day 2022 e ha ricevuto un'offerta di investimento di 150.000 euro, in cambio di quote e di un posto nel consiglio di amministrazione. Ho scelto di rinunciare e di chiudere l'azienda per tornare alla ricerca pubblica.
 
@@ -19,13 +19,13 @@ Nel frattempo ho lavorato al CINECA sul supercalcolo e sono entrato all'INAF: pr
 ## Cosa faccio oggi
 
 - **Ricerca.** Sviluppo reti neurali che leggono gli spettri delle stelle, cioè la loro luce scomposta nei colori, per ricavarne composizione chimica, temperatura e altre proprietà. Sono responsabile scientifico di un progetto INAF su questi metodi.
-- **Spazio e sicurezza.** Studio come osservare e proteggere satelliti e infrastrutture spaziali. Propongo percorsi formativi su economia dello spazio, Space Intelligence e geopolitica dello spazio alla scuola DOMìNI e sono nel Consiglio Direttivo dell'AIAIG.
+- **Spazio e sicurezza.** Studio come osservare e proteggere satelliti e infrastrutture spaziali. Ho ideato il diploma in Space Intelligence della scuola DOMìNI, dove insegno geopolitica dello spazio, intelligence e Space Economy, e sono consigliere direttivo dell'AIAIG, dove ho fondato il gruppo Space Intelligence.
 - **Divulgazione.** Scrivo su Rivista Futura, faccio didattica all'Università di Bologna e divulgazione ambientale nelle scuole medie e superiori.
-- **Impegno politico.** Sono attivista del Movimento 5 Stelle dal 2018: ho contribuito a scrivere il documento finale di IDIA sull'intelligenza artificiale e coordinato la task force su IA e tecnologie emergenti del Network Giovani. [Leggi di più](/impegno-pubblico/).
+- **Impegno politico.** Sono iscritto al Movimento 5 Stelle dal 2018. Alle elezioni del Consiglio nazionale di dicembre 2025 sono stato il candidato più votato in Emilia-Romagna. Ho contribuito a scrivere il documento finale di IDIA sull'intelligenza artificiale e coordino la task force su IA e tecnologie emergenti del Network Giovani. [Leggi di più](/impegno-pubblico/).
 
 ## Fuori dal lavoro
 
-Sono stato volontario per Special Olympics a Roma, nel 2008, e alla Certosa di Bologna, tra chi si prende cura del cimitero monumentale. Sono stato rappresentante d'istituto alle superiori e, durante il dottorato, rappresentante di studenti e dottorandi in Giunta e Consiglio di Dipartimento. Sono iscritto all'ADI, l'Associazione Dottorandi e Dottori di Ricerca in Italia.
+Faccio volontariato dal 2008: prima con Special Olympics a Roma, poi alla Certosa di Bologna, per la cura e la valorizzazione del cimitero monumentale. Dal 2020 partecipo ad attività civiche e ambientali con Youth4Climate e ADI. Sono stato rappresentante d'istituto alle superiori e, durante il dottorato, rappresentante di studenti e dottorandi in Giunta e Consiglio di Dipartimento. Sono iscritto all'ADI, l'Associazione Dottorandi e Dottori di Ricerca in Italia.
 
 ## Perché mi impegno
 

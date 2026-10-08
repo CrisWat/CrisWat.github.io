@@ -20,3 +20,6 @@ vendor/
 
 # Materiali privati per il lavoro sul sito (mai pubblicati)
 _materiali/
+
+# Cartella creata dall'app Claude con le anteprime (non fa parte del sito)
+Claude outputs/

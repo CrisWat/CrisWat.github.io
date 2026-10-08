@@ -30,6 +30,6 @@ Le tecnologie a doppio uso, come i satelliti per le comunicazioni, la navigazion
 
 ## Dove insegno e collaboro
 
-- **DOMìNI, Scuola di Analisi Geopolitica** del Centro Studi AMIStaDeS: propongo e tengo percorsi formativi su economia dello spazio (Space Economy), Space Intelligence e geopolitica dello spazio.
+- **DOMìNI, Scuola di Analisi Geopolitica** del Centro Studi AMIStaDeS: ho ideato il diploma in Space Intelligence e insegno geopolitica dello spazio, intelligence ed economia dello spazio (Space Economy).
 - **Centro Studi AMIStaDeS**, centro studi indipendente di analisi geopolitica e relazioni internazionali: ho svolto attività di analisi e formazione e ho curato un modulo sulle tecniche di analisi strutturata per il progetto europeo Erasmus+ ANALYST.
-- **AIAIG, Associazione Italiana Analisti di Intelligence e Geopolitica**: associazione professionale dedicata alla formazione e alla tutela degli analisti. Sono membro del Consiglio Direttivo.
+- **AIAIG, Associazione Italiana Analisti di Intelligence e Geopolitica**: associazione professionale dedicata alla formazione e alla tutela degli analisti. Sono consigliere direttivo, con delega alla Segreteria Associati, e ho fondato e coordino il gruppo Space Intelligence.

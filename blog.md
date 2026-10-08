@@ -13,7 +13,7 @@ intro: "Riflessioni su intelligenza artificiale, tecnologia, clima, ricerca e si
     <li>
         <p class="post-meta">{{ post.date | date: "%d/%m/%Y" }}{% if post.category %} · {{ post.category }}{% endif %}</p>
         <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-        {{ post.excerpt }}
+        {% if post.description %}<p>{{ post.description }}</p>{% else %}{{ post.excerpt }}{% endif %}
     </li>
 {% endfor %}
 </ul>

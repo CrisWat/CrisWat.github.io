@@ -11,7 +11,7 @@ intro: "Spiegare la scienza e la tecnologia a studenti, professionisti e cittadi
 
 ## Insegnamento
 
-- **Percorsi su economia dello spazio, Space Intelligence e geopolitica dello spazio**, DOMìNI, Scuola di Analisi Geopolitica del Centro Studi AMIStaDeS (dal 2024).
+- **Geopolitica dello spazio, intelligence e Space Economy**, DOMìNI, Scuola di Analisi Geopolitica del Centro Studi AMIStaDeS (dal 2024). Ho ideato il diploma in Space Intelligence della scuola.
 - **Modulo sulle tecniche di analisi strutturata**, progetto europeo Erasmus+ ANALYST, Centro Studi AMIStaDeS.
 - **Tutor di Computational Astrophysics and Statistics**, laurea magistrale in Astrofisica e Cosmologia, Università di Bologna (dal 2023).
 - **Tutor di Ottica Astronomica**, laurea in Astronomia, Università di Bologna (2019–2022).

@@ -11,15 +11,19 @@ intro: "Credo in una politica che non si limiti a parlare ai cittadini, ma che s
 
 ## Impegno politico
 
-Sono attivista del Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: partecipazione democratica, giustizia sociale, bene collettivo. Credo però che partiti e movimenti debbano essere strumenti al servizio delle persone, e non viceversa: militare significa anche contribuire a far crescere il proprio movimento, con le proprie competenze e, quando serve, con spirito critico.
+Sono iscritto al Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: partecipazione democratica, giustizia sociale, bene collettivo. Credo però che partiti e movimenti debbano essere strumenti al servizio delle persone, e non viceversa: militare significa anche contribuire a far crescere il proprio movimento, con le proprie competenze e, quando serve, con spirito critico.
 
-- **Primo referente giovani del Movimento 5 Stelle a Bologna.**
-- **IDIA, Dentro l'Intelligenza Artificiale (2023).** All'evento nazionale promosso dal Movimento 5 Stelle ho coordinato, come esperto, il gruppo di lavoro su ricerca, sviluppo e investimenti. Ho scritto il documento finale insieme a due deputati e a un'esperta ex senatrice: un documento di indirizzo politico poi aperto alla consultazione pubblica. [Leggi il documento "Gli orizzonti dell'Intelligenza Artificiale"](https://www.movimento5stelle.eu/Documento-finale-IDIA.pdf).
-- **IDIA, seconda edizione (Napoli).** Ho coordinato una task force che ha partecipato all'organizzazione e ho tenuto un intervento per il Network Giovani.
-- **Network Giovani.** Coordino la task force su intelligenza artificiale e tecnologie emergenti. Sono stato uno dei volti del Network Giovani nella campagna per il No al referendum sulla giustizia.
+- **Consiglio nazionale (dicembre 2025).** Mi sono candidato alle elezioni del Consiglio nazionale del Movimento 5 Stelle: sono stato il più votato in Emilia-Romagna e il secondo della circoscrizione, dopo l'eurodeputato Gaetano Pedullà.
+- **Network Giovani (dal 2025).** Coordino la task force su intelligenza artificiale e tecnologie emergenti. Sono stato uno dei volti del Network Giovani nella campagna per il No al referendum sulla giustizia.
 - **NOVA.** Ho fatto parte del team che ha elaborato le prime fasi dei report del percorso partecipativo NOVA, sono stato nello staff in tutte le sue fasi e facilitatore centrale dell'incontro in Open Space Technology di NOVA a Bologna.
+- **IDIA, Dentro l'Intelligenza Artificiale (2023).** All'evento nazionale promosso dal Movimento 5 Stelle ho coordinato, come esperto, il gruppo di lavoro su ricerca, sviluppo e investimenti. Ho scritto il documento finale insieme a due deputati e a un'esperta ex senatrice: un documento di indirizzo politico poi aperto alla consultazione pubblica. [Leggi il documento "Gli orizzonti dell'Intelligenza Artificiale"](https://www.movimento5stelle.eu/Documento-finale-IDIA.pdf). Alla seconda edizione, a Napoli, ho coordinato una task force che ha partecipato all'organizzazione e ho tenuto un intervento per il Network Giovani.
+- **Referente giovani a Bologna (2022–2023).** Sono stato il primo referente giovani del gruppo territoriale di Bologna.
 
 Per me l'appartenenza politica non è un fine, ma un mezzo per trasformare le idee in cambiamenti concreti. Le competenze individuali acquistano valore quando vengono messe al servizio di un progetto collettivo.
+
+## Attivismo civico
+
+Dal 2020 partecipo ad attività civiche e ambientali con Youth4Climate e con l'ADI: manifestazioni per il clima, per la pace e per il diritto alla ricerca.
 
 ## Rappresentanza
 
@@ -27,7 +31,7 @@ Sono stato rappresentante d'istituto all'ultimo anno delle superiori. Dal 2019 a
 
 ## Volontariato
 
-Sono stato volontario per Special Olympics a Roma, nel 2008, e alla Certosa di Bologna, tra chi si prende cura del cimitero monumentale.
+Faccio volontariato dal 2008: prima con Special Olympics a Roma, per l'inclusione attraverso lo sport, poi alla Certosa di Bologna, per la cura e la valorizzazione del cimitero monumentale.
 
 ## Divulgazione
 

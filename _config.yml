@@ -47,3 +47,5 @@ exclude:
   - _backup-claude
   - CV_Cristiano_Fanelli.pdf
   - CV_Fanelli_Cristiano.pdf
+  - "Claude outputs"
+  - _materiali
