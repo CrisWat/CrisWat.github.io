@@ -2,7 +2,7 @@
 layout: post
 title: "Il capitale in scadenza"
 date: 2026-10-08 10:00:00 +0200
-category: "Ricerca pubblica e giovani"
+category: "Scuola, università e ricerca"
 description: "Il 31 dicembre scade l'ultima strada per stabilizzare i ricercatori precari degli enti pubblici. Perché lasciarli andare è ingiusto per loro e un pessimo affare per tutti."
 reading_time: "15 minuti di lettura"
 ---

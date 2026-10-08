@@ -536,11 +536,6 @@ h4 {
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-.theme-card:nth-child(4),
-.theme-card:nth-child(5) {
-    grid-column: span 3;
-}
-
 .theme-card:hover {
     transform: translateY(-3px);
     border-color: var(--line-strong);
@@ -1731,14 +1726,8 @@ button:focus-visible {
 /* ===================== RESPONSIVE ===================== */
 
 @media (max-width: 1024px) {
-    .theme-card,
-    .theme-card:nth-child(4),
-    .theme-card:nth-child(5) {
+    .theme-card {
         grid-column: span 3;
-    }
-
-    .theme-card:nth-child(5) {
-        grid-column: 1 / -1;
     }
 
     .proof-list {
@@ -1935,9 +1924,7 @@ button:focus-visible {
 }
 
 @media (max-width: 600px) {
-    .theme-card,
-    .theme-card:nth-child(4),
-    .theme-card:nth-child(5) {
+    .theme-card {
         grid-column: 1 / -1;
     }
 

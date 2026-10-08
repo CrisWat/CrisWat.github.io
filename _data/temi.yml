@@ -1,5 +1,5 @@
 # =====================================================================
-# I cinque temi. Usati in home (schede) e nella pagina /idee/.
+# I sei temi. Usati in home (schede) e nella pagina /idee/.
 # Testi tratti dalle risposte di Cristiano (ottobre 2026), accorciati per il web.
 # =====================================================================
 
@@ -50,9 +50,9 @@
   why_link: "/didattica/"
 
 - id: "ricerca"
-  title: "Ricerca pubblica e giovani"
-  card: "Non voglio un Paese in cui il futuro di un ragazzo dipenda dal conto in banca dei suoi genitori. Scuola, università e ricerca devono rimettere in moto l'ascensore sociale."
-  lead: "La ricerca non è una voce di spesa: è un investimento sulla stabilità, sulla sicurezza e sulla prosperità del Paese."
+  title: "Scuola, università e ricerca"
+  card: "Non voglio un Paese in cui il futuro di un ragazzo dipenda dal conto in banca dei suoi genitori. Scuola, università e ricerca pubbliche devono rimettere in moto l'ascensore sociale."
+  lead: "La conoscenza non è una voce di spesa: è un investimento sulla stabilità, sulla sicurezza e sulla prosperità del Paese."
   problem: >-
     Se per affermarti devi sopportare anni di precarietà, trasferimenti e instabilità
     economica, chi non ha una famiglia in grado di sostenerlo parte svantaggiato. L'ascensore
@@ -61,9 +61,27 @@
     lavorare.
   proposals:
     - "Un piano nazionale pluriennale di reclutamento e finanziamento della ricerca pubblica: investimenti strutturali, concorsi regolari e trasparenti, percorsi professionali prevedibili per i giovani ricercatori."
-    - "Investire nell'istruzione pubblica, garantire opportunità reali e contrastare la precarietà in tutta la società, non solo nell'università."
+    - "Investire nell'istruzione pubblica, dalla scuola all'università, perché le opportunità non dipendano dalle condizioni di partenza."
   why: "All'università mi sono mantenuto lavorando la sera come barista. Conosco il precariato della ricerca perché lo vivo: dopo il dottorato e due anni da assegnista, oggi sono ricercatore a tempo determinato. Sono stato rappresentante di studenti e dottorandi in Dipartimento e sono iscritto all'ADI."
   why_link: "/chi-sono/"
+
+- id: "giovani"
+  title: "Giovani e presente"
+  card: "I giovani non sono solo il futuro: sono il presente. Lavoro stabile, salari dignitosi e servizi che funzionano devono permettere di costruire qui la propria vita."
+  lead: "Restare in Italia non deve essere un atto di coraggio."
+  problem: >-
+    Ogni giorno tanti giovani partono non per avventura, ma per necessità: salari troppo bassi,
+    contratti precari, un costo della vita che toglie ogni prospettiva di autonomia. Quando se ne
+    vanno, i territori si svuotano: chiudono negozi, si riducono i servizi, le scuole faticano a
+    formare le classi. E se tanti rinunciano ad avere figli non è per mancanza di voglia, ma
+    perché non possono progettare il proprio futuro.
+  proposals:
+    - "Contrastare la precarietà in tutta la società, non solo nell'università: contratti stabili e salari dignitosi, a partire da chi lavora nei servizi, nella cultura e nell'assistenza."
+    - "Valorizzare chi lavora negli ospedali, nelle scuole e nella pubblica amministrazione, perché medici, infermieri e insegnanti non siano costretti a partire o a cambiare mestiere."
+    - "Congedi adeguati e servizi per l'infanzia che funzionino, perché formare una famiglia non sia un rischio economico."
+    - "Non lasciare indietro le aree interne e i piccoli comuni: servizi, trasporti e scuole per chi sceglie di restare."
+  why: "Sono stato il primo referente giovani del mio gruppo territoriale a Bologna e oggi coordino una task force del Network Giovani. Nell'articolo «La sicurezza tradita» ho scritto perché una nazione che perde i suoi giovani non è una nazione sicura."
+  why_link: "/blog/2026/10/08/la-sicurezza-tradita/"
 
 - id: "sicurezza"
   title: "Sicurezza"
