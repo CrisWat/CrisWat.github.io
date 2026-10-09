@@ -2129,3 +2129,19 @@ button:focus-visible {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* ===================== TESTO GIUSTIFICATO =====================
+   Tutti i paragrafi e gli elenchi del sito sono giustificati, con la
+   sillabazione automatica per evitare spazi troppo larghi tra le parole.
+   Restano allineati come prima titoli, pulsanti, menu, didascalie
+   centrate e righe brevi (che il browser non giustifica). */
+
+main p,
+main li,
+main dd,
+.site-footer p {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
