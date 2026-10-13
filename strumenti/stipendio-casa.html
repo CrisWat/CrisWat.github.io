@@ -1,0 +1,464 @@
+---
+layout: null
+title: "Quanti anni ti servono per una casa?"
+description: "Inserisci stipendio e città: scopri quanto pesa l'affitto, quanti anni servono per comprare casa e come andava a un giovane nel 1995. Dati ufficiali per tutti i capoluoghi di provincia."
+permalink: /strumenti/stipendio-casa/
+---
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% seo %}
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<style>
+:root{
+  --paper:#F3F6F5; --ink:#18262F; --muted:#56656C; --rule:#B3CCC4; --field:#E3EDEA; --card:#FBFCFC;
+  --line:#2144D0; --line-soft:rgba(33,68,208,.12); --on-line:#FFFFFF; --today:#8A9B97; --track:#E1EAE7;
+  --ok:#0F7D67; --warn:#A86200; --bad:#B3315C;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14222A; --ink:#E5EEEB; --muted:#9FB2AF; --rule:#3D635B; --field:#1C2F37; --card:#182A32;
+    --line:#8C9FFF; --line-soft:rgba(140,159,255,.16); --on-line:#0F1830; --today:#6F8580; --track:#22373F;
+    --ok:#3CC3A0; --warn:#E8A43C; --bad:#F07399; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14222A; --ink:#E5EEEB; --muted:#9FB2AF; --rule:#3D635B; --field:#1C2F37; --card:#182A32;
+  --line:#8C9FFF; --line-soft:rgba(140,159,255,.16); --on-line:#0F1830; --today:#6F8580; --track:#22373F;
+  --ok:#3CC3A0; --warn:#E8A43C; --bad:#F07399; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  font-size:18px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 20px 110px}
+a{color:var(--line)}
+.site-back{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 18px;font-size:.92rem;color:var(--muted)}
+.site-back a{color:var(--muted);font-weight:600;text-decoration:none}
+.site-back a:hover{color:var(--ink);text-decoration:underline}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.05;letter-spacing:-.015em;margin:8px 0 14px;font-weight:800}
+.lede{font-size:1.12rem;color:var(--muted);margin:0 0 6px;max-width:58ch}
+h2{font-size:1.45rem;line-height:1.2;margin:0 0 6px;font-weight:800;display:flex;gap:12px;align-items:baseline}
+h2 .n{display:inline-grid;place-items:center;flex:none;width:1.7em;height:1.7em;border-radius:50%;background:var(--ink);color:var(--paper);font-size:.8em;transform:translateY(-.08em)}
+h3{font-size:1.1rem;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+.small{font-size:.92rem}
+section.step{padding:30px 0 6px;border-top:1px solid var(--rule);margin-top:26px}
+.intro{margin:0 0 16px;color:var(--muted);max-width:60ch}
+button,select,input{font:inherit}
+:focus-visible{outline:3px solid var(--line);outline-offset:2px}
+
+/* campi */
+.field{margin:0 0 20px}
+.field > label,.field > .lab{display:block;font-weight:600;margin:0 0 6px}
+.money{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
+.money .val{display:flex;align-items:center;gap:6px;font-weight:800;font-size:1.3rem}
+.money .val input{width:6.2em;font-weight:800;text-align:right;border:1.5px solid var(--rule);border-radius:6px;padding:4px 8px;background:var(--card);color:var(--ink)}
+.money input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--line);height:32px;margin:0}
+select{width:100%;padding:12px 14px;border:1.5px solid var(--rule);border-radius:8px;background:var(--card);color:var(--ink);font-size:1.05rem;font-weight:600}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+.seg button{padding:9px 14px;border-radius:999px;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer;font-size:.95rem}
+.seg button:hover{border-color:var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:700}
+.hint{color:var(--muted);font-size:.9rem;margin:6px 0 0}
+details.extra{margin-top:18px}
+details.extra > summary{cursor:pointer;font-weight:700;color:var(--line);list-style:none;display:inline-flex;gap:8px;align-items:center;padding:6px 0}
+details.extra > summary::before{content:"+";display:inline-grid;place-items:center;width:1.4em;height:1.4em;border:2px solid var(--line);border-radius:50%;font-size:.9em;line-height:1}
+details.extra[open] > summary::before{content:"−"}
+details.extra > summary::-webkit-details-marker{display:none}
+.box{border:1px solid var(--rule);border-radius:10px;padding:16px;margin-top:12px;background:var(--card)}
+.sl{display:grid;grid-template-columns:1fr auto;gap:0 12px;align-items:center;margin:0 0 12px}
+.sl:last-child{margin-bottom:0}
+.sl label{font-weight:600;font-size:.98rem}
+.sl output{font-weight:800;font-variant-numeric:tabular-nums}
+.sl input{grid-column:1/-1;width:100%;accent-color:var(--line);height:30px;margin:0}
+
+/* risultati */
+.result{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:22px 20px;margin-top:8px}
+.result + .result{margin-top:16px}
+.headline{font-size:clamp(1.25rem,4.2vw,1.65rem);line-height:1.3;font-weight:700;margin:0 0 12px}
+.headline strong{font-weight:900;white-space:nowrap}
+.result p.line{font-size:1.08rem;line-height:1.45;margin:0 0 10px}
+.result p.line strong{white-space:nowrap}
+.sub{color:var(--muted);margin:10px 0 0;font-size:.95rem}
+.tag{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:.95rem;padding:4px 12px 4px 10px;border-radius:999px;border:1.5px solid currentColor}
+.tag svg{width:14px;height:14px;flex:none}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}.tag.bad{color:var(--bad)}
+.meter{position:relative;height:12px;border-radius:6px;background:var(--track);margin:14px 0 6px;overflow:visible}
+.meter i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--line);transition:width .3s ease}
+.meter b{position:absolute;top:-5px;bottom:-5px;width:0;border-left:2px dashed var(--ink)}
+.meter-leg{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted)}
+
+/* confronto 1995 */
+.cmp95{display:grid;gap:18px;margin-top:6px}
+.cmp95 .row h3{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 12px;margin:0 0 8px;font-size:1.02rem}
+.pair{display:grid;grid-template-columns:3.6em 1fr auto;gap:6px 10px;align-items:center;font-size:.95rem}
+.pair .y{color:var(--muted)}
+.pair .t{height:14px;border-radius:0 4px 4px 0;background:var(--today);min-width:3px;transition:width .3s ease}
+.pair .t.now{background:var(--line)}
+.pair .v{font-weight:800;font-variant-numeric:tabular-nums;text-align:right;min-width:4.6em}
+.why{margin:22px 0 0;padding:0 0 0 1.1em}
+.why li{margin:0 0 10px;max-width:64ch}
+
+/* classifica */
+.rank{list-style:none;margin:10px 0 0;padding:0}
+.rank li{display:grid;grid-template-columns:2.2em minmax(7.5em,11em) 1fr 3.4em;gap:8px;align-items:center;padding:3px 0;font-size:.95rem}
+.rank li.me{font-weight:800}
+.rank li.me .nm{color:var(--line)}
+.rank .pos{color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.rank .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .tr{position:relative;height:12px;background:var(--track);border-radius:0 4px 4px 0}
+.rank .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--ok)}
+.rank .tr i.o{background:var(--bad)}
+.rank li.me .tr i{background:var(--line)}
+.rank .tr b{position:absolute;top:-3px;bottom:-3px;border-left:2px dashed var(--ink);opacity:.55}
+.rank .pc{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.rank .gap{grid-template-columns:1fr;color:var(--muted);text-align:center;letter-spacing:.3em}
+.rank-leg{display:flex;flex-wrap:wrap;gap:6px 18px;margin:8px 0 0;padding:0;list-style:none;font-size:.9rem;color:var(--muted)}
+.rank-leg i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.rank-leg i.l{width:0;height:14px;border-left:2px dashed var(--ink);border-radius:0}
+.btn{font-weight:700;font-size:1rem;color:var(--on-line);background:var(--line);border:0;border-radius:8px;padding:12px 18px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{color:var(--line);background:transparent;border:2px solid var(--line)}
+.status{min-height:1.4em;margin:8px 0 0;color:var(--muted);font-size:.95rem}
+.share{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule)}
+details.how{margin-top:30px;border-top:1px solid var(--rule);padding-top:16px}
+details.how summary{cursor:pointer;font-weight:800;font-size:1.15rem}
+details.how li{margin:0 0 8px;max-width:64ch}
+details.how ul{padding-left:1.1em}
+footer{margin-top:28px;color:var(--muted);font-size:.88rem}
+
+/* barra fissa */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--ink);color:var(--paper);
+  padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;transition:transform .25s ease}
+.dock .in{width:100%;max-width:760px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;font-size:.98rem}
+.dock b{font-weight:800}
+.dock.off{transform:translateY(110%)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:420px){ body{font-size:17px} .rank li{grid-template-columns:2em 7.2em 1fr 3.2em;font-size:.9rem} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="site-back" aria-label="Percorso"><a href="/">Cristiano Fanelli</a><span aria-hidden="true">›</span><a href="/strumenti/">Strumenti</a></nav>
+<header>
+  <h1>Quanti anni ti servono per una casa?</h1>
+  <p class="lede">Scrivi quanto guadagni e scegli la città. Vedi subito quanto pesa l'affitto, quanti anni servono per comprare casa e come andava a un giovane nel 1995. I prezzi sono quelli ufficiali dell'Agenzia delle Entrate per tutti i capoluoghi di provincia.</p>
+</header>
+
+<section class="step" aria-labelledby="s1">
+  <h2 id="s1"><span class="n">1</span>Quanto guadagni</h2>
+  <p class="intro">Lo stipendio netto che ti arriva ogni mese.</p>
+  <div class="field money">
+    <label for="sal-r">Stipendio netto al mese</label>
+    <div class="val"><input id="sal-n" inputmode="numeric" aria-label="Stipendio netto al mese in euro"><span>€</span></div>
+    <input type="range" id="sal-r" min="500" max="5000" step="10">
+  </div>
+  <div class="field">
+    <span class="lab">Oppure parti da uno stipendio tipico</span>
+    <div class="seg" id="sal-pre">
+      <button type="button" data-v="1490" aria-pressed="false">Neolaureato · 1.490 €</button>
+      <button type="button" data-v="1903" aria-pressed="false">Laureato da 5 anni · 1.903 €</button>
+    </div>
+    <p class="hint">Medie nazionali AlmaLaurea 2026: chi si è laureato da un anno e chi ha la laurea magistrale da cinque.</p>
+  </div>
+</section>
+
+<section class="step" aria-labelledby="s2">
+  <h2 id="s2"><span class="n">2</span>Dove e che casa</h2>
+  <p class="intro">Scegli la città, la zona e quanto deve essere grande la casa.</p>
+  <div class="field">
+    <label for="city">Città</label>
+    <select id="city"></select>
+  </div>
+  <div class="field">
+    <span class="lab" id="z-lab">Zona</span>
+    <div class="seg" id="zone" role="group" aria-labelledby="z-lab">
+      <button type="button" data-v="0" aria-pressed="false">Centro</button>
+      <button type="button" data-v="1" aria-pressed="false">Semicentro</button>
+      <button type="button" data-v="2" aria-pressed="false">Periferia</button>
+    </div>
+  </div>
+  <div class="field money">
+    <label for="mq-r">Grandezza della casa</label>
+    <div class="val"><input id="mq-n" inputmode="numeric" aria-label="Metri quadri"><span>m²</span></div>
+    <input type="range" id="mq-r" min="25" max="120" step="5">
+  </div>
+  <div class="seg" id="mq-pre" aria-label="Grandezze tipiche">
+    <button type="button" data-v="35" aria-pressed="false">Monolocale · 35 m²</button>
+    <button type="button" data-v="50" aria-pressed="false">Bilocale · 50 m²</button>
+    <button type="button" data-v="75" aria-pressed="false">Trilocale · 75 m²</button>
+  </div>
+  <div class="field" style="margin-top:20px">
+    <span class="lab" id="v-lab">Quali prezzi usare</span>
+    <div class="seg" id="vmode" role="group" aria-labelledby="v-lab">
+      <button type="button" data-v="omi" aria-pressed="false">Valori ufficiali (OMI)</button>
+      <button type="button" data-v="ann" aria-pressed="false">Prezzi degli annunci (stima)</button>
+    </div>
+    <p class="hint">I valori ufficiali sono una media che comprende anche contratti e vendite di qualche anno fa. Chi cerca casa oggi trova negli annunci affitti più alti, in media di circa l'80%, e prezzi di vendita più alti di circa il 30%.</p>
+  </div>
+</section>
+
+<section class="step" aria-labelledby="s3" id="results">
+  <h2 id="s3"><span class="n">3</span>Il risultato</h2>
+
+  <div class="result" aria-live="polite">
+    <h3>In affitto</h3>
+    <p class="headline" id="rent-h"></p>
+    <span class="tag" id="rent-tag"></span>
+    <div class="meter" aria-hidden="true"><i id="rent-bar"></i><b style="left:30%"></b></div>
+    <div class="meter-leg" aria-hidden="true"><span>0%</span><span>30%: soglia di sostenibilità</span><span>100%</span></div>
+    <p class="sub" id="rent-sub"></p>
+  </div>
+
+  <div class="result" aria-live="polite">
+    <h3>Comprarla</h3>
+    <p class="line" id="buy-1"></p>
+    <p class="line" id="buy-2"></p>
+    <p class="line" id="buy-3"></p>
+    <span class="tag" id="rata-tag"></span>
+    <p class="sub">Le banche di solito non concedono il mutuo se la rata supera circa un terzo dello stipendio. Sono escluse le spese di notaio, agenzia e tasse.</p>
+  </div>
+
+  <details class="extra">
+    <summary>Cambia le ipotesi</summary>
+    <div class="box">
+      <div class="sl"><label for="p-r">Quanto riesci a risparmiare</label><output id="p-r-o" for="p-r"></output><input type="range" id="p-r" min="5" max="40" step="1"></div>
+      <div class="sl"><label for="p-a">Anticipo da versare</label><output id="p-a-o" for="p-a"></output><input type="range" id="p-a" min="10" max="50" step="5"></div>
+      <div class="sl"><label for="p-d">Durata del mutuo</label><output id="p-d-o" for="p-d"></output><input type="range" id="p-d" min="10" max="30" step="5"></div>
+      <div class="sl"><label for="p-t">Tasso del mutuo</label><output id="p-t-o" for="p-t"></output><input type="range" id="p-t" min="1" max="8" step="0.05"></div>
+      <p class="hint">Di partenza: risparmio del 15% dello stipendio, anticipo del 20%, mutuo di 25 anni al 3,99%, il tasso medio dei nuovi mutui ad agosto 2026 secondo la Banca d'Italia.</p>
+    </div>
+  </details>
+</section>
+
+<section class="step" aria-labelledby="s4">
+  <h2 id="s4"><span class="n">4</span>E un giovane nel 1995?</h2>
+  <p class="intro">Come sarebbe andata a un giovane nella tua stessa situazione trent'anni fa. Il confronto usa le medie italiane di prezzi delle case, affitti, stipendi d'ingresso e tassi dei mutui.</p>
+  <div class="cmp95" id="cmp95"></div>
+  <ul class="why">
+    <li><strong>Per chi ha uno stipendio medio la casa non è più cara di allora.</strong> Dal 1995 i prezzi delle case sono cresciuti di circa 1,7 volte, gli stipendi medi di circa 1,95 volte. Oggi per comprare casa servono circa il 12% di stipendi in meno.</li>
+    <li><strong>Per i giovani è andata diversamente.</strong> Tra i primi anni Novanta e il 2014 lo stipendio di chi entra nel mondo del lavoro è sceso di circa il 15%, tolta l'inflazione, e nel primo anno di lavoro si lavora circa un terzo delle settimane in meno.</li>
+    <li><strong>Il divario tra giovani e adulti si è allargato.</strong> Alla fine degli anni Ottanta un giovane guadagnava il 20% in meno di un lavoratore adulto, nel 2004 il 35% in meno.</li>
+    <li><strong>I mutui costavano molto di più.</strong> All'inizio del 1996 il tasso era intorno al 13,7%, oggi è intorno al 4%. Per questo allora la rata pesava di più, anche se l'inflazione alta la alleggeriva in fretta negli anni successivi.</li>
+    <li><strong>Il lavoro è più incerto.</strong> Con un contratto a termine ottenere un mutuo è più difficile, anche quando la rata sarebbe sostenibile.</li>
+  </ul>
+  <p class="small muted">Il confronto è sulla media italiana: nella tua città prezzi e stipendi possono essere cambiati in modo diverso.</p>
+</section>
+
+<section class="step" aria-labelledby="s5">
+  <h2 id="s5"><span class="n">5</span>Dove te lo puoi permettere</h2>
+  <p class="intro">Le città capoluogo ordinate in base a quanto pesa l'affitto sul tuo stipendio, per la stessa casa e la stessa zona.</p>
+  <p class="headline" id="rank-h" style="font-size:1.2rem"></p>
+  <ul class="rank-leg" aria-hidden="true">
+    <li><i style="background:var(--ok)"></i>Fino al 30% dello stipendio</li>
+    <li><i style="background:var(--bad)"></i>Oltre il 30%</li>
+    <li><i style="background:var(--line)"></i>La tua città</li>
+    <li><i class="l"></i>Soglia del 30%</li>
+  </ul>
+  <ol class="rank" id="rank"></ol>
+  <button type="button" class="btn ghost" id="rank-all" style="margin-top:12px">Mostra tutte le città</button>
+
+  <div class="share">
+    <h3>Condividi il tuo calcolo</h3>
+    <p class="small muted">Il link contiene le tue scelte: chi lo apre vede lo stesso calcolo.</p>
+    <button type="button" class="btn" id="copy">Copia il link</button>
+    <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<details class="how">
+  <summary>Da dove vengono i numeri</summary>
+  <ul>
+    <li><strong>Prezzi e affitti.</strong> Sono le quotazioni dell'Osservatorio del Mercato Immobiliare dell'Agenzia delle Entrate per il secondo semestre 2025, per abitazioni civili in stato normale. Per ogni zona si usa la media tra il valore minimo e il massimo. Centro, semicentro e periferia sono la media delle zone OMI di quella fascia. Se in una città manca una fascia, si usa la più vicina.</li>
+    <li><strong>Le città.</strong> Ci sono tutti i capoluoghi di provincia. Per la provincia di Barletta-Andria-Trani ci sono tutte e tre le città, per il Sud Sardegna c'è Carbonia.</li>
+    <li><strong>I prezzi degli annunci.</strong> Sono una stima. A settembre 2026, in 17 città, gli affitti chiesti negli annunci di Immobiliare.it erano tra 1,4 e 2,2 volte i valori OMI (in media 1,8 volte), i prezzi di vendita tra 1,1 e 1,7 volte (in media 1,3 volte). Per quelle 17 città si usa il loro rapporto, per le altre la media.</li>
+    <li><strong>Gli stipendi tipici.</strong> Sono le retribuzioni nette medie del Rapporto AlmaLaurea 2026: 1.490 euro a un anno dalla laurea, 1.903 euro a cinque anni dalla laurea magistrale.</li>
+    <li><strong>Il mutuo.</strong> La rata è calcolata a tasso fisso, con il tasso medio dei nuovi mutui per la casa di agosto 2026 (3,99%, Banca d'Italia). Si risparmia sempre la stessa cifra ogni mese, senza interessi.</li>
+    <li><strong>Il 1995.</strong> Dal 1995 al 2025 i prezzi delle case sono cresciuti di 1,72 volte (serie storica della Banca d'Italia fino al 2012, poi indice ISTAT dei prezzi delle abitazioni). Gli stipendi medi per dipendente sono cresciuti di circa 1,95 volte (contabilità nazionale ISTAT, dati Eurostat). Per i giovani si parte dall'inflazione (1,785 volte, indice ISTAT FOI) e si toglie il calo del 15% degli stipendi d'ingresso misurato dalla Banca d'Italia: 1,52 volte. Gli affitti sono cresciuti di 1,80 volte (indice ISTAT degli affitti, che parte dal 1996 e sottostima i nuovi contratti). Il tasso del 1995 è quello dei mutui alle famiglie di gennaio 1996, 13,65%.</li>
+    <li><strong>Nessun dato raccolto.</strong> Tutti i calcoli avvengono nel tuo browser: quello che scrivi non viene inviato a nessuno.</li>
+  </ul>
+</details>
+
+<footer>
+  <p>Fonti: Agenzia delle Entrate, <a href="https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi" rel="noopener">Osservatorio del Mercato Immobiliare</a>, quotazioni 2° semestre 2025; Immobiliare.it, prezzi degli annunci, settembre 2026; AlmaLaurea, Rapporto 2026; Banca d'Italia, <a href="https://www.bancaditalia.it/pubblicazioni/qef/2016-0333/index.html" rel="noopener">I prezzi delle abitazioni in Italia, 1927-2012</a>, <a href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2007/2007-0639/index.html" rel="noopener">Il divario generazionale</a> (2007), <a href="https://www.bancaditalia.it/pubblicazioni/qef/2016-0366/index.html" rel="noopener">Questioni di economia e finanza n. 366</a> (2016) e statistiche sui tassi d'interesse; ISTAT, prezzi delle abitazioni, prezzi al consumo e contabilità nazionale.</p>
+</footer>
+</div>
+
+<div class="dock off" id="dock" aria-hidden="true"><div class="in"><span id="d1"></span><span id="d2"></span></div></div>
+
+<script>
+(function(){
+"use strict";
+const CITIES = [{"n":"Agrigento","r":"Sicilia","z":[[979,3.82],[657,2.92],[873,3.5]]},{"n":"Alessandria","r":"Piemonte","z":[[650,6.5],[687,6.33],[735,3.8]]},{"n":"Ancona","r":"Marche","z":[[1319,7.64],[1179,6.19],[1391,7.38]],"f":[1.41,1.41]},{"n":"Andria","r":"Puglia","z":[[988,3.3],[1200,3.93],[1167,3.65]]},{"n":"Aosta","r":"Valle d'Aosta","z":[[2025,8.8],[1800,8.0],[1708,8.07]]},{"n":"Arezzo","r":"Toscana","z":[[1775,6.7],[1510,5.46],[1281,4.47]]},{"n":"Ascoli Piceno","r":"Marche","z":[[1600,6.65],[1244,5.2],[1151,4.8]]},{"n":"Asti","r":"Piemonte","z":[[1152,6.2],[804,5.27],[872,3.67]]},{"n":"Avellino","r":"Campania","z":[[1433,4.6],[1135,4.1],[1150,3.77]]},{"n":"Bari","r":"Puglia","z":[[2006,7.61],[2070,7.56],[1540,5.19]],"f":[1.34,2.05]},{"n":"Barletta","r":"Puglia","z":[[1525,5.77],[1550,5.62],[1467,5.22]]},{"n":"Belluno","r":"Veneto","z":[[1375,7.12],[1318,5.98],[1262,4.85]]},{"n":"Benevento","r":"Campania","z":[[1112,5.08],[1015,4.63],[925,4.17]]},{"n":"Bergamo","r":"Lombardia","z":[[2425,10.89],[1822,8.41],[1909,7.64]]},{"n":"Biella","r":"Piemonte","z":[[802,5.57],[670,5.05],[650,4.55]]},{"n":"Bologna","r":"Emilia-Romagna","z":[[3525,12.7],[3242,12.79],[2797,11.39]],"f":[1.3,1.4]},{"n":"Bolzano","r":"Trentino-Alto Adige","z":[[4570,14.13],[3512,11.29],[4200,12.0]]},{"n":"Brescia","r":"Lombardia","z":[[2425,9.7],[1950,8.86],[1669,6.69]]},{"n":"Brindisi","r":"Puglia","z":[[1182,6.83],[1306,5.51],[1021,4.87]]},{"n":"Cagliari","r":"Sardegna","z":[[2250,8.56],[2288,8.94],[2061,7.64]],"f":[1.33,1.82]},{"n":"Caltanissetta","r":"Sicilia","z":[[286,1.37],[668,3.05],[658,2.53]]},{"n":"Campobasso","r":"Molise","z":[[923,4.28],[1012,4.88],[1100,4.93]],"f":[1.11,1.46]},{"n":"Carbonia","r":"Sardegna","z":[[850,3.75],[862,3.62],[875,3.5]]},{"n":"Caserta","r":"Campania","z":[[1350,5.12],[1208,4.08],[1206,3.5]]},{"n":"Catania","r":"Sicilia","z":[[1408,4.91],[1409,5.04],[1198,4.28]],"f":[1.07,2.19]},{"n":"Catanzaro","r":"Calabria","z":[[1338,6.28],[1068,4.65],[1168,4.51]]},{"n":"Chieti","r":"Abruzzo","z":[[1050,5.25],[850,4.7],[890,4.57]]},{"n":"Como","r":"Lombardia","z":[[3100,12.31],[2020,7.91],[1781,7.75]]},{"n":"Cosenza","r":"Calabria","z":[[1425,5.5],[1200,4.6],[1158,4.3]]},{"n":"Cremona","r":"Lombardia","z":[[1375,8.75],[1225,7.0],[1169,6.56]]},{"n":"Crotone","r":"Calabria","z":[[1045,4.4],[950,4.1],[976,4.11]]},{"n":"Cuneo","r":"Piemonte","z":[[1625,6.57],[1462,5.62],[1387,4.95]]},{"n":"Enna","r":"Sicilia","z":[[1030,3.72],[1100,3.8],[1210,3.75]]},{"n":"Fermo","r":"Marche","z":[[1100,4.6],[1400,5.85],[1188,4.97]]},{"n":"Ferrara","r":"Emilia-Romagna","z":[[1468,7.95],[1353,6.7],[1240,5.61]]},{"n":"Firenze","r":"Toscana","z":[[3880,12.37],[3054,10.85],[2695,9.05]],"f":[1.59,2.11]},{"n":"Foggia","r":"Puglia","z":[[1200,5.75],[1062,5.5],[1225,5.75]]},{"n":"Forlì","r":"Emilia-Romagna","z":[[1550,7.0],[1700,7.05],[1542,5.7]]},{"n":"Frosinone","r":"Lazio","z":[[915,5.87],[930,5.25],[840,4.05]]},{"n":"Genova","r":"Liguria","z":[[2554,10.01],[1632,7.22],[1603,6.79]],"f":[1.11,1.56]},{"n":"Gorizia","r":"Friuli-Venezia Giulia","z":[[1088,6.47],[1060,6.35],[902,5.17]]},{"n":"Grosseto","r":"Toscana","z":[[1775,8.6],[1650,9.25],[1781,7.09]]},{"n":"Imperia","r":"Liguria","z":[[1792,6.37],[2147,5.82],[2288,5.51]]},{"n":"Isernia","r":"Molise","z":[[812,5.65],[1250,5.45],[920,5.45]]},{"n":"L'Aquila","r":"Abruzzo","z":[[1250,5.5],[1250,5.5],[1110,5.2]]},{"n":"La Spezia","r":"Liguria","z":[[1888,8.25],[1675,8.0],[1700,7.75]]},{"n":"Latina","r":"Lazio","z":[[1625,8.2],[1512,6.85],[1506,6.47]]},{"n":"Lecce","r":"Puglia","z":[[1362,6.33],[1193,5.71],[1150,4.89]],"f":[1.52,1.88]},{"n":"Lecco","r":"Lombardia","z":[[1825,7.6],[1717,7.12],[1470,6.06]]},{"n":"Livorno","r":"Toscana","z":[[1600,7.8],[1779,8.09],[1721,8.53]]},{"n":"Lodi","r":"Lombardia","z":[[2050,10.75],[1725,10.25],[1850,10.4]]},{"n":"Lucca","r":"Toscana","z":[[2650,8.85],[1925,6.75],[1625,5.76]]},{"n":"Macerata","r":"Marche","z":[[1212,7.76],[1367,7.08],[1088,4.4]]},{"n":"Mantova","r":"Lombardia","z":[[1750,9.0],[1110,6.5],[1008,6.17]]},{"n":"Massa","r":"Toscana","z":[[1600,6.8],[1675,7.1],[1717,7.75]]},{"n":"Matera","r":"Basilicata","z":[[2075,6.6],[1750,5.25],[1625,5.83]]},{"n":"Messina","r":"Sicilia","z":[[1233,7.1],[1120,5.22],[978,4.5]]},{"n":"Milano","r":"Lombardia","z":[[7939,24.06],[5550,17.32],[3575,12.77]],"f":[1.17,1.4]},{"n":"Modena","r":"Emilia-Romagna","z":[[2525,12.75],[1958,9.53],[1775,8.07]]},{"n":"Monza","r":"Lombardia","z":[[2775,10.35],[2162,9.78],[2092,9.08]]},{"n":"Napoli","r":"Campania","z":[[3623,11.1],[2748,9.15],[2054,7.07]],"f":[1.29,1.97]},{"n":"Novara","r":"Piemonte","z":[[1502,5.97],[1278,4.99],[1219,4.79]]},{"n":"Nuoro","r":"Sardegna","z":[[1100,5.75],[1425,6.15],[1425,5.7]]},{"n":"Oristano","r":"Sardegna","z":[[1275,8.4],[1275,7.75],[1012,3.33]]},{"n":"Padova","r":"Veneto","z":[[2775,9.47],[1480,8.01],[1306,6.24]],"f":[1.69,2.01]},{"n":"Palermo","r":"Sicilia","z":[[1540,4.78],[1262,5.2],[1274,4.33]],"f":[1.16,2.11]},{"n":"Parma","r":"Emilia-Romagna","z":[[2000,10.88],[1725,8.56],[1729,7.81]]},{"n":"Pavia","r":"Lombardia","z":[[2400,8.0],[1925,6.35],[1583,6.48]]},{"n":"Perugia","r":"Umbria","z":[[1344,6.34],[1000,4.65],[932,4.42]],"f":[1.24,1.86]},{"n":"Pesaro","r":"Marche","z":[[2617,8.78],[1988,6.78],[1655,5.92]]},{"n":"Pescara","r":"Abruzzo","z":[[1917,6.03],[1530,5.56],[1202,5.07]]},{"n":"Piacenza","r":"Emilia-Romagna","z":[[1450,6.95],[1260,6.28],[1056,4.7]]},{"n":"Pisa","r":"Toscana","z":[[2350,9.53],[1975,8.2],[1850,7.64]]},{"n":"Pistoia","r":"Toscana","z":[[1575,7.85],[1525,7.25],[1467,6.93]]},{"n":"Pordenone","r":"Friuli-Venezia Giulia","z":[[1425,6.33],[1050,5.7],[982,4.55]]},{"n":"Potenza","r":"Basilicata","z":[[1112,5.2],[1092,3.95],[1240,4.44]]},{"n":"Prato","r":"Toscana","z":[[1900,9.75],[1765,8.5],[1789,8.5]]},{"n":"Ragusa","r":"Sicilia","z":[[590,4.05],[757,3.72],[1055,4.5]]},{"n":"Ravenna","r":"Emilia-Romagna","z":[[2062,10.22],[2250,9.75],[1746,6.47]]},{"n":"Reggio Calabria","r":"Calabria","z":[[1365,5.88],[998,4.28],[785,3.28]]},{"n":"Reggio Emilia","r":"Emilia-Romagna","z":[[1725,7.5],[1294,5.97],[1534,6.55]]},{"n":"Rieti","r":"Lazio","z":[[975,6.75],[1044,4.79],[1042,4.33]]},{"n":"Rimini","r":"Emilia-Romagna","z":[[2744,10.88],[2506,9.76],[2261,8.46]]},{"n":"Roma","r":"Lazio","z":[[5800,19.45],[4166,15.21],[2996,12.16]],"f":[1.27,1.56]},{"n":"Rovigo","r":"Veneto","z":[[1075,6.75],[1100,6.8],[983,6.75]]},{"n":"Salerno","r":"Campania","z":[[2742,7.57],[2142,6.67],[1830,4.72]]},{"n":"Sassari","r":"Sardegna","z":[[1188,6.58],[1600,7.14],[1262,5.58]]},{"n":"Savona","r":"Liguria","z":[[2075,7.95],[1892,7.0],[1620,5.71]]},{"n":"Siena","r":"Toscana","z":[[3225,11.07],[2700,9.23],[2164,8.04]]},{"n":"Siracusa","r":"Sicilia","z":[[1660,6.67],[1028,6.13],[1018,4.68]]},{"n":"Sondrio","r":"Lombardia","z":[[1350,6.6],[1275,5.55],[1369,5.55]]},{"n":"Taranto","r":"Puglia","z":[[968,5.08],[840,5.12],[798,4.28]]},{"n":"Teramo","r":"Abruzzo","z":[[1417,5.77],[1195,4.53],[1203,4.59]]},{"n":"Terni","r":"Umbria","z":[[1283,6.38],[1065,5.5],[988,4.35]]},{"n":"Torino","r":"Piemonte","z":[[2764,9.93],[2209,8.07],[1531,6.68]],"f":[1.11,1.64]},{"n":"Trani","r":"Puglia","z":[[1400,4.55],[1350,5.1],[1225,4.25]]},{"n":"Trapani","r":"Sicilia","z":[[1058,4.6],[970,4.25],[1035,3.85]]},{"n":"Trento","r":"Trentino-Alto Adige","z":[[2808,8.75],[2309,8.34],[2044,5.97]],"f":[1.46,1.66]},{"n":"Treviso","r":"Veneto","z":[[2688,9.5],[2000,9.0],[1625,8.0]]},{"n":"Trieste","r":"Friuli-Venezia Giulia","z":[[2275,8.5],[2015,7.42],[2100,7.65]]},{"n":"Udine","r":"Friuli-Venezia Giulia","z":[[1425,6.43],[1262,5.68],[1175,5.45]]},{"n":"Varese","r":"Lombardia","z":[[1600,10.5],[1450,9.9],[1370,5.61]]},{"n":"Venezia","r":"Veneto","z":[[3930,11.18],[2872,9.13],[1814,7.08]]},{"n":"Verbania","r":"Piemonte","z":[[1925,6.7],[1875,6.3],[1558,5.28]]},{"n":"Vercelli","r":"Piemonte","z":[[935,5.95],[795,5.9],[785,5.1]]},{"n":"Verona","r":"Veneto","z":[[3125,10.75],[1917,8.17],[1620,7.88]]},{"n":"Vibo Valentia","r":"Calabria","z":[[845,3.75],[780,3.35],[752,3.05]]},{"n":"Vicenza","r":"Veneto","z":[[1675,8.68],[1562,6.95],[1109,6.78]]},{"n":"Viterbo","r":"Lazio","z":[[1000,6.75],[1175,6.25],[800,3.75]]}];
+const AVG_F = [1.3, 1.8];            // annunci / OMI: vendita, affitto (media di 17 città)
+const K = { price:1.720, young:1.517, rent:1.796, rate95:13.65 };
+const ZN = ['in centro','in semicentro','in periferia'];
+const $ = id => document.getElementById(id);
+const nf = new Intl.NumberFormat('it-IT');
+const eur = x => nf.format(Math.round(x)) + ' €';
+const pct = x => Math.round(x*100) + '%';
+const yrs = x => x > 60 ? 'più di 60 anni' : (x < 1 ? 'meno di un anno' : (Math.round(x*10)/10).toLocaleString('it-IT') + (Math.round(x*10)/10 === 1 ? ' anno' : ' anni'));
+const round10 = x => Math.round(x/10)*10;
+const round1000 = x => Math.round(x/1000)*1000;
+
+const S = { s:1490, c:'Bologna', z:1, m:50, v:'omi', r:15, a:20, d:25, t:3.99 };
+const byName = Object.fromEntries(CITIES.map(c => [c.n, c]));
+try {
+  const q = new URLSearchParams(location.search);
+  const num = (k, lo, hi) => { const v = parseFloat(q.get(k)); if (isFinite(v) && v >= lo && v <= hi) S[k] = v; };
+  num('s',300,20000); num('z',0,2); num('m',15,300); num('r',1,90); num('a',0,90); num('d',5,40); num('t',0,20);
+  S.z = Math.round(S.z);
+  if (q.get('c') && byName[q.get('c')]) S.c = q.get('c');
+  if (q.get('v') === 'ann') S.v = 'ann';
+} catch(e) {}
+
+function pay(rate, years){ const r = rate/1200, n = years*12; return r ? r/(1-Math.pow(1+r,-n)) : 1/n; }
+function vals(city, mode){
+  const z = city.z[S.z], f = mode === 'ann' ? (city.f || AVG_F) : [1,1];
+  return { buy: z[0]*f[0], rent: z[1]*f[1] };
+}
+function calc(city, mode){
+  mode = mode || S.v;
+  const v = vals(city, mode);
+  const rent = v.rent*S.m, price = v.buy*S.m;
+  const down = price*S.a/100, save = S.s*S.r/100;
+  const years = down/save/12;
+  const rata = (price-down)*pay(S.t, S.d);
+  return { rent, rentSh: rent/S.s, price, down, save, years, rata, rataSh: rata/S.s };
+}
+const ICON = {
+  ok:'<svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="currentColor"/></svg>',
+  warn:'<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 13 13H1Z" fill="currentColor"/></svg>',
+  bad:'<svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.5" y="1.5" width="11" height="11" fill="currentColor"/></svg>'
+};
+function tag(el, sh){
+  const k = sh <= 0.30 ? 'ok' : (sh <= 0.40 ? 'warn' : 'bad');
+  const t = { ok:'Sostenibile', warn:'Pesante', bad:'Troppo alto' }[k];
+  el.className = 'tag ' + k; el.innerHTML = ICON[k] + t;
+}
+
+/* --- controlli --- */
+const sel = $('city');
+const regions = {};
+CITIES.forEach(c => (regions[c.r] = regions[c.r] || []).push(c.n));
+Object.keys(regions).sort((a,b)=>a.localeCompare(b,'it')).forEach(r => {
+  const g = document.createElement('optgroup'); g.label = r;
+  regions[r].sort((a,b)=>a.localeCompare(b,'it')).forEach(n => { const o = document.createElement('option'); o.value = o.textContent = n; g.appendChild(o); });
+  sel.appendChild(g);
+});
+function bindMoney(nId, rId, key, lo, hi){
+  const n = $(nId), r = $(rId);
+  n.addEventListener('input', () => { const v = parseInt(n.value.replace(/\D/g,''),10); if (v >= lo && v <= hi){ S[key] = v; update('n'+key); } });
+  n.addEventListener('blur', () => { n.value = nf.format(S[key]); });
+  r.addEventListener('input', () => { S[key] = +r.value; update(); });
+}
+bindMoney('sal-n','sal-r','s',300,20000);
+bindMoney('mq-n','mq-r','m',15,300);
+function bindSeg(id, key, conv){
+  $(id).addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; S[key] = conv(b.dataset.v); update(); });
+}
+bindSeg('sal-pre','s',Number); bindSeg('zone','z',Number); bindSeg('mq-pre','m',Number); bindSeg('vmode','v',String);
+sel.addEventListener('change', () => { S.c = sel.value; update(); });
+[['p-r','r'],['p-a','a'],['p-d','d'],['p-t','t']].forEach(([id,k]) => $(id).addEventListener('input', e => { S[k] = +e.target.value; update(); }));
+
+let showAll = false;
+$('rank-all').addEventListener('click', () => { showAll = !showAll; drawRank(); });
+
+/* --- disegno --- */
+function setPressed(id, v){ $(id).querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v == v))); }
+function bars95(label, a, b, fmt, better){
+  const mx = Math.max(a, b) || 1;
+  const t = better === 'now' ? '<span class="tag ok">' + ICON.ok + 'Meglio oggi</span>' : (better === 'then' ? '<span class="tag bad">' + ICON.bad + 'Peggio oggi</span>' : '<span class="tag warn">' + ICON.warn + 'Simile</span>');
+  return '<div class="row"><h3><span>' + label + '</span>' + t + '</h3>' +
+    '<div class="pair"><span class="y">1995</span><div class="t" style="width:' + (a/mx*100).toFixed(1) + '%"></div><span class="v">' + fmt(a) + '</span>' +
+    '<span class="y">Oggi</span><div class="t now" style="width:' + (b/mx*100).toFixed(1) + '%"></div><span class="v">' + fmt(b) + '</span></div></div>';
+}
+function rankRow(i, c, sh, mx, me){
+  const w = Math.min(sh, mx)/mx*100;
+  return '<li' + (me ? ' class="me"' : '') + '><span class="pos">' + (i+1) + '</span><span class="nm" title="' + c.n + '">' + c.n + '</span>' +
+    '<span class="tr" aria-hidden="true"><i class="' + (sh > 0.30 ? 'o' : '') + '" style="width:' + w.toFixed(1) + '%"></i><b style="left:' + (0.30/mx*100).toFixed(1) + '%"></b></span>' +
+    '<span class="pc">' + pct(sh) + '</span></li>';
+}
+function drawRank(){
+  const rows = CITIES.map(c => ({ c, sh: calc(c).rentSh })).sort((a,b) => a.sh - b.sh);
+  const mx = Math.max(0.6, Math.min(1.5, rows[rows.length-1].sh));
+  const me = rows.findIndex(x => x.c.n === S.c);
+  const ok = rows.filter(x => x.sh <= 0.30).length;
+  $('rank-h').innerHTML = 'Con <strong>' + eur(S.s) + '</strong> al mese, l\'affitto resta sotto il 30% in <strong>' + ok + ' città su ' + rows.length + '</strong>. ' + S.c + ' è al ' + (me+1) + '° posto.';
+  let html = '';
+  if (showAll) rows.forEach((x,i) => html += rankRow(i, x.c, x.sh, mx, i === me));
+  else {
+    const keep = new Set([0,1,2,3,4,5,6,7,8,9, me-1, me, me+1, rows.length-3, rows.length-2, rows.length-1].filter(i => i >= 0 && i < rows.length));
+    let prev = -1;
+    [...keep].sort((a,b)=>a-b).forEach(i => { if (i > prev+1) html += '<li class="gap" aria-hidden="true">···</li>'; html += rankRow(i, rows[i].c, rows[i].sh, mx, i === me); prev = i; });
+  }
+  $('rank').innerHTML = html;
+  $('rank-all').textContent = showAll ? 'Mostra meno città' : 'Mostra tutte le ' + rows.length + ' città';
+}
+function update(skip){
+  const city = byName[S.c];
+  if (skip !== 'ns') $('sal-n').value = nf.format(S.s);
+  if (skip !== 'nm') $('mq-n').value = S.m;
+  $('sal-r').value = Math.min(5000, S.s); $('mq-r').value = Math.min(120, S.m);
+  sel.value = S.c;
+  setPressed('sal-pre', S.s); setPressed('zone', S.z); setPressed('mq-pre', S.m); setPressed('vmode', S.v);
+  $('p-r').value = S.r; $('p-a').value = S.a; $('p-d').value = S.d; $('p-t').value = S.t;
+  $('p-r-o').textContent = S.r + '% · ' + eur(S.s*S.r/100) + ' al mese';
+  $('p-a-o').textContent = S.a + '%';
+  $('p-d-o').textContent = S.d + ' anni';
+  $('p-t-o').textContent = S.t.toLocaleString('it-IT', { minimumFractionDigits:2, maximumFractionDigits:2 }) + '%';
+
+  const R = calc(city), O = calc(city, S.v === 'omi' ? 'ann' : 'omi');
+  const where = 'A <strong>' + city.n + '</strong>, ' + ZN[S.z];
+  $('rent-h').innerHTML = where + ', una casa da ' + S.m + ' m² in affitto costa circa <strong>' + eur(round10(R.rent)) + ' al mese</strong>: il <strong>' + pct(R.rentSh) + '</strong> del tuo stipendio.';
+  tag($('rent-tag'), R.rentSh);
+  $('rent-bar').style.width = Math.min(100, R.rentSh*100) + '%';
+  $('rent-sub').textContent = (S.v === 'omi'
+    ? 'Con i prezzi degli annunci di oggi sarebbe circa ' + eur(round10(O.rent)) + ', il ' + pct(O.rentSh) + ' dello stipendio.'
+    : 'Con i valori ufficiali OMI sarebbe circa ' + eur(round10(O.rent)) + ', il ' + pct(O.rentSh) + ' dello stipendio.') +
+    ' Di solito si considera sostenibile un affitto che non supera il 30% dello stipendio netto.';
+
+  $('buy-1').innerHTML = 'Comprarla costa circa <strong>' + eur(round1000(R.price)) + '</strong>.';
+  $('buy-2').innerHTML = 'Per l\'anticipo del ' + S.a + '% (' + eur(round1000(R.down)) + '), risparmiando ' + eur(round10(R.save)) + ' al mese, ti servono <strong>' + yrs(R.years) + '</strong>.';
+  $('buy-3').innerHTML = 'Poi il mutuo: <strong>' + eur(round10(R.rata)) + ' al mese</strong> per ' + S.d + ' anni, il <strong>' + pct(R.rataSh) + '</strong> dello stipendio.';
+  tag($('rata-tag'), R.rataSh);
+
+  const y95 = R.years/(K.price/K.young), r95 = R.rentSh/(K.rent/K.young), m95 = R.rataSh*pay(K.rate95, S.d)/pay(S.t, S.d)/(K.price/K.young);
+  const cmp = (a,b) => b > a*1.05 ? 'then' : (b < a*0.95 ? 'now' : 'same');
+    $('cmp95').innerHTML =
+    bars95('Anni di risparmio per l\'anticipo', y95, R.years, yrs, cmp(y95, R.years)) +
+    bars95('Affitto, in percentuale dello stipendio', r95, R.rentSh, pct, cmp(r95, R.rentSh)) +
+    bars95('Rata del mutuo, in percentuale dello stipendio', m95, R.rataSh, pct, cmp(m95, R.rataSh));
+
+  $('d1').innerHTML = 'Affitto: <b>' + pct(R.rentSh) + '</b> dello stipendio';
+  $('d2').innerHTML = 'Anticipo: <b>' + yrs(R.years) + '</b>';
+  drawRank();
+  try {
+    const q = new URLSearchParams({ s:S.s, c:S.c, z:S.z, m:S.m, v:S.v, r:S.r, a:S.a, d:S.d, t:S.t });
+    history.replaceState(null, '', location.pathname + '?' + q.toString());
+  } catch(e) {}
+}
+
+$('copy').addEventListener('click', async () => {
+  const url = location.href, st = $('copy-status');
+  try { await navigator.clipboard.writeText(url); st.textContent = 'Link copiato.'; }
+  catch(e) { st.textContent = 'Copia questo link: ' + url; }
+});
+try { new IntersectionObserver(es => { for (const e of es) $('dock').classList.toggle('off', e.isIntersecting); }, { threshold:0.05 }).observe($('results')); } catch(e) {}
+update();
+})();
+</script>
+</body>
+</html>

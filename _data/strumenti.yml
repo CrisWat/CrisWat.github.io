@@ -10,3 +10,10 @@
   status: "Simulatore"
   tagline: "Chi pagherebbe di più, chi di meno, quanto incasserebbe lo Stato."
   description: "Cambia le regole dell'imposta sui redditi (scaglioni, flat tax o aliquota che sale piano piano) e guarda subito l'effetto sulle tasse delle persone e sul gettito. I calcoli usano i redditi dichiarati nel 2024 da quasi 41 milioni di persone."
+
+- title: "Quanti anni ti servono per una casa?"
+  url: "/strumenti/stipendio-casa/"
+  category: "Giovani e casa"
+  status: "Calcolatore"
+  tagline: "Il peso dell'affitto, gli anni per comprare e il confronto con il 1995."
+  description: "Inserisci stipendio e città e scopri quanto pesa l'affitto, quanti anni servono per l'anticipo e quanto costerebbe il mutuo. Poi il confronto con un giovane del 1995 e la classifica dei 109 capoluoghi di provincia, con i dati ufficiali dell'Agenzia delle Entrate."
