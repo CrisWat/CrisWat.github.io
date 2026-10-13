@@ -1,0 +1,12 @@
+# =====================================================================
+# Strumenti interattivi della pagina /strumenti/.
+# Per aggiungere un nuovo strumento: metti il file HTML nella cartella
+# strumenti/ (con il suo front matter e permalink) e aggiungi qui una voce.
+# =====================================================================
+
+- title: "Prova tu la riforma dell'IRPEF"
+  url: "/strumenti/riforma-irpef/"
+  category: "Tasse e redditi"
+  status: "Simulatore"
+  tagline: "Chi pagherebbe di più, chi di meno, quanto incasserebbe lo Stato."
+  description: "Cambia le regole dell'imposta sui redditi (scaglioni, flat tax o aliquota che sale piano piano) e guarda subito l'effetto sulle tasse delle persone e sul gettito. I calcoli usano i redditi dichiarati nel 2024 da quasi 41 milioni di persone."

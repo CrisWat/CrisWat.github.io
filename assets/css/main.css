@@ -1290,6 +1290,15 @@ h4 {
     margin: 0;
 }
 
+.project-card h2 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-card h2 a:hover {
+    color: var(--accent-dark);
+}
+
 .project-links {
     margin-top: 1.4rem;
     display: flex;

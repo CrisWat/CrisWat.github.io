@@ -1,0 +1,31 @@
+---
+layout: page
+title: "Strumenti"
+heading: "Strumenti per capire"
+permalink: /strumenti/
+eyebrow: "Strumenti"
+description: "Simulatori e strumenti interattivi di Cristiano Fanelli per capire con i numeri temi pubblici come tasse, redditi e politiche."
+intro: "Simulatori interattivi per toccare con mano i numeri dietro le scelte pubbliche. Cambi le regole e vedi subito cosa succede."
+content_width: wide
+---
+
+<div class="card-grid">
+    {% for s in site.data.strumenti %}
+    <article class="project-card">
+        <div class="project-card-head">
+            <span class="project-cat">{{ s.category }}</span>
+            {% if s.status %}<span class="project-status">{{ s.status }}</span>{% endif %}
+        </div>
+        <h2><a href="{{ s.url | relative_url }}">{{ s.title }}</a></h2>
+        {% if s.tagline %}<p class="project-tagline">{{ s.tagline }}</p>{% endif %}
+        <p class="project-desc">{{ s.description }}</p>
+        <div class="project-links">
+            <a href="{{ s.url | relative_url }}">Apri lo strumento →</a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+<div class="callout">
+    <p>Hai un'idea per un nuovo strumento o hai trovato un errore nei calcoli? <a href="{{ '/contatti/' | relative_url }}">Scrivimi</a>.</p>
+</div>

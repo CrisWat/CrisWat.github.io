@@ -1,0 +1,1227 @@
+---
+layout: null
+title: "Prova tu la riforma dell'IRPEF"
+description: "Un simulatore semplice per capire come cambierebbero le tasse sul reddito, chi pagherebbe di più e chi di meno, e quanto incasserebbe lo Stato. Calcoli sui redditi dichiarati nel 2024."
+permalink: /strumenti/riforma-irpef/
+---
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% seo %}
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<style>
+:root{
+  --paper:#F3F6F5; --ink:#18262F; --muted:#56656C; --rule:#B3CCC4; --field:#E3EDEA; --field-2:#D4E5DF; --card:#FBFCFC;
+  --line:#2144D0; --line-soft:rgba(33,68,208,.12); --on-line:#FFFFFF; --today:#7F918C; --grid:#D8E4E0;
+  --less:#0F7D67; --more:#B3315C; --same:#C9D6D2;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14222A; --ink:#E5EEEB; --muted:#9FB2AF; --rule:#3D635B; --field:#1C2F37; --field-2:#24404A; --card:#182A32;
+    --line:#8C9FFF; --line-soft:rgba(140,159,255,.16); --on-line:#0F1830; --today:#93A6A1; --grid:#284149;
+    --less:#3CC3A0; --more:#F07399; --same:#3A5660; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14222A; --ink:#E5EEEB; --muted:#9FB2AF; --rule:#3D635B; --field:#1C2F37; --field-2:#24404A; --card:#182A32;
+  --line:#8C9FFF; --line-soft:rgba(140,159,255,.16); --on-line:#0F1830; --today:#93A6A1; --grid:#284149;
+  --less:#3CC3A0; --more:#F07399; --same:#3A5660; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  font-size:18px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 20px 110px}
+a{color:var(--line)}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.05;letter-spacing:-.015em;margin:8px 0 14px;font-weight:800}
+.lede{font-size:1.12rem;color:var(--muted);margin:0 0 6px;max-width:58ch}
+h2{font-size:1.45rem;line-height:1.2;margin:0 0 6px;font-weight:800;display:flex;gap:12px;align-items:baseline}
+h2 .n{display:inline-grid;place-items:center;flex:none;width:1.7em;height:1.7em;border-radius:50%;background:var(--ink);color:var(--paper);font-size:.8em;transform:translateY(-.08em)}
+h3{font-size:1.1rem;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+.small{font-size:.92rem}
+section.step{padding:30px 0 6px;border-top:1px solid var(--rule);margin-top:26px}
+.intro{margin:0 0 16px;color:var(--muted);max-width:60ch}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--line);outline-offset:2px}
+
+/* scelta del sistema */
+.choices{display:grid;gap:10px}
+.choice{display:grid;grid-template-columns:64px 1fr;gap:4px 14px;align-items:center;text-align:left;width:100%;
+  padding:14px 16px;background:var(--card);border:2px solid var(--rule);border-radius:10px;cursor:pointer;color:var(--ink)}
+.choice:hover{border-color:var(--line)}
+.choice[aria-checked="true"]{border-color:var(--line);background:var(--line-soft)}
+.choice svg{grid-row:span 2;width:64px;height:44px}
+.choice b{font-size:1.08rem}
+.choice span{color:var(--muted);font-size:.95rem;line-height:1.4}
+
+/* cursori */
+.sliders{display:grid;gap:18px}
+.sl{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center}
+.sl label{font-weight:600}
+.sl .val{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sl .row{grid-column:1/-1;display:grid;grid-template-columns:44px 1fr 44px;gap:10px;align-items:center}
+.sl input[type=range]{width:100%;accent-color:var(--line);height:32px;margin:0}
+.pm{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer}
+.pm:hover{border-color:var(--line);color:var(--line)}
+.sl .hint{grid-column:1/-1;color:var(--muted);font-size:.9rem}
+.note{background:var(--field);border-radius:8px;padding:10px 14px;font-size:.95rem;margin:16px 0 0}
+.zero{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font-weight:700;font-size:1rem;color:var(--on-line);background:var(--line);border:0;border-radius:8px;padding:12px 18px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{color:var(--line);background:transparent;border:2px solid var(--line)}
+.status{min-height:1.4em;margin:8px 0 0;color:var(--muted);font-size:.95rem}
+
+/* gruppi di opzioni */
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+.seg button{padding:9px 14px;border-radius:999px;border:1.5px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer;font-size:.95rem}
+.seg button:hover{border-color:var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:700}
+details.extra{margin-top:6px}
+details.extra > summary{cursor:pointer;font-weight:700;color:var(--line);list-style:none;display:inline-flex;gap:8px;align-items:center;padding:6px 0}
+details.extra > summary::before{content:"+";display:inline-grid;place-items:center;width:1.4em;height:1.4em;border:2px solid var(--line);border-radius:50%;font-size:.9em;line-height:1}
+details.extra[open] > summary::before{content:"−"}
+details.extra > summary::-webkit-details-marker{display:none}
+.box{border:1px solid var(--rule);border-radius:10px;padding:16px;margin-top:12px;background:var(--card)}
+.box + .box{margin-top:12px}
+.wrows{display:grid;gap:8px;margin-top:10px}
+.wrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.95rem}
+.wrow input{width:4.5em;font:inherit;font-weight:700;text-align:right;padding:6px 8px;border:1.5px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink)}
+.wrow .rm{border:0;background:transparent;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:2px 8px}
+.linkbtn{border:0;background:transparent;color:var(--line);font-weight:700;cursor:pointer;padding:6px 0}
+
+/* risultati */
+.result{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:22px 20px;margin-top:8px}
+.headline{font-size:clamp(1.35rem,4.4vw,1.85rem);line-height:1.25;font-weight:700;margin:0 0 10px}
+.headline strong{font-weight:900;white-space:nowrap}
+.sub{color:var(--muted);margin:0}
+.breakdown{margin:10px 0 0;padding:0;list-style:none;font-size:.95rem;color:var(--muted)}
+.breakdown li{padding:2px 0}
+.people{margin-top:26px}
+.grid100{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;max-width:520px;margin:10px 0 8px}
+.grid100 i{display:block;aspect-ratio:1;border-radius:50%;background:var(--same);transition:background-color .35s ease}
+.grid100 i.l{background:var(--less)}.grid100 i.m{background:var(--more)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:6px 0 0;padding:0;list-style:none;font-size:.95rem}
+.legend li{display:flex;gap:7px;align-items:center}
+.legend i{width:13px;height:13px;border-radius:50%;display:inline-block;flex:none}
+.bars svg,.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.bars text,.chart text{font-family:inherit;font-size:13px;fill:var(--muted)}
+.you{margin-top:6px}
+.you .seg{margin-bottom:12px}
+.incomebox{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;margin:4px 0 6px}
+.incomebox label{font-weight:600}
+.incomebox .val{display:flex;align-items:center;gap:6px;font-weight:800;font-size:1.3rem}
+.incomebox .val input{width:7.2em;font:inherit;font-weight:800;text-align:right;border:1.5px solid var(--rule);border-radius:6px;padding:4px 8px;background:var(--card);color:var(--ink)}
+.incomebox input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--line);height:32px}
+.yours{font-size:1.15rem;line-height:1.45;margin:12px 0 4px}
+.yours strong{white-space:nowrap}
+.chart{margin-top:14px}
+.leg2{display:flex;flex-wrap:wrap;gap:6px 18px;margin:6px 0 0;padding:0;list-style:none;font-size:.92rem;color:var(--muted)}
+.leg2 i{display:inline-block;width:22px;border-top:3px solid var(--line);vertical-align:middle;margin-right:6px}
+.leg2 i.t{border-top:2px dashed var(--today)}
+.share{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule)}
+details.how{margin-top:30px;border-top:1px solid var(--rule);padding-top:16px}
+details.how summary{cursor:pointer;font-weight:800;font-size:1.15rem}
+details.how li{margin:0 0 8px;max-width:64ch}
+details.how ul{padding-left:1.1em}
+footer{margin-top:28px;color:var(--muted);font-size:.88rem}
+
+/* scaglioni */
+.brs{display:grid;gap:14px}
+.br{border-left:4px solid var(--line);padding:2px 0 2px 12px}
+.br .top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
+.br .top .lab{font-weight:600}
+.br .top input{width:6.4em;font:inherit;font-weight:700;text-align:right;padding:3px 8px;border:1.5px solid var(--rule);border-radius:6px;background:var(--card);color:var(--ink)}
+.br .val{font-size:1.4rem;font-weight:800;font-variant-numeric:tabular-nums}
+.br .row{display:grid;grid-template-columns:44px 1fr 44px;gap:10px;align-items:center;margin-top:4px}
+.br input[type=range]{width:100%;accent-color:var(--line);height:32px;margin:0}
+.br-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.presets{margin:0 0 14px}
+.presets p{margin:0 0 4px;font-size:.95rem;color:var(--muted)}
+/* formula */
+details.fx{margin-top:18px;border:1px solid var(--rule);border-radius:10px;padding:10px 14px;background:var(--card)}
+details.fx summary{cursor:pointer;font-weight:700;color:var(--line)}
+.fx-lab{display:block;font-weight:700;margin:12px 0 4px}
+details.fx textarea{display:block;width:100%;min-height:3.2em;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:1rem;line-height:1.45;
+  color:var(--ink);background:var(--paper);border:1.5px solid var(--rule);border-radius:8px;padding:10px 12px}
+details.fx textarea[aria-invalid="true"]{border-color:var(--more)}
+details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em;background:var(--field);padding:0 3px;border-radius:3px}
+.fx-st{min-height:1.3em;margin:6px 0;font-size:.93rem;color:var(--more);font-weight:600}
+.rng{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85rem;color:var(--muted)}
+.rng input{width:6em;font:inherit;padding:2px 6px;border:1px solid var(--rule);border-radius:5px;background:var(--card);color:var(--ink);text-align:right}
+/* grafico della riforma */
+.plan{margin:22px 0 0}
+.plan-head{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+.plan-head h3{margin:0}
+.plan-head .seg{margin:0}
+.cmp{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;cursor:pointer;margin-top:4px}
+.cmp input{width:20px;height:20px;accent-color:var(--line)}
+.leg2 i.d{border-top:8px solid var(--same);width:14px}
+#plan-read{margin:8px 0 2px}
+
+/* barra fissa */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--ink);color:var(--paper);
+  padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;transition:transform .25s ease}
+.dock .in{width:100%;max-width:760px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;font-size:.98rem}
+.dock b{font-weight:800}
+.dock.off{transform:translateY(110%)}
+.dock button{border:0;background:transparent;color:inherit;text-decoration:underline;cursor:pointer;padding:0;font-size:.95rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:420px){ body{font-size:17px} .choice{grid-template-columns:52px 1fr;padding:12px} .choice svg{width:52px} .grid100{gap:3px} }
+/* collegamento al sito */
+.site-back{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 18px;font-size:.92rem;color:var(--muted)}
+.site-back a{color:var(--muted);font-weight:600;text-decoration:none}
+.site-back a:hover{color:var(--ink);text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="site-back" aria-label="Percorso"><a href="/">Cristiano Fanelli</a><span aria-hidden="true">›</span><a href="/strumenti/">Strumenti</a></nav>
+<header>
+  <h1>Prova tu la riforma dell'IRPEF</h1>
+  <p class="lede">L'IRPEF è l'imposta sui redditi delle persone. Qui puoi cambiarne le regole e vedere subito chi pagherebbe di più, chi di meno e quanto incasserebbe lo Stato. I calcoli usano i redditi veri dichiarati nel 2024 da quasi 41 milioni di persone.</p>
+</header>
+
+<section class="step" aria-labelledby="s1">
+  <h2 id="s1"><span class="n">1</span>Scegli come tassare i redditi</h2>
+  <p class="intro">L'aliquota è la percentuale di reddito che va in tasse. Scegli come deve cambiare al crescere del reddito.</p>
+  <div class="choices" role="radiogroup" aria-labelledby="s1">
+    <button type="button" class="choice" role="radio" data-opt="sc" aria-checked="true">
+      <svg viewBox="0 0 64 44" aria-hidden="true"><path d="M4 32H22V22H40V12H60" fill="none" stroke="currentColor" stroke-width="3"/><path d="M4 40H60" stroke="var(--rule)" stroke-width="2"/></svg>
+      <b>A scaglioni, come oggi</b>
+      <span>Il reddito è diviso in fasce e ogni fascia ha la sua aliquota. Oggi sono 23%, 33% e 43%.</span>
+    </button>
+    <button type="button" class="choice" role="radio" data-opt="flat" aria-checked="false">
+      <svg viewBox="0 0 64 44" aria-hidden="true"><path d="M4 38H18V16H60" fill="none" stroke="currentColor" stroke-width="3"/><path d="M4 40H60" stroke="var(--rule)" stroke-width="2"/></svg>
+      <b>Un'aliquota unica (flat tax)</b>
+      <span>Fino a una certa soglia non si paga. Sopra, si paga la stessa percentuale su ogni euro in più.</span>
+    </button>
+    <button type="button" class="choice" role="radio" data-opt="grad" aria-checked="false">
+      <svg viewBox="0 0 64 44" aria-hidden="true"><path d="M4 32L38 10H60" fill="none" stroke="currentColor" stroke-width="3"/><path d="M4 40H60" stroke="var(--rule)" stroke-width="2"/></svg>
+      <b>Un'aliquota che sale piano piano</b>
+      <span>Niente gradini: l'aliquota cresce un po' alla volta con il reddito, fino a un massimo.</span>
+    </button>
+    <button type="button" class="choice" role="radio" data-opt="lib" aria-checked="false">
+      <svg viewBox="0 0 64 44" aria-hidden="true"><path d="M4 36C14 34 18 14 30 14S44 26 60 8" fill="none" stroke="currentColor" stroke-width="3"/><path d="M4 40H60" stroke="var(--rule)" stroke-width="2"/></svg>
+      <b>Una curva a scelta</b>
+      <span>Scegli una curva già pronta oppure scrivi tu la formula dell'aliquota.</span>
+    </button>
+  </div>
+</section>
+
+<section class="step" aria-labelledby="s2">
+  <h2 id="s2"><span class="n">2</span>Regola i numeri</h2>
+  <p class="intro" id="s2-intro"></p>
+  <div id="ctrl"></div>
+  <details class="fx" id="fx" hidden>
+    <summary>Vedi o modifica la formula</summary>
+    <p class="small muted" style="margin-top:10px">La formula descrive:</p>
+    <div class="seg" role="group" aria-label="Cosa descrive la formula">
+      <button type="button" data-fm="avg" aria-pressed="true">Tasse ogni 100 € di reddito</button>
+      <button type="button" data-fm="marg" aria-pressed="false">Aliquota su ogni euro in più</button>
+      <button type="button" data-fm="T" aria-pressed="false">Imposta in euro</button>
+    </div>
+    <label class="fx-lab" for="fx-ta">Formula</label>
+    <textarea id="fx-ta" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="fx-st fx-help"></textarea>
+    <p class="fx-st" id="fx-st" role="status" aria-live="polite"></p>
+    <p class="small muted" id="fx-help"><b>y</b> è il reddito in euro; <b>a</b>, <b>b</b> e <b>c</b> sono i cursori qui sopra. Le aliquote si scrivono in punti: 23 vuol dire 23%. Si possono usare + − * / ^, i decimali con il punto (0.5), 28k per 28.000 e le funzioni min, max, clamp(x, minimo, massimo), pos, log, log2, exp, sqrt. Per esempio: <code>min(45, 20 + b*y/10000)</code>.</p>
+  </details>
+  <figure class="plan">
+    <div class="plan-head">
+      <h3>Il grafico della tua riforma</h3>
+      <div class="seg" role="group" aria-label="Cosa mostra il grafico">
+        <button type="button" data-pv="marg" aria-pressed="true">Aliquota su ogni euro in più</button>
+        <button type="button" data-pv="avg" aria-pressed="false">Tasse ogni 100 € di reddito</button>
+      </div>
+      <label class="cmp"><input type="checkbox" class="cmp-box" checked> Confronta con oggi</label>
+    </div>
+    <div class="chart" id="plan"></div>
+    <ul class="leg2" id="plan-leg"></ul>
+    <p class="small" id="plan-read"></p>
+    <p class="small muted" id="plan-note"></p>
+  </figure>
+  <p class="note">Le detrazioni, cioè gli sconti per lavoro, pensione, figli e spese come quelle mediche, restano quelle di oggi.</p>
+  <div class="zero">
+    <button type="button" class="btn ghost" id="zero">Rendi la riforma a costo zero</button>
+  </div>
+  <p class="status" id="status" role="status" aria-live="polite">Sposta tutte le aliquote in su o in giù dello stesso numero di punti, finché lo Stato incassa quanto oggi.</p>
+</section>
+
+<section class="step" aria-labelledby="s3">
+  <h2 id="s3"><span class="n">3</span>Aggiungi altro, se vuoi</h2>
+  <p class="intro">Due misure di cui si discute spesso. Puoi lasciarle spente.</p>
+
+  <div class="box">
+    <h3>Salario minimo per legge</h3>
+    <p class="small muted">Oggi in Italia non c'è. Con un minimo orario i salari più bassi salirebbero, e con loro un po' di tasse pagate.</p>
+    <div class="seg" role="group" aria-label="Salario minimo">
+      <button type="button" data-mw="0" aria-pressed="true">Nessuno</button>
+      <button type="button" data-mw="9" aria-pressed="false">9 € l'ora</button>
+      <button type="button" data-mw="10" aria-pressed="false">10 € l'ora</button>
+    </div>
+    <p class="small muted" id="mw-note"></p>
+  </div>
+
+  <div class="box">
+    <h3>Tassa sui grandi patrimoni</h3>
+    <p class="small muted">Una piccola percentuale all'anno su case, conti, azioni e aziende di chi possiede milioni di euro. Vale solo per la parte di patrimonio sopra la soglia.</p>
+    <div class="seg" role="group" aria-label="Tassa sui grandi patrimoni" id="wp"></div>
+    <div id="wcustom" hidden>
+      <div class="wrows" id="wrows"></div>
+      <button type="button" class="linkbtn" id="wadd">Aggiungi una soglia</button>
+    </div>
+    <div id="wero-box" hidden>
+      <p class="small" style="margin:12px 0 0"><b>Quanti riuscirebbero a evitarla?</b> Spostando soldi all'estero o dichiarando meno di quanto hanno.</p>
+      <div class="seg" role="group" aria-label="Quanti la eviterebbero">
+        <button type="button" data-ero="10" aria-pressed="false">Pochi</button>
+        <button type="button" data-ero="20" aria-pressed="true">Alcuni</button>
+        <button type="button" data-ero="40" aria-pressed="false">Molti</button>
+      </div>
+    </div>
+    <p class="small muted" id="w-note"></p>
+  </div>
+</section>
+
+<section class="step" aria-labelledby="s4" id="results">
+  <h2 id="s4">Cosa succederebbe</h2>
+  <div class="result" aria-live="polite">
+    <p class="headline" id="headline"></p>
+    <p class="sub" id="sub"></p>
+    <ul class="breakdown" id="breakdown"></ul>
+  </div>
+
+  <div class="people">
+    <h3>Su 100 contribuenti</h3>
+    <div class="grid100" id="grid100" role="img"></div>
+    <ul class="legend" id="plegend"></ul>
+  </div>
+
+  <div class="people">
+    <h3>Quanto cambia, in media, per fascia di reddito</h3>
+    <p class="small muted">Euro all'anno in più o in meno per persona, rispetto a oggi.</p>
+    <div class="bars" id="bars"></div>
+  </div>
+
+  <div class="people you">
+    <h3>E tu?</h3>
+    <p class="small muted">Scegli da dove viene il tuo reddito e quanto guadagni in un anno.</p>
+    <div class="seg" role="group" aria-label="Tipo di reddito" id="cat">
+      <button type="button" data-cat="dip" aria-pressed="true">Lavoro dipendente</button>
+      <button type="button" data-cat="pen" aria-pressed="false">Pensione</button>
+      <button type="button" data-cat="aut" aria-pressed="false">Lavoro autonomo</button>
+      <button type="button" data-cat="alt" aria-pressed="false">Altro</button>
+    </div>
+    <div class="incomebox">
+      <label for="inc-r">Reddito annuo</label>
+      <div class="val"><input id="inc-n" inputmode="numeric" aria-label="Reddito annuo in euro"><span>€</span></div>
+      <input type="range" id="inc-r" min="0" max="200000" step="500" aria-describedby="inc-hint">
+    </div>
+    <p class="small muted" id="inc-hint">È il reddito lordo che trovi nella Certificazione Unica o nel 730, tolti i contributi previdenziali.</p>
+    <p class="yours" id="yours"></p>
+    <div class="chart" id="chart"></div>
+    <ul class="leg2" id="you-leg"></ul>
+    <label class="cmp"><input type="checkbox" class="cmp-box" checked> Confronta con oggi</label>
+    <p class="small muted" style="margin-top:8px">Il grafico mostra quanti euro di IRPEF si pagano ogni 100 euro di reddito. Tocca il grafico per scegliere un altro reddito.</p>
+  </div>
+
+  <div class="share">
+    <h3>Condividi la tua riforma</h3>
+    <p class="small muted">Il link contiene tutte le tue scelte: chi lo apre vede la stessa riforma.</p>
+    <button type="button" class="btn" id="copy">Copia il link</button>
+    <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<details class="how">
+  <summary>Da dove vengono i numeri</summary>
+  <ul>
+    <li><strong>I redditi.</strong> Sono quelli dichiarati per il 2024 da 40,7 milioni di contribuenti, divisi in 31 fasce di reddito, come li pubblica il Ministero dell'Economia. Dentro ogni fascia i redditi sono distribuiti in modo uniforme.</li>
+    <li><strong>Le detrazioni.</strong> Restano quelle del 2024, fascia per fascia. Il calcolo è tarato in modo da riprodurre esattamente l'IRPEF pagata quell'anno, 197,4 miliardi. Le regole di oggi (23%, 33% e 43%) applicate agli stessi redditi danno 194,8 miliardi: è il punto di partenza.</li>
+    <li><strong>Nessuno riceve soldi indietro.</strong> Se con la riforma l'imposta scende sotto zero, si paga zero.</li>
+    <li><strong>La curva a scelta.</strong> La formula può descrivere quanto si paga ogni 100 € di reddito, l'aliquota su ogni euro in più oppure direttamente l'imposta in euro. In ogni caso l'imposta resta tra zero e il reddito. Il ritocco moltiplica le imposte di tutti per lo stesso numero.</li>
+    <li><strong>Il salario minimo.</strong> Usa le stime dell'Istat: con 9 € l'ora circa 3 milioni di lavoratori guadagnerebbero 2,8 miliardi in più all'anno, con 10 € circa 5 milioni guadagnerebbero 6,4 miliardi in più. Gli aumenti vanno soprattutto ai redditi più bassi.</li>
+    <li><strong>La tassa sui patrimoni.</strong> Riguarda chi ha almeno qualche milione di euro: circa 50.000 persone hanno più di 5,4 milioni. I numeri seguono le stime di Oxfam Italia e del manifesto "Tax the rich" firmato da oltre 130 economisti. Sotto i 5,4 milioni sono un'estensione di quelle stime, quindi meno sicuri.</li>
+    <li><strong>Il tuo calcolo.</strong> È indicativo. Tiene conto delle detrazioni per lavoro o pensione (compresa quella per i dipendenti tra 20.000 e 40.000 euro introdotta nel 2025), ma non di quelle per familiari a carico e spese, né delle addizionali regionali e comunali, né dei bonus in busta paga.</li>
+    <li><strong>Cosa non considera.</strong> Il simulatore non prevede come le persone cambierebbero comportamento: per esempio se lavorerebbero di più o di meno, o se evaderebbero di più. Restano fuori anche cedolare secca e regime forfettario.</li>
+  </ul>
+</details>
+
+<footer>
+  <p>Fonti: Ministero dell'Economia e delle Finanze, <a href="https://www1.finanze.gov.it/finanze/analisi_stat/public/index.php?tree=2025" rel="noopener">statistiche sulle dichiarazioni dei redditi 2025</a>; Istat, <a href="https://www.istat.it/it/files/2023/07/Audizione-Salario-minimo-12072023.pdf" rel="noopener">audizione sul salario minimo (2023)</a>; Oxfam Italia e manifesto "Tax the rich" (2024).</p>
+</footer>
+</div>
+
+<div class="dock off" id="dock" aria-hidden="true"><div class="in"><span id="d1"></span><span id="d2"></span></div></div>
+<script>
+(function(){
+"use strict";
+const RAW = [[1632063,[52,155,259,362,466,569,672],564.8,[0.01452,0.04642,0.09368,0.16576,0.28,0.47297,0.83694,1.68892,5.40079],0,1000,34245000],[475288,[938,1003,1067,1132,1197,1262,1326],866.8,[0.04464,0.11006,0.18982,0.29562,0.44409,0.66712,1.03899,1.79187,4.41779],1000,1500,26279000],[411552,[1442,1509,1576,1643,1710,1777,1844],960.3,[0.07796,0.16774,0.26644,0.38812,0.54831,0.77461,1.12835,1.79231,3.85615],1500,2000,30086000],[367667,[1922,1990,2057,2124,2192,2259,2327],1053.2,[0.10862,0.21485,0.32437,0.45338,0.61667,0.83876,1.17237,1.77,3.50098],2000,2500,32813000],[342947,[2396,2463,2531,2598,2666,2733,2800],1137.1,[0.14672,0.26823,0.38616,0.51929,0.68168,0.89485,1.20336,1.73243,3.16729],2500,3000,34260000],[313635,[2868,2935,3003,3070,3138,3205,3273],1211.4,[0.19089,0.325,0.4482,0.58201,0.73987,0.94055,1.22137,1.68435,2.86776],3000,3500,33617000],[307457,[3344,3412,3479,3547,3614,3682,3749],1267.3,[0.23006,0.37185,0.49695,0.62905,0.78113,0.96998,1.22784,1.64091,2.65222],3500,4000,36857000],[596871,[3834,3969,4103,4238,4372,4507,4641],1344.4,[0.29988,0.44907,0.57311,0.69877,0.83834,1.00579,1.22633,1.56504,2.34367],4000,5000,79187000],[578797,[4726,4859,4992,5126,5259,5392,5525],1437.3,[0.39337,0.54284,0.65939,0.77234,0.89307,1.03266,1.20955,1.46926,2.02751],5000,6000,84591000],[909687,[5737,5938,6140,6341,6542,6744,6945],1566.7,[0.49101,0.63175,0.73561,0.8325,0.93271,1.04498,1.18262,1.37706,1.77176],6000,7500,167434000],[2799674,[7259,7597,7934,8272,8610,8947,9285],1863.8,[0.6749,0.78044,0.85202,0.91502,0.97698,1.04313,1.12026,1.223,1.41425],7500,10000,553358000],[1746050,[9669,9941,10213,10486,10758,11030,11303],1924.5,[0.56879,0.69729,0.78858,0.87152,0.95538,1.0473,1.15745,1.30898,1.60471],10000,12000,1005682000],[2817868,[11655,12064,12473,12882,13291,13700,14109],1970.5,[0.50228,0.64151,0.74368,0.8386,0.93642,1.04566,1.17913,1.3669,1.74581],12000,15000,2946317000],[4780215,[14732,15418,16103,16788,17473,18159,18844],2433.7,[0.48246,0.62427,0.7294,0.82778,0.92979,1.04437,1.18522,1.38482,1.79188],15000,20000,7089664000],[6643069,[19783,20613,21443,22273,23103,23933,24763],2320.9,[0.32509,0.47532,0.59791,0.72051,0.85515,1.01496,1.22307,1.5385,2.2495],20000,26000,18775272000],[3051519,[25268,25681,26094,26507,26920,27333,27746],2276.8,[0.20289,0.33966,0.46368,0.59716,0.75339,0.95048,1.22411,1.67104,2.7976],26000,29000,11749355000],[4896549,[28141,28960,29780,30600,31419,32239,33059],2071.8,[0.08143,0.1733,0.27347,0.39624,0.55703,0.78308,1.13461,1.79043,3.81041],29000,35000,26167523000],[2475838,[33539,34216,34894,35572,36249,36927,37604],1798.5,[0.01814,0.05515,0.10796,0.18638,0.30776,0.50818,0.87728,1.7173,5.22185],35000,40000,18158503000],[2285663,[37457,38771,40086,41400,42714,44028,45343],1536.7,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],40000,50000,21927014000],[602449,[46331,46988,47645,48302,48960,49617,50274],1217.0,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],50000,55000,7429399000],[431141,[50606,51259,51912,52565,53218,53871,54524],1264.9,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],55000,60000,6026546000],[592820,[55016,56311,57605,58900,60194,61489,62784],1484.6,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],60000,70000,9771100000],[218508,[63954,64603,65252,65902,66551,67200,67850],1684.7,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],70000,75000,4215682000],[185413,[68416,69065,69713,70362,71010,71659,72307],1794.8,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],75000,80000,3912337000],[290254,[72965,74256,75548,76839,78130,79422,80713],1966.8,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],80000,90000,6883068000],[206806,[81612,82897,84183,85468,86753,88038,89324],2205.5,[0.1348,0.25203,0.3678,0.50008,0.66314,0.87936,1.19564,1.74481,3.26234],90000,100000,5622162000],[258462,[89938,92472,95005,97539,100072,102606,105139],2534.7,[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],100000,120000,8282925000],[198103,[107271,111035,114799,118563,122327,126091,129855],3078.9,[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],120000,150000,8031719000],[144621,[134862,141135,147408,153680,159953,166226,172498],3857.3,[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],150000,200000,7934669000],[90043,[180003,192417,204831,217245,229659,242073,254486],5184.8,[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],200000,300000,7281815000],[58918,[305314,311818,318766,326210,334214,342852,352212,362402,373552,385824,399422,414603,431703,451165,473591,499823,531085,569229,617238,680291,768418,904538,1158664,1973424],8842.9,[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],300000,0,13070629000]];
+const C = RAW.map(r => ({n:r[0], ys:r[1], d:r[2], s:r[3], lo:r[4], hi:r[5] || null}));
+const nf0 = new Intl.NumberFormat('it-IT',{maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat('it-IT',{minimumFractionDigits:1,maximumFractionDigits:1});
+const eur = v => nf0.format(Math.round(v)) + ' €';
+const mld = v => nf1.format(v/1e9) + ' mld €';
+const sgn = v => (v > 0 ? '+' : (v < 0 ? '−' : ''));
+const smld = v => sgn(v) + nf1.format(Math.abs(v)/1e9) + ' mld €';
+const fmtNum = (v, dec, extra=0) => new Intl.NumberFormat('it-IT',{minimumFractionDigits:dec,maximumFractionDigits:dec+extra,useGrouping:dec===0}).format(v);
+const pctTxt = (v, dec=1) => fmtNum(v, dec) + '%';
+
+/* ---------- modello ---------- */
+function irpef2026(y){
+  if (y <= 28000) return 0.23*y;
+  if (y <= 50000) return 6440 + 0.33*(y-28000);
+  return 13700 + 0.43*(y-50000);
+}
+function classRev(c, f, dy, dd){
+  const ys = c.ys, s = c.s, K = ys.length, M = s.length, d = c.d - dd;
+  let cs = 0;
+  for (let k=0; k<K; k++){
+    const L = f(ys[k] + dy);
+    if (!(L > 0)) continue;
+    let acc = 0;
+    for (let m=0; m<M; m++){ const v = L - d*s[m]; if (v > 0) acc += v; }
+    cs += acc;
+  }
+  return cs*c.n/(K*M);
+}
+/* Salario minimo legale: stime Istat (audizione luglio 2023, dati 2019).
+   9 €: 3,6 milioni di rapporti, +2,8 mld di retribuzioni; 10 €: circa 6 milioni di rapporti, +6,4 mld.
+   Lavoratori stimati come l'83% dei rapporti (piu' rapporti per persona). */
+const MWS = {9:{workers:3.0e6, gross:2.8e9}, 10:{workers:5.0e6, gross:6.4e9}};
+const EMP = {7:396474, 8:394697, 9:607331, 10:1173938, 11:1032116, 12:1554051, 13:2653757, 14:4137425}; // dipendenti per classe, 4.000-26.000 €
+const CONTRIB = 0.908;     // quota dell'aumento lordo che resta imponibile, al netto dei contributi a carico del lavoratore
+const DETR_SLOPE = 0.0915; // calo della detrazione per lavoro dipendente per euro di reddito tra 15.000 e 28.000 €
+let SHIFT = new Array(C.length).fill(null);
+function mwInfo(){
+  if (!state.mw) return null;
+  const sc = MWS[state.mw];
+  return {workers: sc.workers, gross: sc.gross/sc.workers, dy: sc.gross/sc.workers*CONTRIB};
+}
+function buildShift(){
+  SHIFT = new Array(C.length).fill(null);
+  const mi = mwInfo(); if (!mi) return;
+  const ids = Object.keys(EMP).map(Number);
+  // pesi: 'low' concentra gli aumenti sotto i 12.000 € (circa il 13% tra 12 e 20 mila, come nei dati Istat a 9 €)
+  const w = i => state.mwDist === 'spread' ? 1 : (i <= 11 ? 1 : (i <= 13 ? 0.15 : 0.05));
+  const cap = {}; ids.forEach(i => cap[i] = 0.85*EMP[i]);
+  const alloc = {}; ids.forEach(i => alloc[i] = 0);
+  let left = mi.workers, open = ids.slice();
+  for (let it=0; it<10 && left > 1 && open.length; it++){
+    const tw = open.reduce((t,i) => t + EMP[i]*w(i), 0), next = [];
+    let used = 0;
+    for (const i of open){
+      const want = left*EMP[i]*w(i)/tw, room = cap[i] - alloc[i], give = Math.min(want, room);
+      alloc[i] += give; used += give; if (cap[i] - alloc[i] > 1) next.push(i);
+    }
+    left -= used; open = next;
+  }
+  for (const i of ids){
+    const c = C[i];
+    SHIFT[i] = {f: alloc[i]/c.n, dy: mi.dy, dd: (c.lo >= 15000 && c.lo < 28000) ? DETR_SLOPE*mi.dy : 0};
+  }
+}
+function revenue(f, per, useShift=true){
+  let R = 0;
+  for (let ci=0; ci<C.length; ci++){
+    const c = C[ci], sh = useShift ? SHIFT[ci] : null;
+    let cs = classRev(c, f, 0, 0);
+    if (sh && sh.f > 0) cs = (1 - sh.f)*cs + sh.f*classRev(c, f, sh.dy, sh.dd);
+    if (per) per[ci] = cs;
+    R += cs;
+  }
+  return R;
+}
+const BASE_PER = new Float64Array(C.length);
+const BASE0 = revenue(irpef2026, null, false);
+let BASE = BASE0;
+function rebase(){ buildShift(); BASE = revenue(irpef2026, BASE_PER); }
+/* Imposta sui grandi patrimoni: circa 50.000 persone (lo 0,1% più ricco) oltre 5,4 milioni di patrimonio netto.
+   Coda di Pareto con alfa 1,476, calibrata perché lo schema del Manifesto "Tax the rich" (1,7% / 2,1% / 3,5%)
+   dia i 15,7 miliardi stimati; patrimonio medio circa 16,7 milioni. Base imponibile oltre la soglia: 567 miliardi. */
+const WT = {N:50000, w0:5.4e6, alpha:1.4759};
+const wtN = k => WT.N*Math.pow(k/WT.w0, -WT.alpha);       // persone sopra il patrimonio k
+const wtB = k => wtN(k)*k/(WT.alpha - 1);                  // somma delle eccedenze oltre k
+const wtRows = () => (state.wtRows || []).filter(r => r.th > 0).slice().sort((x, y) => x.th - y.th);
+function wtSeg(rs, i){ const lo = rs[i].th*1e6, hi = rs[i+1] ? rs[i+1].th*1e6 : null; return rs[i].r/100*(wtB(lo) - (hi ? wtB(hi) : 0)); }
+function wtGross(){ const rs = wtRows(); let g = 0; for (let i=0; i<rs.length; i++) g += wtSeg(rs, i); return g; }
+const wtRev = () => wtGross()*(1 - (state.wtEro || 0)/100);
+function wtTaxOn(w){ const rs = wtRows(); let t = 0; rs.forEach((r, i) => { const lo = r.th*1e6, hi = rs[i+1] ? rs[i+1].th*1e6 : Infinity; if (w > lo) t += r.r/100*(Math.min(w, hi) - lo); }); return t; }
+
+/* ---------- linguaggio delle formule ---------- */
+const FUNCS = {
+  min:[1,20,(...x) => Math.min(...x)], max:[1,20,(...x) => Math.max(...x)],
+  abs:[1,1,Math.abs], sqrt:[1,1,Math.sqrt], exp:[1,1,Math.exp],
+  log:[1,1,Math.log], ln:[1,1,Math.log], log2:[1,1,Math.log2], log10:[1,1,Math.log10],
+  pow:[2,2,Math.pow], floor:[1,1,Math.floor], ceil:[1,1,Math.ceil], round:[1,1,Math.round],
+  clamp:[3,3,(x,lo,hi) => Math.min(hi, Math.max(lo, x))],
+  pos:[1,1,x => x > 0 ? x : 0], step:[1,1,x => x > 0 ? 1 : 0],
+  se:[3,3,(c,t,f) => c ? t : f]
+};
+FUNCS['if'] = FUNCS.se;
+const H = {}; for (const k in FUNCS) H[k] = FUNCS[k][2];
+const CONSTS = {pi:Math.PI, e:Math.E};
+const VARS = ['y','a','b','c'];
+class FErr extends Error { constructor(msg, pos){ super(msg); this.pos = pos; } }
+
+function tokenize(src){
+  const toks = [], map = {'×':'*','·':'*','÷':'/','−':'-','–':'-','≤':'<=','≥':'>=','≠':'!='};
+  let i = 0;
+  while (i < src.length){
+    const ch = src[i];
+    if (/\s/.test(ch)){ i++; continue; }
+    if (map[ch]){ toks.push({t:'op', v:map[ch], pos:i}); i++; continue; }
+    if (/[0-9.]/.test(ch)){
+      const m = /^(\d+\.?\d*|\.\d+)(e[+-]?\d+)?/i.exec(src.slice(i));
+      if (!m) throw new FErr('Numero non valido', i);
+      let v = parseFloat(m[0]), len = m[0].length;
+      if (/^k(?![a-z0-9_])/i.test(src.slice(i+len))){ v *= 1000; len += 1; }
+      toks.push({t:'num', v, pos:i}); i += len; continue;
+    }
+    if (/[a-zA-Z_]/.test(ch)){
+      const m = /^[a-zA-Z_][a-zA-Z_0-9]*/.exec(src.slice(i));
+      toks.push({t:'id', v:m[0].toLowerCase(), pos:i}); i += m[0].length; continue;
+    }
+    const two = src.substr(i, 2);
+    if (['<=','>=','==','!=','**'].includes(two)){ toks.push({t:'op', v: two === '**' ? '^' : two, pos:i}); i += 2; continue; }
+    if ('+-*/^(),?:<>'.includes(ch)){ toks.push({t:'op', v:ch, pos:i}); i++; continue; }
+    if (ch === '=') throw new FErr('Per confrontare due valori usa ==', i);
+    if (ch === ';') throw new FErr('Separa gli argomenti con la virgola e i decimali con il punto', i);
+    throw new FErr(`Carattere non ammesso: «${ch}»`, i);
+  }
+  toks.push({t:'end', pos:src.length});
+  return toks;
+}
+function parse(src){
+  const T = tokenize(src); let p = 0;
+  const isOp = v => T[p].t === 'op' && T[p].v === v;
+  const expect = v => { if (!isOp(v)) throw new FErr(v === ')' ? 'Manca una parentesi chiusa' : `Manca «${v}»`, T[p].pos); p++; };
+  const expr = () => tern();
+  function tern(){ const c = cmp(); if (isOp('?')){ p++; const t = expr(); expect(':'); const f = expr(); return {k:'tern', c, t, f}; } return c; }
+  function cmp(){ let l = add(); while (T[p].t === 'op' && ['<','<=','>','>=','==','!='].includes(T[p].v)){ const op = T[p++].v; l = {k:'cmp', op, l, r:add()}; } return l; }
+  function add(){ let l = mul(); while (isOp('+') || isOp('-')){ const op = T[p++].v; l = {k:'bin', op, l, r:mul()}; } return l; }
+  function mul(){ let l = un(); while (isOp('*') || isOp('/')){ const op = T[p++].v; l = {k:'bin', op, l, r:un()}; } return l; }
+  function un(){ if (isOp('-')){ p++; return {k:'neg', x:un()}; } if (isOp('+')){ p++; return un(); } return pw(); }
+  function pw(){ const b = prim(); if (isOp('^')){ p++; return {k:'bin', op:'^', l:b, r:un()}; } return b; }
+  function prim(){
+    const t = T[p];
+    if (t.t === 'num'){ p++; return {k:'num', v:t.v}; }
+    if (t.t === 'id'){
+      p++;
+      if (isOp('(')){
+        const f = FUNCS[t.v];
+        if (!f) throw new FErr(`Funzione sconosciuta: ${t.v}`, t.pos);
+        p++; const args = [];
+        if (!isOp(')')){ args.push(expr()); while (isOp(',')){ p++; args.push(expr()); } }
+        expect(')');
+        if (args.length < f[0] || args.length > f[1]) throw new FErr(`${t.v} vuole ${f[0] === f[1] ? f[0] : 'da ' + f[0] + ' a ' + f[1]} argomenti`, t.pos);
+        return {k:'call', name:t.v, args};
+      }
+      if (VARS.includes(t.v)) return {k:'var', v:t.v};
+      if (t.v in CONSTS) return {k:'num', v:CONSTS[t.v]};
+      if (FUNCS[t.v]) throw new FErr(`${t.v} va usata con le parentesi, per esempio ${t.v}(y)`, t.pos);
+      throw new FErr(`Nome sconosciuto «${t.v}»: puoi usare y, a, b, c`, t.pos);
+    }
+    if (isOp('(')){ p++; const e = expr(); expect(')'); return e; }
+    if (t.t === 'end') throw new FErr('La formula è incompleta', t.pos);
+    throw new FErr(`Simbolo inatteso: «${t.v}»`, t.pos);
+  }
+  if (T[0].t === 'end') throw new FErr('Scrivi una formula', 0);
+  const ast = expr();
+  if (T[p].t !== 'end'){
+    const t = T[p];
+    throw new FErr(t.t === 'op' && t.v === ')' ? 'C\u2019è una parentesi chiusa di troppo' : `Manca un operatore prima di «${t.v}»`, t.pos);
+  }
+  return ast;
+}
+function usedVars(n, s = new Set()){
+  if (n.k === 'var') s.add(n.v);
+  for (const key of ['x','l','r','c','t','f']) if (n[key] && typeof n[key] === 'object') usedVars(n[key], s);
+  if (n.args) n.args.forEach(a => usedVars(a, s));
+  return s;
+}
+function toJS(n){
+  switch (n.k){
+    case 'num': return '(' + (Number.isFinite(n.v) ? String(n.v) : '0') + ')';
+    case 'var': return n.v;
+    case 'neg': return '(-' + toJS(n.x) + ')';
+    case 'bin': return n.op === '^' ? 'Math.pow(' + toJS(n.l) + ',' + toJS(n.r) + ')' : '(' + toJS(n.l) + n.op + toJS(n.r) + ')';
+    case 'cmp': return '((' + toJS(n.l) + ({'==':'===','!=':'!=='}[n.op] || n.op) + toJS(n.r) + ')?1:0)';
+    case 'tern': return '((' + toJS(n.c) + ')?(' + toJS(n.t) + '):(' + toJS(n.f) + '))';
+    case 'call': return 'H.' + n.name + '(' + n.args.map(toJS).join(',') + ')';
+  }
+  throw new Error('nodo');
+}
+function toClosure(n){
+  switch (n.k){
+    case 'num': { const v = n.v; return () => v; }
+    case 'var': return n.v === 'y' ? (y) => y : n.v === 'a' ? (y,a) => a : n.v === 'b' ? (y,a,b) => b : (y,a,b,c) => c;
+    case 'neg': { const x = toClosure(n.x); return (y,a,b,c) => -x(y,a,b,c); }
+    case 'bin': { const l = toClosure(n.l), r = toClosure(n.r);
+      switch (n.op){
+        case '+': return (y,a,b,c) => l(y,a,b,c) + r(y,a,b,c);
+        case '-': return (y,a,b,c) => l(y,a,b,c) - r(y,a,b,c);
+        case '*': return (y,a,b,c) => l(y,a,b,c) * r(y,a,b,c);
+        case '/': return (y,a,b,c) => l(y,a,b,c) / r(y,a,b,c);
+        default:  return (y,a,b,c) => Math.pow(l(y,a,b,c), r(y,a,b,c));
+      } }
+    case 'cmp': { const l = toClosure(n.l), r = toClosure(n.r);
+      const f = {'<':(u,v)=>u<v, '<=':(u,v)=>u<=v, '>':(u,v)=>u>v, '>=':(u,v)=>u>=v, '==':(u,v)=>u===v, '!=':(u,v)=>u!==v}[n.op];
+      return (y,a,b,c) => f(l(y,a,b,c), r(y,a,b,c)) ? 1 : 0; }
+    case 'tern': { const c0 = toClosure(n.c), t = toClosure(n.t), f = toClosure(n.f); return (y,a,b,c) => c0(y,a,b,c) ? t(y,a,b,c) : f(y,a,b,c); }
+    case 'call': { const f = H[n.name], A = n.args.map(toClosure);
+      if (A.length === 1){ const x = A[0]; return (y,a,b,c) => f(x(y,a,b,c)); }
+      if (A.length === 2){ const x = A[0], z = A[1]; return (y,a,b,c) => f(x(y,a,b,c), z(y,a,b,c)); }
+      if (A.length === 3){ const x = A[0], z = A[1], w = A[2]; return (y,a,b,c) => f(x(y,a,b,c), z(y,a,b,c), w(y,a,b,c)); }
+      return (y,a,b,c) => f(...A.map(g => g(y,a,b,c))); }
+  }
+  throw new Error('nodo');
+}
+function compile(src){
+  const ast = parse(src), used = usedVars(ast);
+  let fn = null;
+  try {
+    // il codice è generato solo da nodi ammessi (numeri, y, a, b, c, operatori, funzioni dell'elenco)
+    const g = new Function('H','y','a','b','c', '"use strict";return ' + toJS(ast) + ';');
+    g(H, 1, 1, 1, 1);
+    fn = (y,a,b,c) => g(H, y, a, b, c);
+  } catch (e) { fn = toClosure(ast); }
+  return {fn, used, src};
+}
+
+/* ---------- dall'espressione all'imposta ---------- */
+const GN = 1101, GX = new Float64Array(GN), GR = Math.pow(50e6/2e5, 1/300), GLR = Math.log(GR);
+for (let i=0; i<=800; i++) GX[i] = i*250;
+for (let i=1; i<=300; i++) GX[800+i] = 2e5*Math.pow(GR, i);
+const mClamp = v => v > 0 ? (v < 100 ? v : 100) : 0;
+function gridIndex(y){
+  if (y <= 2e5) return Math.min(799, Math.floor(y/250));
+  return Math.min(GN-2, 800 + Math.floor(Math.log(y/2e5)/GLR));
+}
+function makeTax(Fc, mode, p){
+  const fn = Fc.fn, a = p.a, b = p.b, c = p.c;
+  if (mode === 'T') return y => { const v = fn(y,a,b,c); return v > 0 ? (v < y ? v : y) : 0; };
+  if (mode === 'avg') return y => { if (y <= 0) return 0; let t = fn(y,a,b,c); if (!(t > 0)) return 0; if (t > 100) t = 100; return t*y/100; };
+  const cum = new Float64Array(GN); let prev = mClamp(fn(0,a,b,c));
+  for (let i=1; i<GN; i++){ const v = mClamp(fn(GX[i],a,b,c)); cum[i] = cum[i-1] + (prev + v)*0.005*(GX[i] - GX[i-1]); prev = v; }
+  const last = prev;
+  return y => {
+    if (y <= 0) return 0;
+    if (y >= GX[GN-1]) return cum[GN-1] + last/100*(y - GX[GN-1]);
+    const j = gridIndex(y), t = (y - GX[j])/(GX[j+1] - GX[j]);
+    return cum[j] + t*(cum[j+1] - cum[j]);
+  };
+}
+
+
+/* ---------- impostazioni pronte ---------- */
+const SC_PRESETS = [
+  ['Oggi (dal 2026)', [28000, 50000], [23, 33, 43]],
+  ['2024 e 2025', [28000, 50000], [23, 35, 43]],
+  ['2022 e 2023', [15000, 28000, 50000], [23, 25, 35, 43]],
+  ['Fino al 2021', [15000, 28000, 55000, 75000], [23, 27, 38, 41, 43]]
+];
+const LIB = {
+  log:   {name:"Sale con il logaritmo", mode:'avg', f:'clamp(a + b*log2(y/10000), 0, c)', p:{
+    a:[15, 0, 30, 0.5, "Tasse ogni 100 € a 10.000 € di reddito"], b:[6.1, 0, 15, 0.1, "Punti in più ogni volta che il reddito raddoppia"], c:[45, 20, 70, 0.5, "Massimo ogni 100 €"]}},
+  twolog:{name:"Due salite diverse", mode:'avg', f:'clamp(15 + a*log2(clamp(y, 10k, 100k)/10k) + b*log2(max(y, 100k)/100k), 15, c)', p:{
+    a:[6.16, 0, 15, 0.1, "Salita fino a 100.000 €: punti in più a ogni raddoppio"], b:[4, 0, 15, 0.1, "Salita oltre 100.000 €: punti in più a ogni raddoppio"], c:[45, 20, 70, 0.5, "Massimo ogni 100 €"]}},
+  gs:    {name:"Si avvicina a un massimo", mode:'avg', f:'c*(1 - (1 + a*(y/10000)^b)^(-1/b))', p:{
+    a:[0.407, 0.05, 2, 0.005, "Quanto in fretta sale"], b:[1, 0.2, 3, 0.05, "Forma della curva"], c:[45, 20, 70, 0.5, "Massimo a cui ci si avvicina, ogni 100 €"]}},
+  hsv:   {name:"Progressività costante", mode:'T', f:'y - a*25000*(y/25000)^(1 - b)', p:{
+    a:[0.779, 0.6, 1, 0.001, "Quanto resta in tasca a 25.000 € (1 = niente tasse)"], b:[0.15, 0, 0.4, 0.005, "Progressività (0 = aliquota unica)"]}},
+  exp:   {name:"Sale verso un tetto", mode:'marg', f:'b + (c - b)*(1 - exp(-y/(1000*a)))', p:{
+    a:[36.3, 5, 150, 0.5, "Velocità: migliaia di euro per fare il 63% della salita"], b:[15, 0, 40, 0.5, "Aliquota sul primo euro"], c:[45, 20, 70, 0.5, "Aliquota verso cui si tende"]}},
+  custom:{name:"Scrivo io", mode:null, f:null, p:null}
+};
+const PRESETS_W = {
+  none:  {label:'Nessuna', rows:[]},
+  light: {label:'1% sopra 5,4 milioni', rows:[{th:5.4, r:1}]},
+  econ:  {label:'Proposta degli economisti', rows:[{th:5.4, r:1.7}, {th:8, r:2.1}, {th:20.9, r:3.5}]},
+  wide:  {label:'1, 2 e 3% sopra 3, 5 e 10 milioni', rows:[{th:3, r:1}, {th:5, r:2}, {th:10, r:3}]},
+  custom:{label:'Decido io', rows:null}
+};
+function libState(id){
+  const L = LIB[id], spec = {};
+  for (const k of ['a','b','c']){ const q = L.p[k]; spec[k] = q ? {v:q[0], min:q[1], max:q[2], step:q[3], label:q[4]} : {v:1, min:0, max:100, step:0.1, label:'Parametro ' + k}; }
+  return {preset:id, mode:L.mode, f:L.f, spec, adj:0};
+}
+const DEF = {opt:'sc', sc:{th:[28000, 50000], r:[23, 33, 43]}, flat:{r:36, s:8000}, grad:{a:18, m:43, y:60000}, lib:libState('log'),
+  mw:0, mwDist:'low', wp:'none', wtRows:[], wtEro:20, cat:'dip', inc:30000, cmp:true, pv:'marg'};
+let state = JSON.parse(JSON.stringify(DEF));
+let F = compile(state.lib.f);
+const NTOT = C.reduce((t, c) => t + c.n, 0);
+
+/* ---------- link condivisibile ---------- */
+function toHash(){
+  const p = new URLSearchParams();
+  p.set('o', state.opt);
+  if (state.opt === 'sc') p.set('s', state.sc.th.join('-') + '_' + state.sc.r.join('-'));
+  if (state.opt === 'flat') p.set('f', [state.flat.r, state.flat.s].join(','));
+  if (state.opt === 'grad') p.set('g', [state.grad.a, state.grad.m, state.grad.y].join(','));
+  if (state.opt === 'lib'){
+    const L = state.lib; p.set('lp', L.preset);
+    if (L.preset === 'custom'){ p.set('lm', L.mode); p.set('lf', L.f); }
+    p.set('lv', ['a','b','c'].map(k => L.spec[k].v).join(','));
+    if (L.preset === 'custom') p.set('lr', ['a','b','c'].map(k => L.spec[k].min + ':' + L.spec[k].max).join(','));
+    if (L.adj) p.set('la', L.adj);
+  }
+  if (state.mw) p.set('mw', state.mw);
+  if (state.wp !== 'none'){ p.set('w', state.wp); if (state.wp === 'custom') p.set('wr', state.wtRows.map(r => r.th + ':' + r.r).join(',')); p.set('e', state.wtEro); }
+  p.set('c', state.cat); p.set('i', state.inc);
+  return '#' + p.toString();
+}
+function fromHash(){
+  try {
+    const p = new URLSearchParams(location.hash.slice(1)); if (!p.has('o')) return;
+    const num = (v, lo, hi) => { const x = parseFloat(v); return isFinite(x) ? Math.min(hi, Math.max(lo, x)) : null; };
+    if (['sc','flat','grad','lib'].includes(p.get('o'))) state.opt = p.get('o');
+    if (p.has('s')){
+      const [a, b] = p.get('s').split('_'), th = a ? a.split('-').map(x => num(x, 1, 1e7)) : [], r = (b || '').split('-').map(x => num(x, 0, 80));
+      const ok = r.length >= 1 && r.length <= 8 && th.length === r.length - 1 && th.every((x, i) => x !== null && (i === 0 || x > th[i-1])) && r.every(x => x !== null);
+      if (ok) state.sc = {th, r};
+    }
+    if (p.has('f')){ const [r, s] = p.get('f').split(','); if (num(r,0,80) !== null && num(s,0,100000) !== null) state.flat = {r:num(r,0,80), s:num(s,0,100000)}; }
+    if (p.has('g')){ const [a, m, y] = p.get('g').split(','); if ([num(a,0,80), num(m,0,80), num(y,5000,500000)].every(x => x !== null)) state.grad = {a:num(a,0,80), m:num(m,0,80), y:num(y,5000,500000)}; }
+    if (state.opt === 'lib' && LIB[p.get('lp')]){
+      const id = p.get('lp');
+      if (id === 'custom'){
+        const src = p.get('lf') || '', mode = ['avg','marg','T'].includes(p.get('lm')) ? p.get('lm') : 'avg';
+        try { F = compile(src); state.lib = libState('log'); state.lib.preset = 'custom'; state.lib.mode = mode; state.lib.f = src;
+          ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k);
+          const rr = (p.get('lr') || '').split(',');
+          ['a','b','c'].forEach((k, i) => { const [lo, hi] = (rr[i] || '').split(':').map(parseFloat); if (isFinite(lo) && isFinite(hi) && hi > lo){ const S = state.lib.spec[k]; S.min = lo; S.max = hi; S.step = niceStep(hi - lo, 200); } });
+        } catch(e) { state.lib = libState('log'); F = compile(state.lib.f); }
+      } else { state.lib = libState(id); F = compile(state.lib.f); }
+      const v = (p.get('lv') || '').split(',');
+      ['a','b','c'].forEach((k, i) => { const S = state.lib.spec[k], x = num(v[i], S.min, S.max); if (x !== null) S.v = x; });
+      const la = num(p.get('la'), -60, 150); if (la !== null) state.lib.adj = la;
+    }
+    if (['9','10'].includes(p.get('mw'))) state.mw = +p.get('mw');
+    if (PRESETS_W[p.get('w')]) state.wp = p.get('w');
+    if (state.wp === 'custom' && p.has('wr')) state.wtRows = p.get('wr').split(',').map(t => { const [th, r] = t.split(':'); return {th:num(th,1,1000), r:num(r,0,10)}; }).filter(r => r.th !== null && r.r !== null).slice(0, 4);
+    if (['10','20','40'].includes(p.get('e'))) state.wtEro = +p.get('e');
+    if (['dip','pen','aut','alt'].includes(p.get('c'))) state.cat = p.get('c');
+    if (num(p.get('i'), 0, 1e7) !== null) state.inc = num(p.get('i'), 0, 1e7);
+  } catch(e) {}
+}
+
+/* ---------- regole della riforma ---------- */
+function niceStep(range, target){
+  const raw = range/target, pw = Math.pow(10, Math.floor(Math.log10(raw))), r = raw/pw;
+  return +((r <= 1 ? 1 : r <= 2 ? 2 : r <= 2.5 ? 2.5 : r <= 5 ? 5 : 10)*pw).toPrecision(6);
+}
+const libVals = L => ({a:L.spec.a.v, b:L.spec.b.v, c:L.spec.c.v});
+function taxFor(st){
+  if (st.opt === 'flat'){ const r = st.flat.r/100, s = st.flat.s; return y => y > s ? r*(y - s) : 0; }
+  if (st.opt === 'grad'){
+    const a = st.grad.a/100, M = Math.max(st.grad.m, st.grad.a)/100, Y = st.grad.y, b = (M - a)/Y, top = a*Y + b*Y*Y/2;
+    return y => y <= 0 ? 0 : (y <= Y ? a*y + b*y*y/2 : top + M*(y - Y));
+  }
+  if (st.opt === 'lib'){
+    const base = makeTax(F, st.lib.mode, libVals(st.lib)), k = 1 + (st.lib.adj || 0)/100;
+    return y => { const t = base(y)*k; return t > 0 ? (t < y ? t : y) : 0; };
+  }
+  const th = st.sc.th, r = st.sc.r.map(v => v/100);
+  return y => { let t = 0, lo = 0; for (let i=0; i<r.length; i++){ const hi = i < th.length ? th[i] : Infinity; if (y <= lo) break; t += r[i]*(Math.min(y, hi) - lo); lo = hi; } return t; };
+}
+function marginalFor(st, y){
+  if (st.opt === 'flat') return y > st.flat.s ? st.flat.r : 0;
+  if (st.opt === 'grad'){ const M = Math.max(st.grad.m, st.grad.a); return y >= st.grad.y ? M : st.grad.a + (M - st.grad.a)*y/st.grad.y; }
+  if (st.opt === 'sc'){ const th = st.sc.th; let i = 0; while (i < th.length && y > th[i]) i++; return st.sc.r[i]; }
+  const f = taxFor(st), h = Math.max(25, y*0.0005), lo = Math.max(0, y - h);
+  return Math.max(0, Math.min(100, (f(y + h) - f(lo))/(y + h - lo)*100));
+}
+const margToday = y => y <= 28000 ? 23 : (y <= 50000 ? 33 : 43);
+function analyze(f){
+  let R = 0, less = 0, more = 0, same = 0;
+  const per = new Float64Array(C.length), base = new Float64Array(C.length);
+  for (let ci=0; ci<C.length; ci++){
+    const c = C[ci], sh = SHIFT[ci];
+    const parts = sh && sh.f > 0 ? [[1 - sh.f, 0, 0], [sh.f, sh.dy, sh.dd]] : [[1, 0, 0]];
+    let cs = 0, cb = 0;
+    for (const [wt, dy, dd] of parts){
+      const K = c.ys.length, Mm = c.s.length, d = c.d - dd, w = wt*c.n/(K*Mm);
+      for (let k=0; k<K; k++){
+        const y = c.ys[k] + dy; let Ln = f(y); if (!(Ln > 0)) Ln = 0; const Lo = irpef2026(y);
+        for (let m=0; m<Mm; m++){
+          const dm = d*c.s[m], nn = Ln > dm ? Ln - dm : 0, no = Lo > dm ? Lo - dm : 0;
+          cs += w*nn; cb += w*no;
+          const diff = nn - no;
+          if (diff < -10) less += w; else if (diff > 10) more += w; else same += w;
+        }
+      }
+    }
+    per[ci] = cs; base[ci] = cb; R += cs;
+  }
+  return {R, per, base, less, more, same};
+}
+
+/* ---------- detrazioni per il calcolo personale ---------- */
+function detr(cat, y){
+  if (cat === 'dip'){
+    let d = y <= 15000 ? 1955 : y <= 28000 ? 1910 + 1190*(28000 - y)/13000 : y <= 50000 ? 1910*(50000 - y)/22000 : 0;
+    if (y > 25000 && y <= 35000) d += 65;
+    if (y > 20000 && y <= 32000) d += 1000; else if (y > 32000 && y < 40000) d += 1000*(40000 - y)/8000;
+    return d;
+  }
+  if (cat === 'pen') return y <= 8500 ? 1955 : y <= 28000 ? 700 + 1255*(28000 - y)/19500 : y <= 50000 ? 700*(50000 - y)/22000 : 0;
+  if (cat === 'aut') return y <= 5500 ? 1265 : y <= 28000 ? 500 + 765*(28000 - y)/22500 : y <= 50000 ? 500*(50000 - y)/22000 : 0;
+  return 0;
+}
+const netOf = (L, cat, y) => Math.max(0, (L > 0 ? L : 0) - detr(cat, y));
+
+/* ---------- testi ---------- */
+const $ = id => document.getElementById(id);
+const money = v => {
+  const a = Math.abs(v);
+  if (a >= 9.95e8) return nf1.format(a/1e9).replace(/,0$/, '') + (a >= 1.95e9 ? ' miliardi' : ' miliardo');
+  return nf0.format(Math.round(a/1e7)*10) + ' milioni';
+};
+const euro = v => nf0.format(Math.round(v)) + ' €';
+const dec1 = v => Number.isInteger(+(+v).toFixed(1)) ? 0 : 1;
+const pct = v => fmtNum(v, dec1(v)) + '%';
+const people = n => n >= 1e6 ? nf1.format(n/1e6).replace(/,0$/, '') + ' milioni' : nf0.format(Math.round(n/1000)*1000);
+const decOf = step => { const s = String(step); if (s.includes('e-')) return Math.min(6, +s.split('e-')[1]); const i = s.indexOf('.'); return i < 0 ? 0 : Math.min(6, s.length - i - 1); };
+const parseNum = s => { s = String(s).trim().replace(/[€%\s]/g, '').replace('−', '-'); if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.'); else if (/^\-?\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, ''); return parseFloat(s); };
+
+/* ---------- passo 1 ---------- */
+const choiceBtns = [...document.querySelectorAll('.choice')];
+choiceBtns.forEach(b => {
+  b.addEventListener('click', () => { state.opt = b.dataset.opt; $('status').textContent = statusText(); renderCtrl(); update(); });
+  b.addEventListener('keydown', e => {
+    if (!['ArrowDown','ArrowUp','ArrowRight','ArrowLeft'].includes(e.key)) return;
+    e.preventDefault(); const n = choiceBtns.length, i = choiceBtns.indexOf(b), j = (i + (e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1) + n) % n;
+    choiceBtns[j].focus(); choiceBtns[j].click();
+  });
+});
+
+/* ---------- passo 2: controlli ---------- */
+const INTRO = {
+  sc:"Decidi quante fasce di reddito usare, dove finisce ciascuna e la sua aliquota. Ogni aliquota vale solo per la parte di reddito che cade nella sua fascia: con le regole di oggi chi guadagna 30.000 euro paga il 23% sui primi 28.000 e il 33% sui 2.000 restanti.",
+  flat:"Scegli la soglia sotto cui non si paga e l'aliquota unica per tutto il reddito che la supera.",
+  grad:"Scegli da dove parte l'aliquota, fin dove arriva e a quale reddito arriva al massimo. In mezzo cresce in modo regolare.",
+  lib:"Scegli una curva già pronta e regola i cursori. Se vuoi, apri la formula qui sotto e cambiala come preferisci."
+};
+let CTRL = {};   // controlli a cursore attivi: id -> {get, set, min, max, step, unit}
+const fmtVal = (v, unit) => unit === '%' ? pct(v) : unit === '€' ? euro(v) : unit === 'adj' ? (v > 0 ? '+' : v < 0 ? '−' : '') + fmtNum(Math.abs(v), dec1(v)) + '%' : fmtNum(v, decOf(unit), 1);
+function sliderHTML(id, label, it, hint, extra = ''){
+  const v = it.get(), plain = label.replace(/<[^>]+>/g, '');
+  return `<div class="sl">
+      <label for="sl-${id}">${label}</label><span class="val" id="sv-${id}">${fmtVal(v, it.unit)}</span>
+      <div class="row">
+        <button type="button" class="pm" data-id="${id}" data-d="-1" aria-label="Diminuisci: ${plain}">−</button>
+        <input type="range" id="sl-${id}" data-id="${id}" min="${it.min}" max="${it.max}" step="${it.step}" value="${v}" aria-valuetext="${fmtVal(v, it.unit)}">
+        <button type="button" class="pm" data-id="${id}" data-d="1" aria-label="Aumenta: ${plain}">+</button>
+      </div>
+      ${hint ? `<span class="hint">${hint}</span>` : ''}${extra}
+    </div>`;
+}
+function renderCtrl(){
+  choiceBtns.forEach(b => { const on = b.dataset.opt === state.opt; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
+  $('s2-intro').textContent = INTRO[state.opt];
+  $('fx').hidden = state.opt !== 'lib';
+  CTRL = {}; let h = '';
+  if (state.opt === 'sc'){
+    const S = state.sc, n = S.r.length;
+    h += `<div class="presets"><p>Parti da:</p><div class="seg" role="group" aria-label="Scaglioni pronti">${SC_PRESETS.map((p, i) => `<button type="button" data-scp="${i}" aria-pressed="${JSON.stringify(p[1]) === JSON.stringify(S.th) && JSON.stringify(p[2]) === JSON.stringify(S.r)}">${p[0]}</button>`).join('')}</div></div><div class="brs">`;
+    for (let i=0; i<n; i++){
+      const lo = i === 0 ? 0 : S.th[i-1], id = 'r' + i;
+      CTRL[id] = {get:() => state.sc.r[i], set:v => state.sc.r[i] = v, min:0, max:80, step:0.5, unit:'%'};
+      let lab;
+      if (n === 1) lab = 'Un\'unica aliquota su tutto il reddito';
+      else if (i < n - 1) lab = `${i === 0 ? 'Dal primo euro' : 'Da ' + euro(lo)} fino a <input data-th="${i}" inputmode="numeric" value="${nf0.format(S.th[i])}" aria-label="Fine dello scaglione ${i+1} in euro"> €`;
+      else lab = `Oltre ${euro(lo)}`;
+      h += `<div class="br"><div class="top"><span class="lab">${lab}</span><span class="val" id="sv-${id}">${pct(S.r[i])}</span></div>
+        <div class="row"><button type="button" class="pm" data-id="${id}" data-d="-1" aria-label="Diminuisci l'aliquota dello scaglione ${i+1}">−</button>
+        <input type="range" id="sl-${id}" data-id="${id}" min="0" max="80" step="0.5" value="${S.r[i]}" aria-label="Aliquota dello scaglione ${i+1}" aria-valuetext="${pct(S.r[i])}">
+        <button type="button" class="pm" data-id="${id}" data-d="1" aria-label="Aumenta l'aliquota dello scaglione ${i+1}">+</button></div></div>`;
+    }
+    h += `</div><div class="br-actions"><button type="button" class="btn ghost" id="br-add" ${n >= 8 ? 'disabled' : ''}>Aggiungi uno scaglione</button><button type="button" class="btn ghost" id="br-rm" ${n <= 1 ? 'disabled' : ''}>Togli l'ultimo scaglione</button></div>`;
+    h += `<p class="small muted" style="margin-top:8px">${n === 1 ? 'Con un solo scaglione è un\'aliquota unica, senza soglia.' : `${n} scaglioni. Puoi averne fino a 8.`}</p>`;
+  } else if (state.opt === 'flat'){
+    CTRL.fr = {get:() => state.flat.r, set:v => state.flat.r = v, min:0, max:70, step:0.5, unit:'%'};
+    CTRL.fs = {get:() => state.flat.s, set:v => state.flat.s = v, min:0, max:40000, step:500, unit:'€'};
+    h += '<div class="sliders">' + sliderHTML('fr', 'Aliquota unica', CTRL.fr, 'Si paga questa percentuale su ogni euro sopra la soglia.')
+      + sliderHTML('fs', 'Soglia sotto cui non si paga', CTRL.fs, 'Esempio: con 8.000 € di soglia e un reddito di 20.000 €, si paga solo sui 12.000 € in più.') + '</div>';
+  } else if (state.opt === 'grad'){
+    CTRL.ga = {get:() => state.grad.a, set:v => state.grad.a = v, min:0, max:50, step:0.5, unit:'%'};
+    CTRL.gm = {get:() => state.grad.m, set:v => state.grad.m = v, min:0, max:80, step:0.5, unit:'%'};
+    CTRL.gy = {get:() => state.grad.y, set:v => state.grad.y = v, min:10000, max:300000, step:5000, unit:'€'};
+    h += '<div class="sliders">' + sliderHTML('ga', 'Aliquota sul primo euro di reddito', CTRL.ga, 'Da qui parte la salita.')
+      + sliderHTML('gm', 'Aliquota massima', CTRL.gm, "Non si va mai oltre. Se è più bassa di quella iniziale, l'aliquota resta ferma.")
+      + sliderHTML('gy', 'Reddito a cui si arriva al massimo', CTRL.gy, 'Più è basso, più la salita è ripida.') + '</div>';
+  } else {
+    const L = state.lib;
+    h += `<div class="presets"><p>Scegli una curva:</p><div class="seg" role="group" aria-label="Curve pronte">${Object.entries(LIB).map(([k, x]) => `<button type="button" data-lp="${k}" aria-pressed="${L.preset === k}">${x.name}</button>`).join('')}</div></div><div class="sliders">`;
+    const used = ['a','b','c'].filter(k => F.used.has(k));
+    for (const k of used){
+      const S = L.spec[k];
+      CTRL['p' + k] = {get:() => state.lib.spec[k].v, set:v => state.lib.spec[k].v = v, min:S.min, max:S.max, step:S.step, unit:String(S.step)};
+      const extra = L.preset === 'custom' ? `<div class="rng">Valore <input data-pval="${k}" value="${fmtNum(S.v, decOf(S.step), 1)}" inputmode="decimal" aria-label="Valore di ${k}"> intervallo da <input data-pmin="${k}" value="${fmtNum(S.min, decOf(S.step))}" inputmode="decimal" aria-label="Minimo di ${k}"> a <input data-pmax="${k}" value="${fmtNum(S.max, decOf(S.step))}" inputmode="decimal" aria-label="Massimo di ${k}"></div>` : '';
+      h += sliderHTML('p' + k, S.label, CTRL['p' + k], '', extra);
+    }
+    if (!used.length) h += '<p class="small muted">La formula non usa i cursori a, b e c.</p>';
+    CTRL.adj = {get:() => state.lib.adj, set:v => state.lib.adj = v, min:-60, max:150, step:1, unit:'adj'};
+    h += sliderHTML('adj', 'Ritocco su tutte le imposte', CTRL.adj, 'Aumenta o riduce le tasse di tutti nella stessa proporzione. Il pulsante qui sotto lo usa per rendere la riforma a costo zero.');
+    h += '</div>';
+  }
+  $('ctrl').innerHTML = h;
+  syncFx();
+}
+function setCtrl(id, v){
+  const it = CTRL[id]; if (!it) return;
+  v = Math.min(it.max, Math.max(it.min, +(+v).toFixed(4)));
+  it.set(v);
+  const r = $('sl-' + id); if (r){ r.value = v; r.setAttribute('aria-valuetext', fmtVal(v, it.unit)); }
+  $('sv-' + id).textContent = fmtVal(v, it.unit);
+  const pvIn = document.querySelector(`[data-pval="${id.slice(1)}"]`); if (id[0] === 'p' && pvIn) pvIn.value = fmtNum(v, decOf(it.step), 1);
+  $('status').textContent = statusText();
+  if (id.startsWith('r')) document.querySelectorAll('[data-scp]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+  update();
+}
+$('ctrl').addEventListener('input', e => { if (e.target.type === 'range') setCtrl(e.target.dataset.id, e.target.value); });
+$('ctrl').addEventListener('click', e => {
+  const pm = e.target.closest('.pm'); if (pm){ const it = CTRL[pm.dataset.id]; setCtrl(pm.dataset.id, it.get() + (+pm.dataset.d)*it.step); return; }
+  const scp = e.target.closest('[data-scp]'); if (scp){ const p = SC_PRESETS[+scp.dataset.scp]; state.sc = {th:p[1].slice(), r:p[2].slice()}; renderCtrl(); update(); return; }
+  const lp = e.target.closest('[data-lp]'); if (lp){ chooseLib(lp.dataset.lp); return; }
+  if (e.target.id === 'br-add'){
+    const S = state.sc, n = S.r.length; if (n >= 8) return;
+    const lastTh = S.th.length ? S.th[S.th.length - 1] : 0;
+    const nt = lastTh ? Math.ceil(Math.max(lastTh*1.6, lastTh + 20000)/5000)*5000 : 50000;
+    S.th.push(nt); S.r.push(Math.min(80, S.r[n-1] + 5)); renderCtrl(); update(); return;
+  }
+  if (e.target.id === 'br-rm'){ const S = state.sc; if (S.r.length <= 1) return; S.r.pop(); S.th.pop(); renderCtrl(); update(); }
+});
+$('ctrl').addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset.th !== undefined){
+    const i = +t.dataset.th, S = state.sc, v = parseNum(t.value);
+    if (isFinite(v)){
+      const lo = (i === 0 ? 0 : S.th[i-1]) + 500, hi = i + 1 < S.th.length ? S.th[i+1] - 500 : 1e7;
+      S.th[i] = Math.round(Math.min(hi, Math.max(lo, v))/100)*100;
+    }
+    renderCtrl(); update(); return;
+  }
+  if (t.dataset.pval){ const v = parseNum(t.value); if (isFinite(v)){ const S = state.lib.spec[t.dataset.pval]; if (v < S.min) S.min = v; if (v > S.max) S.max = v; S.v = v; } renderCtrl(); update(); return; }
+  if (t.dataset.pmin || t.dataset.pmax){
+    const k = t.dataset.pmin || t.dataset.pmax, S = state.lib.spec[k], v = parseNum(t.value);
+    if (isFinite(v)){
+      const lo = t.dataset.pmin ? v : S.min, hi = t.dataset.pmax ? v : S.max;
+      if (hi > lo){ S.min = lo; S.max = hi; S.step = niceStep(hi - lo, 200); S.v = Math.min(hi, Math.max(lo, S.v)); }
+    }
+    renderCtrl(); update();
+  }
+});
+$('ctrl').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'range'){ e.preventDefault(); e.target.blur(); } });
+
+/* ---------- curva libera ---------- */
+function chooseLib(id){
+  if (id === 'custom'){ state.lib.preset = 'custom'; ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k); $('fx').open = true; }
+  else { state.lib = libState(id); F = compile(state.lib.f); }
+  $('fx-st').textContent = ''; $('fx-ta').removeAttribute('aria-invalid');
+  renderCtrl(); update();
+  if (id === 'custom') $('fx-ta').focus();
+}
+function syncFx(){
+  if (state.opt !== 'lib') return;
+  if ($('fx-ta').value !== state.lib.f && document.activeElement !== $('fx-ta')) $('fx-ta').value = state.lib.f;
+  document.querySelectorAll('[data-fm]').forEach(b => b.setAttribute('aria-pressed', b.dataset.fm === state.lib.mode));
+}
+document.querySelectorAll('[data-fm]').forEach(b => b.addEventListener('click', () => {
+  if (state.lib.mode === b.dataset.fm) return;
+  state.lib.mode = b.dataset.fm; state.lib.preset = 'custom'; ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k);
+  renderCtrl(); update();
+}));
+let fxTimer = null;
+$('fx-ta').addEventListener('input', () => { clearTimeout(fxTimer); fxTimer = setTimeout(applyFx, 400); });
+function applyFx(){
+  const src = $('fx-ta').value;
+  try { F = compile(src); }
+  catch (e) {
+    $('fx-st').textContent = `${e instanceof FErr ? e.message : 'Formula non valida'}${e instanceof FErr && src.trim() ? ` (carattere ${e.pos + 1})` : ''}. Uso ancora l'ultima formula valida.`;
+    $('fx-ta').setAttribute('aria-invalid', 'true');
+    try { F = compile(state.lib.f); } catch(e2) {}
+    return;
+  }
+  $('fx-ta').removeAttribute('aria-invalid');
+  const wasPreset = state.lib.preset;
+  state.lib.f = src;
+  const match = Object.keys(LIB).find(k => LIB[k].f === src && LIB[k].mode === state.lib.mode);
+  if (match && match === wasPreset){ /* nessun cambiamento */ }
+  else if (!match){ state.lib.preset = 'custom'; ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k); }
+  renderCtrl(); update();
+}
+function checkFx(R){
+  if (state.opt !== 'lib' || $('fx-ta').getAttribute('aria-invalid') === 'true') return;
+  const p = libVals(state.lib), v = F.fn(50000, p.a, p.b, p.c), notes = [];
+  if (state.lib.mode === 'T' && isFinite(v) && v > 0 && v < 100) notes.push(`A 50.000 € la formula vale ${fmtNum(v, 1)}: sembra un'aliquota, non un'imposta in euro. Prova a scegliere «Tasse ogni 100 €» o «Aliquota su ogni euro in più».`);
+  if (state.lib.mode !== 'T' && isFinite(v) && v > 100) notes.push(`A 50.000 € la formula vale ${nf0.format(v)}: sembra un importo in euro. Prova a scegliere «Imposta in euro».`);
+  if (R < 0.2*BASE0) notes.push(`Con questi valori le tasse sui redditi quasi spariscono (${money(R)}): controlla i cursori.`);
+  $('fx-st').textContent = notes.join(' ');
+}
+
+/* ---------- riforma a costo zero ---------- */
+const statusText = () => state.opt === 'lib'
+  ? 'Il pulsante cambia il ritocco su tutte le imposte finché lo Stato incassa quanto oggi.'
+  : 'Il pulsante sposta tutte le aliquote in su o in giù dello stesso numero di punti, finché lo Stato incassa quanto oggi.';
+function shifted(d){
+  const s = JSON.parse(JSON.stringify(state)), cl = v => Math.min(80, Math.max(0, v + d));
+  if (s.opt === 'flat') s.flat.r = cl(s.flat.r);
+  else if (s.opt === 'grad'){ s.grad.a = cl(s.grad.a); s.grad.m = cl(s.grad.m); }
+  else if (s.opt === 'lib') s.lib.adj = Math.min(150, Math.max(-60, (state.lib.adj || 0) + d));
+  else s.sc.r = s.sc.r.map(cl);
+  return s;
+}
+$('zero').addEventListener('click', () => {
+  const target = BASE0 - wtRev(), f = d => revenue(taxFor(shifted(d))) - target, lib = state.opt === 'lib';
+  let lo = lib ? -60 - (state.lib.adj || 0) : -40, hi = lib ? 150 - (state.lib.adj || 0) : 40;
+  if (f(lo) > 0 || f(hi) < 0){ $('status').textContent = lib ? 'Con questa curva il ritocco non basta: cambia i cursori.' : 'Spostando solo le aliquote non ci si arriva: prova a cambiare anche le soglie o le altre misure.'; return; }
+  for (let k=0; k<40; k++){ const m = (lo + hi)/2; if (f(m) < 0) lo = m; else hi = m; }
+  const d = Math.round((lo + hi)/2*(lib ? 10 : 100))/(lib ? 10 : 100), s = shifted(d);
+  state.sc = s.sc; state.flat = s.flat; state.grad = s.grad; state.lib.adj = s.lib.adj;
+  renderCtrl(); update();
+  if (lib) $('status').textContent = Math.abs(d) < 0.05 ? 'La riforma era già a costo zero.' : `Fatto: il ritocco è ora ${fmtVal(state.lib.adj, 'adj')}. Lo Stato incassa quanto oggi.`;
+  else $('status').textContent = Math.abs(d) < 0.005 ? 'La riforma era già a costo zero.' : `Fatto: le aliquote sono ${d < 0 ? 'scese' : 'salite'} di ${fmtNum(Math.abs(d), Math.abs(d) < 0.1 ? 2 : 1)} punti. Ora lo Stato incassa quanto oggi.`;
+});
+
+/* ---------- passo 3 ---------- */
+document.querySelectorAll('[data-mw]').forEach(b => b.addEventListener('click', () => { state.mw = +b.dataset.mw; rebase(); update(); }));
+Object.entries(PRESETS_W).forEach(([k, p]) => {
+  const b = document.createElement('button'); b.type = 'button'; b.dataset.wp = k; b.textContent = p.label;
+  b.addEventListener('click', () => { state.wp = k; if (p.rows) state.wtRows = p.rows.map(r => Object.assign({}, r)); else if (!state.wtRows.length) state.wtRows = [{th:5, r:1}]; renderW(); update(); });
+  $('wp').appendChild(b);
+});
+document.querySelectorAll('[data-ero]').forEach(b => b.addEventListener('click', () => { state.wtEro = +b.dataset.ero; update(); }));
+function renderW(){
+  document.querySelectorAll('[data-wp]').forEach(b => b.setAttribute('aria-pressed', b.dataset.wp === state.wp));
+  $('wcustom').hidden = state.wp !== 'custom';
+  $('wero-box').hidden = state.wp === 'none';
+  if (state.wp === 'custom'){
+    state.wtRows.sort((a, b) => a.th - b.th);
+    $('wrows').innerHTML = state.wtRows.map((r, i) => `<div class="wrow">Sopra
+      <input data-i="${i}" data-f="th" inputmode="decimal" value="${fmtNum(r.th, 0, 1)}" aria-label="Soglia ${i+1} in milioni di euro"> milioni si paga il
+      <input data-i="${i}" data-f="r" inputmode="decimal" value="${fmtNum(r.r, 0, 2)}" aria-label="Percentuale ${i+1}"> %
+      <button type="button" class="rm" data-i="${i}" aria-label="Togli la soglia ${i+1}">×</button></div>`).join('');
+    $('wadd').hidden = state.wtRows.length >= 4;
+  }
+}
+$('wrows').addEventListener('change', e => {
+  const t = e.target, i = +t.dataset.i; if (!t.dataset.f || !state.wtRows[i]) return;
+  const v = parseNum(t.value);
+  if (isFinite(v)) state.wtRows[i][t.dataset.f] = t.dataset.f === 'th' ? Math.min(1000, Math.max(1, v)) : Math.min(10, Math.max(0, v));
+  renderW(); update();
+});
+$('wrows').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.tagName === 'INPUT'){ e.preventDefault(); e.target.blur(); } });
+$('wrows').addEventListener('click', e => { const b = e.target.closest('.rm'); if (!b) return; state.wtRows.splice(+b.dataset.i, 1); renderW(); update(); });
+$('wadd').addEventListener('click', () => { const l = state.wtRows[state.wtRows.length - 1]; state.wtRows.push(l ? {th:Math.min(1000, l.th*2), r:Math.min(10, l.r + 1)} : {th:5, r:1}); renderW(); update(); });
+
+/* ---------- confronto e viste ---------- */
+document.querySelectorAll('.cmp-box').forEach(cb => cb.addEventListener('change', () => { state.cmp = cb.checked; document.querySelectorAll('.cmp-box').forEach(x => x.checked = state.cmp); drawPlan(); drawChart(); }));
+document.querySelectorAll('[data-pv]').forEach(b => { if (b.closest('.plan')) b.addEventListener('click', () => { state.pv = b.dataset.pv; drawPlan(); }); });
+
+/* ---------- risultati ---------- */
+const GROUPS = [
+  ['fino a 10.000 €',[0,1,2,3,4,5,6,7,8,9,10]], ['10–15.000 €',[11,12]], ['15–20.000 €',[13]], ['20–26.000 €',[14]],
+  ['26–35.000 €',[15,16]], ['35–50.000 €',[17,18]], ['50–75.000 €',[19,20,21,22]], ['75–100.000 €',[23,24,25]],
+  ['100–200.000 €',[26,27,28]], ['oltre 200.000 €',[29,30]]
+];
+let last = null;
+function update(){
+  const f = taxFor(state), A = analyze(f), Pw = wtRev(), T = A.R + Pw, D = T - BASE0;
+  last = {f, A, D};
+  checkFx(A.R);
+  const tot = A.less + A.more + A.same;
+  $('headline').innerHTML = Math.abs(D) < 3e8 ? 'Lo Stato incasserebbe <strong>più o meno quanto oggi</strong>.'
+    : `Lo Stato incasserebbe <strong>${money(D)} ${D < 0 ? 'in meno' : 'in più'}</strong> all'anno.`;
+  $('sub').textContent = Math.abs(D) < 3e8
+    ? `Le entrate restano intorno ai ${money(BASE0)} di oggi, ma cambia chi paga.`
+    : `È come se ognuno dei ${people(NTOT)} di contribuenti pagasse in media ${euro(Math.abs(D)/NTOT)} ${D < 0 ? 'in meno' : 'in più'}. Oggi l'IRPEF porta ${money(BASE0)} all'anno.`;
+  const bd = [];
+  if (state.mw || Pw > 0){
+    bd.push(`<li>Imposta sui redditi: ${money(A.R)} (oggi ${money(BASE0)})</li>`);
+    if (state.mw){ const e = A.R - revenue(f, null, false); bd.push(`<li>Di cui grazie al salario minimo: ${e >= 0 ? '+' : '−'}${money(e)}</li>`); }
+    if (Pw > 0) bd.push(`<li>Tassa sui grandi patrimoni: +${money(Pw)}</li>`);
+  }
+  $('breakdown').innerHTML = bd.join('');
+  const raw = [A.less, A.more, A.same].map(x => x/tot*100), cnt = raw.map(Math.floor);
+  const rest = 100 - cnt.reduce((a, b) => a + b, 0);
+  raw.map((x, i) => [x - cnt[i], i]).sort((a, b) => b[0] - a[0]).slice(0, rest).forEach(([, i]) => cnt[i]++);
+  const cells = []; for (let i=0; i<cnt[0]; i++) cells.push('l'); for (let i=0; i<cnt[1]; i++) cells.push('m'); for (let i=0; i<cnt[2]; i++) cells.push('');
+  const g = $('grid100'); if (g.children.length !== 100) g.innerHTML = '<i></i>'.repeat(100);
+  [...g.children].forEach((el, i) => el.className = cells[i]);
+  g.setAttribute('aria-label', `Su 100 contribuenti: ${cnt[0]} pagherebbero meno, ${cnt[1]} di più, ${cnt[2]} lo stesso.`);
+  $('plegend').innerHTML = `<li><i style="background:var(--less)"></i>${cnt[0]} pagherebbero meno (${people(A.less)})</li>`
+    + `<li><i style="background:var(--more)"></i>${cnt[1]} pagherebbero di più (${people(A.more)})</li>`
+    + `<li><i style="background:var(--same)"></i>${cnt[2]} pagherebbero lo stesso</li>`;
+  drawBars(A);
+  $('d1').innerHTML = Math.abs(D) < 3e8 ? 'Entrate: <b>come oggi</b>' : `Entrate: <b>${money(D)} ${D < 0 ? 'in meno' : 'in più'}</b>`;
+  $('d2').textContent = `${cnt[0]} su 100 pagano meno, ${cnt[1]} di più`;
+  document.querySelectorAll('[data-mw]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.mw === state.mw));
+  document.querySelectorAll('[data-ero]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.ero === state.wtEro));
+  const mi = mwInfo();
+  $('mw-note').textContent = mi ? `Circa ${people(mi.workers)} di lavoratori guadagnerebbero in media ${euro(mi.gross)} lordi in più all'anno.` : '';
+  if (Pw > 0){
+    const first = wtRows().find(r => r.r > 0);
+    $('w-note').innerHTML = `La pagherebbero circa ${people(wtN(first.th*1e6))} persone e porterebbe ${money(Pw)} all'anno. Chi ha un patrimonio di 10 milioni pagherebbe ${euro(wtTaxOn(1e7))} all'anno, chi ne ha 100 pagherebbe ${euro(wtTaxOn(1e8))}.`
+      + (state.wp === 'econ' ? ' È la proposta del manifesto «Tax the rich»: 1,7% tra 5,4 e 8 milioni, 2,1% tra 8 e 20,9 milioni, 3,5% oltre.' : '');
+  } else $('w-note').textContent = state.wp === 'none' ? '' : 'Con queste soglie e percentuali la tassa non porta nulla.';
+  drawPlan(); drawYou();
+  try { history.replaceState(null, '', toHash()); } catch(e) {}
+}
+function drawBars(A){
+  const box = $('bars'), W = Math.max(290, box.clientWidth), row = 30, H = GROUPS.length*row + 6;
+  const lw = W < 430 ? 112 : 136, vw = 86, area = W - lw - 2*vw, z = lw + vw + area/2;
+  const rows = GROUPS.map(([lab, idx]) => { let d = 0, n = 0; for (const i of idx){ d += A.per[i] - A.base[i]; n += C[i].n; } return [lab, d/n]; });
+  const av = rows.map(r => Math.abs(r[1])).sort((a, b) => b - a);
+  let mx = av[0]; if (av[1] > 0 && av[0] > 2.5*av[1]) mx = av[1]*1.25; mx = Math.max(60, mx);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Variazione media per fascia di reddito"><line x1="${z}" x2="${z}" y1="0" y2="${H}" stroke="var(--today)"/>`;
+  rows.forEach(([lab, v], k) => {
+    const y = k*row, w = Math.min(Math.abs(v), mx)/mx*(area/2), up = v > 0, small = Math.abs(v) < 5;
+    s += `<text x="${lw - 8}" y="${y + 20}" text-anchor="end" style="fill:var(--ink)">${lab}</text>`;
+    if (!small) s += `<rect x="${(up ? z : z - w).toFixed(1)}" y="${y + 6}" width="${Math.max(1, w).toFixed(1)}" height="${row - 12}" rx="3" fill="${up ? 'var(--more)' : 'var(--less)'}"/>`;
+    if (!small && Math.abs(v) > mx){ const bx = up ? z + w - 16 : z - w + 8; s += `<path d="M${bx} ${y + row - 7} l5 -${row - 14} M${bx + 6} ${y + row - 7} l5 -${row - 14}" stroke="var(--card)" stroke-width="2.5"/>`; }
+    const txt = small ? 'uguale' : (up ? '+' : '−') + nf0.format(Math.round(Math.abs(v))) + ' €';
+    s += `<text x="${small ? z + 8 : (up ? z + w + 6 : z - w - 6)}" y="${y + 20}" text-anchor="${small || up ? 'start' : 'end'}" style="fill:var(--ink);font-weight:700">${txt}</text>`;
+  });
+  box.innerHTML = s + '</svg>';
+}
+
+/* ---------- grafico della riforma ---------- */
+let planX = 40000;
+function planXmax(){
+  let m = 150000;
+  if (state.opt === 'sc' && state.sc.th.length) m = Math.max(m, state.sc.th[state.sc.th.length - 1]*1.3);
+  if (state.opt === 'flat') m = Math.max(m, state.flat.s*3);
+  if (state.opt === 'grad') m = Math.max(m, state.grad.y*1.25);
+  return Math.min(1e6, Math.ceil(m/50000)*50000);
+}
+function drawPlan(){
+  if (!last) return;
+  document.querySelectorAll('.plan [data-pv]').forEach(b => b.setAttribute('aria-pressed', b.dataset.pv === state.pv));
+  const box = $('plan'), W = Math.max(290, box.clientWidth), H = Math.round(Math.min(340, Math.max(240, W*0.58)));
+  const ml = 40, mr = 10, mt = 12, mb = 32, pw = W - ml - mr, ph = H - mt - mb, f = last.f, xmax = planXmax(), marg = state.pv === 'marg';
+  const valNew = y => marg ? marginalFor(state, y) : (y < 100 ? 0 : Math.max(0, f(y))/y*100);
+  const valOld = y => marg ? margToday(y) : (y < 100 ? 0 : irpef2026(y)/y*100);
+  // punti: griglia fitta più i punti di salto, per disegnare i gradini netti
+  let xs = []; for (let i=0; i<=400; i++) xs.push(i/400*xmax);
+  const jumps = state.opt === 'sc' ? state.sc.th : state.opt === 'flat' ? [state.flat.s] : [];
+  jumps.forEach(t => { if (t > 0 && t < xmax) xs.push(t, t + 0.01); });
+  xs = xs.sort((a, b) => a - b);
+  const vN = xs.map(valNew);
+  const old = marg ? [[0,23],[28000,23],[28000.01,33],[50000,33],[50000.01,43],[xmax,43]] : xs.map(x => [x, valOld(x)]);
+  let yMax = Math.max(30, ...vN, ...(state.cmp ? old.map(q => q[1]) : [])); yMax = Math.min(100, Math.ceil((yMax + 3)/10)*10);
+  const X = x => ml + x/xmax*pw, Y = v => mt + ph - Math.max(0, Math.min(v, yMax))/yMax*ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafico della riforma">`;
+  // quante persone per livello di reddito
+  let dmax = 0; const bars = [];
+  for (const c of C){ if (!c.hi || c.lo >= xmax) continue; const hi = Math.min(c.hi, xmax), dv = c.n/(c.hi - c.lo); bars.push([c.lo, hi, dv]); dmax = Math.max(dmax, dv); }
+  for (const [lo, hi, dv] of bars){ const h = dv/dmax*ph*0.2; s += `<rect x="${X(lo).toFixed(1)}" y="${(mt + ph - h).toFixed(1)}" width="${Math.max(0.5, X(hi) - X(lo) - 0.5).toFixed(1)}" height="${h.toFixed(1)}" fill="var(--same)" opacity=".7"/>`; }
+  for (let v = 0; v <= yMax; v += 10) s += `<line x1="${ml}" x2="${ml + pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--grid)"/><text x="${ml - 6}" y="${Y(v) + 4}" text-anchor="end">${v}%</text>`;
+  const step = xmax <= 150000 ? (W < 480 ? 50000 : 25000) : niceStep(xmax, W < 480 ? 3 : 6);
+  for (let x = 0; x <= xmax + 1; x += step) s += `<text x="${X(x)}" y="${H - 8}" text-anchor="${x === 0 ? 'start' : (x >= xmax - 1 ? 'end' : 'middle')}">${x === 0 ? '0 €' : nf0.format(x/1000) + ' mila'}</text>`;
+  if (state.cmp) s += `<polyline fill="none" stroke="var(--today)" stroke-width="2.2" stroke-dasharray="6 4" points="${old.map(q => X(q[0]).toFixed(1) + ',' + Y(q[1]).toFixed(1)).join(' ')}"/>`;
+  s += `<polyline fill="none" stroke="var(--line)" stroke-width="3.5" stroke-linejoin="round" points="${xs.map((x, i) => X(x).toFixed(1) + ',' + Y(vN[i]).toFixed(1)).join(' ')}"/>`;
+  const px = Math.min(planX, xmax), a = valNew(px), b = valOld(px);
+  s += `<line x1="${X(px)}" x2="${X(px)}" y1="${mt}" y2="${mt + ph}" stroke="var(--ink)" stroke-dasharray="3 3" opacity=".5"/>`;
+  if (state.cmp) s += `<circle cx="${X(px)}" cy="${Y(b)}" r="5" fill="var(--paper)" stroke="var(--today)" stroke-width="2"/>`;
+  s += `<circle cx="${X(px)}" cy="${Y(a)}" r="6" fill="var(--line)" stroke="var(--paper)" stroke-width="2"/></svg>`;
+  box.innerHTML = s;
+  const svg = box.querySelector('svg'); svg.style.touchAction = 'pan-y';
+  const pick = e => { const r = svg.getBoundingClientRect(), x = ((e.clientX - r.left)*(W/r.width) - ml)/pw*xmax; planX = Math.round(Math.min(xmax, Math.max(0, x))/500)*500; drawPlan(); };
+  svg.addEventListener('pointerdown', pick);
+  svg.addEventListener('pointermove', e => { if (e.buttons) pick(e); });
+  $('plan-leg').innerHTML = `<li><i></i>La tua riforma</li>${state.cmp ? '<li><i class="t"></i>Oggi</li>' : ''}<li><i class="d"></i>Quante persone hanno quel reddito</li>`;
+  $('plan-read').innerHTML = marg
+    ? `A ${euro(px)} di reddito, su ogni euro in più la riforma prende <b>${fmtNum(a, 0, 1)} centesimi</b>${state.cmp ? `, oggi ${fmtNum(b, 0, 1)}` : ''}. Tocca il grafico per scegliere un altro reddito.`
+    : `A ${euro(px)} di reddito si pagano <b>${fmtNum(a, 1)} € ogni 100</b>${state.cmp ? `, oggi ${fmtNum(b, 1)}` : ''}, prima delle detrazioni. Tocca il grafico per scegliere un altro reddito.`;
+  $('plan-note').textContent = marg
+    ? "L'aliquota su ogni euro in più è la percentuale che va in tasse quando il reddito cresce di un euro. Le barre chiare mostrano quante persone hanno quel reddito."
+    : 'Quanti euro di imposta si pagano ogni 100 € di reddito, prima delle detrazioni. Le barre chiare mostrano quante persone hanno quel reddito.';
+}
+
+/* ---------- e tu? ---------- */
+const catName = {dip:'da lavoro dipendente', pen:'da pensione', aut:'da lavoro autonomo', alt:''};
+document.querySelectorAll('[data-cat]').forEach(b => b.addEventListener('click', () => { state.cat = b.dataset.cat; drawYou(); try { history.replaceState(null, '', toHash()); } catch(e) {} }));
+$('inc-r').addEventListener('input', e => setInc(+e.target.value));
+$('inc-n').addEventListener('change', e => { const v = parseNum(e.target.value); if (isFinite(v)) setInc(v); else drawYou(); });
+$('inc-n').addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); e.target.blur(); } });
+function setInc(v){ state.inc = Math.max(0, Math.min(1e7, Math.round(v))); drawYou(); try { history.replaceState(null, '', toHash()); } catch(e) {} }
+function drawYou(){
+  if (!last) return;
+  document.querySelectorAll('[data-cat]').forEach(b => b.setAttribute('aria-pressed', b.dataset.cat === state.cat));
+  const y = state.inc, cat = state.cat, f = last.f;
+  $('inc-r').value = Math.min(200000, y); $('inc-n').value = nf0.format(y);
+  const today = netOf(irpef2026(y), cat, y), ref = netOf(f(y), cat, y), d = ref - today;
+  const who = `Con un reddito ${catName[cat] ? catName[cat] + ' ' : ''}di ${euro(y)}`;
+  let t;
+  if (today < 1 && ref < 1) t = `${who} oggi non paghi IRPEF, e non la pagheresti nemmeno con questa riforma.`;
+  else {
+    t = `${who} oggi paghi circa <strong>${euro(today)}</strong> di IRPEF all'anno. Con la tua riforma ne pagheresti <strong>${euro(ref)}</strong>`;
+    t += Math.abs(d) < 5 ? ': in pratica la stessa cifra.' : `: <strong>${euro(Math.abs(d))} ${d > 0 ? 'in più' : 'in meno'}</strong> all'anno, circa ${euro(Math.abs(d)/12)} al mese.`;
+  }
+  t += ` <span class="muted small">Su ogni euro in più che guadagni, la riforma ne prende ${fmtNum(marginalFor(state, y), 0, 1)} centesimi; oggi ${margToday(y)}.</span>`;
+  $('yours').innerHTML = t;
+  $('you-leg').innerHTML = `<li><i></i>Con la tua riforma</li>${state.cmp ? '<li><i class="t"></i>Oggi</li>' : ''}`;
+  drawChart();
+}
+function drawChart(){
+  if (!last) return;
+  const box = $('chart'), W = Math.max(290, box.clientWidth), H = Math.round(Math.min(330, Math.max(230, W*0.55)));
+  const ml = 40, mr = 10, mt = 12, mb = 32, pw = W - ml - mr, ph = H - mt - mb, cat = state.cat, f = last.f, y0 = state.inc;
+  const xmax = Math.max(150000, Math.ceil(y0*1.15/50000)*50000);
+  const rate = (L, y) => y < 500 ? 0 : netOf(L, cat, y)/y*100;
+  const xs = []; for (let i=0; i<=240; i++) xs.push(Math.max(500, i/240*xmax));
+  const vN = xs.map(x => rate(f(x), x)), vT = xs.map(x => rate(irpef2026(x), x));
+  let yMax = Math.max(30, ...vN, ...(state.cmp ? vT : [])); yMax = Math.min(100, Math.ceil((yMax + 2)/10)*10);
+  const X = x => ml + x/xmax*pw, Y = v => mt + ph - Math.min(v, yMax)/yMax*ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Euro di IRPEF ogni 100 euro di reddito">`;
+  for (let v = 0; v <= yMax; v += 10) s += `<line x1="${ml}" x2="${ml + pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--grid)"/><text x="${ml - 6}" y="${Y(v) + 4}" text-anchor="end">${v}</text>`;
+  const step = xmax <= 150000 ? (W < 480 ? 50000 : 25000) : (W < 480 ? 100000 : 50000);
+  for (let x = 0; x <= xmax; x += step) s += `<text x="${X(x)}" y="${H - 8}" text-anchor="${x === 0 ? 'start' : (x >= xmax ? 'end' : 'middle')}">${x === 0 ? '0 €' : nf0.format(x/1000) + ' mila'}</text>`;
+  if (state.cmp) s += `<polyline fill="none" stroke="var(--today)" stroke-width="2.2" stroke-dasharray="6 4" points="${xs.map((x, i) => X(x).toFixed(1) + ',' + Y(vT[i]).toFixed(1)).join(' ')}"/>`;
+  s += `<polyline fill="none" stroke="var(--line)" stroke-width="3.5" stroke-linejoin="round" points="${xs.map((x, i) => X(x).toFixed(1) + ',' + Y(vN[i]).toFixed(1)).join(' ')}"/>`;
+  const px = Math.min(y0, xmax), a = rate(f(px), px), b = rate(irpef2026(px), px);
+  s += `<line x1="${X(px)}" x2="${X(px)}" y1="${mt}" y2="${mt + ph}" stroke="var(--ink)" stroke-dasharray="3 3" opacity=".5"/>`;
+  if (state.cmp) s += `<circle cx="${X(px)}" cy="${Y(b)}" r="5" fill="var(--paper)" stroke="var(--today)" stroke-width="2"/>`;
+  s += `<circle cx="${X(px)}" cy="${Y(a)}" r="6" fill="var(--line)" stroke="var(--paper)" stroke-width="2"/>`;
+  s += `<text x="${Math.min(X(px) + 8, W - 120)}" y="${mt + 14}" style="fill:var(--ink);font-weight:700">${fmtNum(a, 1)} € ogni 100</text></svg>`;
+  box.innerHTML = s;
+  const svg = box.querySelector('svg'); svg.style.touchAction = 'pan-y';
+  const pick = e => { const r = svg.getBoundingClientRect(), x = ((e.clientX - r.left)*(W/r.width) - ml)/pw*xmax; setInc(Math.round(Math.min(xmax, Math.max(0, x))/500)*500); };
+  svg.addEventListener('pointerdown', pick);
+  svg.addEventListener('pointermove', e => { if (e.buttons) pick(e); });
+}
+
+/* ---------- condivisione ---------- */
+$('copy').addEventListener('click', async () => {
+  const url = location.href.split('#')[0] + toHash();
+  try { await navigator.clipboard.writeText(url); $('copy-status').textContent = 'Link copiato: incollalo dove vuoi.'; }
+  catch(e) { $('copy-status').textContent = 'Copia questo link: ' + url; }
+});
+
+/* ---------- avvio ---------- */
+fromHash();
+if (state.wp !== 'custom') state.wtRows = PRESETS_W[state.wp].rows.map(r => Object.assign({}, r));
+document.querySelectorAll('.cmp-box').forEach(x => x.checked = state.cmp);
+rebase(); renderCtrl(); renderW();
+$('status').textContent = statusText();
+update();
+try { new IntersectionObserver(es => { for (const e of es) $('dock').classList.toggle('off', e.isIntersecting); }, {threshold:0.05}).observe($('results')); } catch(e) {}
+let rz = null;
+new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(() => { if (last){ drawBars(last.A); drawPlan(); drawChart(); } }, 80); }).observe(document.querySelector('.wrap'));
+})();
+
+</script>
+</body>
+</html>
