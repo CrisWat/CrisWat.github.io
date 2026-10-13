@@ -1,0 +1,397 @@
+---
+layout: null
+title: "Ti fidi della macchina?"
+description: "Un piccolo esperimento in 10 domande: rispondi, ricevi un consiglio da un'IA o da un esperto e decidi se cambiare idea. Alla fine scopri quanto ti sei fidato, e di chi."
+permalink: /strumenti/fiducia-ia/
+---
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% seo %}
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<style>
+:root{
+  --paper:#F3F6F5; --ink:#18262F; --muted:#56656C; --rule:#B3CCC4; --field:#E3EDEA; --card:#FBFCFC;
+  --line:#2144D0; --line-soft:rgba(33,68,208,.12); --on-line:#FFFFFF; --today:#8A9B97; --track:#E1EAE7;
+  --ok:#0F7D67; --bad:#B3315C; --ai:#6B3FC8; --ai-soft:rgba(107,63,200,.10); --exp:#A85A00; --exp-soft:rgba(168,90,0,.10);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14222A; --ink:#E5EEEB; --muted:#9FB2AF; --rule:#3D635B; --field:#1C2F37; --card:#182A32;
+    --line:#8C9FFF; --line-soft:rgba(140,159,255,.16); --on-line:#0F1830; --today:#6F8580; --track:#22373F;
+    --ok:#3CC3A0; --bad:#F07399; --ai:#8E74E0; --ai-soft:rgba(142,116,224,.16); --exp:#C4862F; --exp-soft:rgba(196,134,47,.16); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14222A; --ink:#E5EEEB; --muted:#9FB2AF; --rule:#3D635B; --field:#1C2F37; --card:#182A32;
+  --line:#8C9FFF; --line-soft:rgba(140,159,255,.16); --on-line:#0F1830; --today:#6F8580; --track:#22373F;
+  --ok:#3CC3A0; --bad:#F07399; --ai:#8E74E0; --ai-soft:rgba(142,116,224,.16); --exp:#C4862F; --exp-soft:rgba(196,134,47,.16); color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  font-size:18px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:24px 20px 80px}
+a{color:var(--line)}
+.site-back{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 18px;font-size:.92rem;color:var(--muted)}
+.site-back a{color:var(--muted);font-weight:600;text-decoration:none}
+.site-back a:hover{color:var(--ink);text-decoration:underline}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.05;letter-spacing:-.015em;margin:8px 0 14px;font-weight:800}
+.lede{font-size:1.12rem;color:var(--muted);margin:0 0 6px;max-width:58ch}
+h2{font-size:1.45rem;line-height:1.2;margin:0 0 10px;font-weight:800}
+h3{font-size:1.1rem;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+.small{font-size:.92rem}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--line);outline-offset:2px}
+[hidden]{display:none!important}
+.btn{font-weight:700;font-size:1.02rem;color:var(--on-line);background:var(--line);border:0;border-radius:8px;padding:13px 20px;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.4;cursor:default;filter:none}
+.btn.ghost{color:var(--line);background:transparent;border:2px solid var(--line)}
+.start{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+
+/* gioco */
+.game{margin-top:26px;border-top:1px solid var(--rule);padding-top:22px}
+.prog{display:flex;justify-content:space-between;font-size:.92rem;color:var(--muted);margin-bottom:6px}
+.bar{height:6px;background:var(--track);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;background:var(--line);transition:width .3s ease}
+.q{font-size:clamp(1.3rem,4.4vw,1.7rem);line-height:1.25;font-weight:800;margin:0 0 16px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px 16px;background:var(--card);border:2px solid var(--rule);border-radius:10px;cursor:pointer;color:var(--ink);font-size:1.05rem}
+.opt:hover{border-color:var(--line)}
+.opt .k{display:inline-grid;place-items:center;flex:none;width:1.8em;height:1.8em;border-radius:50%;border:1.5px solid var(--rule);font-weight:700;font-size:.9rem;color:var(--muted)}
+.opt[aria-pressed="true"]{border-color:var(--line);background:var(--line-soft)}
+.opt[aria-pressed="true"] .k{background:var(--line);border-color:var(--line);color:var(--on-line)}
+.opt .lab{flex:1}
+.opt .mine,.opt .sug{font-size:.8rem;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.opt .mine{color:var(--muted);border:1.5px solid var(--rule)}
+.opt .sug{color:var(--ink)}
+.opt .sug.ai{border:2px solid var(--ai)}
+.opt .sug.exp{border:2px solid var(--exp)}
+.advice{margin:18px 0 0;border-radius:12px;padding:16px 18px;border:2px solid;display:grid;grid-template-columns:44px 1fr;gap:4px 14px;align-items:start}
+.advice.ai{border-color:var(--ai);background:var(--ai-soft)}
+.advice.exp{border-color:var(--exp);background:var(--exp-soft)}
+.advice .av{grid-row:span 2;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--card)}
+.advice.ai .av{background:var(--ai)}
+.advice.exp .av{background:var(--exp)}
+.advice .av svg{width:26px;height:26px}
+.advice .who{font-weight:800;font-size:.95rem}
+.advice .say{font-size:1.08rem;margin:0}
+.typing{display:inline-flex;gap:5px;padding:8px 0}
+.typing i{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.35;animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:1}}
+.next{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.next .hint{color:var(--muted);font-size:.92rem}
+
+/* risultati */
+.res-h{font-size:clamp(1.35rem,4.4vw,1.85rem);line-height:1.25;font-weight:700;margin:0 0 16px}
+.res-h strong{font-weight:900}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 22px}
+.tile{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:12px 14px}
+.tile b{display:block;font-size:1.7rem;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile span{font-size:.9rem;color:var(--muted)}
+.cmp{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:20px}
+.cmp h3{margin-bottom:12px}
+.pair{display:grid;grid-template-columns:7.5em 1fr 4.2em;gap:10px 12px;align-items:center;font-size:.98rem}
+.pair .t{height:16px;background:var(--track);border-radius:0 4px 4px 0;position:relative}
+.pair .t i{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;transition:width .4s ease}
+.pair .t i.ai{background:var(--ai)}.pair .t i.exp{background:var(--exp)}
+.pair .v{font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.pair .n{grid-column:2/-1;font-size:.86rem;color:var(--muted);margin-top:-6px}
+.reading{margin:16px 0 0;font-size:1.05rem}
+.trick{margin-top:22px;background:var(--field);border-radius:10px;padding:14px 16px}
+.trick p:last-child{margin:0}
+details.review{margin-top:18px;border:1px solid var(--rule);border-radius:10px;padding:10px 14px;background:var(--card)}
+details.review summary{cursor:pointer;font-weight:700;color:var(--line)}
+.rv{list-style:none;margin:10px 0 0;padding:0}
+.rv li{border-top:1px solid var(--rule);padding:12px 0}
+.rv li:first-child{border-top:0}
+.rv .qq{font-weight:700;margin:0 0 4px}
+.rv .meta{font-size:.92rem;color:var(--muted);margin:0 0 4px}
+.rv .ex{font-size:.95rem;margin:0}
+.ok{color:var(--ok);font-weight:700}.ko{color:var(--bad);font-weight:700}
+.learn{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule)}
+.learn ul{padding-left:1.1em}
+.learn li{margin:0 0 10px;max-width:64ch}
+.share{margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)}
+.share .row{display:flex;flex-wrap:wrap;gap:10px}
+.status{min-height:1.4em;margin:8px 0 0;color:var(--muted);font-size:.95rem}
+footer{margin-top:28px;color:var(--muted);font-size:.88rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:420px){ body{font-size:17px} .pair{grid-template-columns:6.4em 1fr 3.8em} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="site-back" aria-label="Percorso"><a href="/">Cristiano Fanelli</a><span aria-hidden="true">›</span><a href="/strumenti/">Strumenti</a></nav>
+
+<header id="intro">
+  <h1>Ti fidi della macchina?</h1>
+  <p class="lede">Dieci domande. Prima rispondi da solo, poi ricevi un consiglio e decidi se cambiare idea. A volte il consiglio arriva da un'intelligenza artificiale, a volte da un esperto. Alla fine scopri quanto ti sei fidato, e di chi.</p>
+  <div class="start">
+    <button type="button" class="btn" id="go">Inizia</button>
+    <span class="small muted">Ci vogliono circa tre minuti. Nessuna risposta viene salvata o inviata.</span>
+  </div>
+</header>
+
+<section class="game" id="game" hidden aria-live="polite">
+  <div class="prog"><span id="pn"></span><span id="ptag"></span></div>
+  <div class="bar" aria-hidden="true"><i id="pbar"></i></div>
+  <p class="q" id="qt"></p>
+  <div class="opts" id="opts" role="group" aria-labelledby="qt"></div>
+  <div id="adv"></div>
+  <div class="next" id="nextrow" hidden>
+    <button type="button" class="btn" id="next">Conferma e vai avanti</button>
+    <span class="hint">Puoi tenere la tua risposta o sceglierne un'altra.</span>
+  </div>
+</section>
+
+<section class="game" id="result" hidden>
+  <h2>Il tuo risultato</h2>
+  <p class="res-h" id="res-h"></p>
+  <div class="tiles" id="tiles"></div>
+  <div class="cmp">
+    <h3>Quando il consiglio era diverso dalla tua risposta, quante volte hai cambiato idea</h3>
+    <div class="pair" id="pairs"></div>
+    <p class="reading" id="reading"></p>
+  </div>
+  <div class="trick">
+    <p><strong>Il trucco.</strong> I consigli dell'IA e dell'esperto erano scritti con le stesse parole: l'unica differenza era la firma, assegnata a caso. E in 5 domande su 10 il consiglio era sbagliato di proposito.</p>
+    <p class="small muted">Con dieci domande il risultato è indicativo: è un gioco, non un test psicologico. Rifallo: domande, consigli e firme cambiano ogni volta.</p>
+  </div>
+  <details class="review">
+    <summary>Rivedi le risposte</summary>
+    <ol class="rv" id="rv"></ol>
+  </details>
+
+  <div class="learn">
+    <h2>Cos'è l'AI authority bias</h2>
+    <p>È la tendenza a fidarsi di una risposta solo perché viene da una macchina, anche quando è sbagliata o contraddice quello che sappiamo. Una risposta data con sicurezza, scritta bene e senza esitazioni sembra più autorevole di quanto sia.</p>
+    <ul>
+      <li><strong>Ci fidiamo più degli algoritmi che delle persone.</strong> In una serie di esperimenti pubblicati nel 2019, chi non era esperto seguiva di più lo stesso consiglio quando credeva che venisse da un algoritmo invece che da una persona (Logg, Minson e Moore).</li>
+      <li><strong>Succede anche agli specialisti.</strong> In uno studio su 27 radiologi che leggevano mammografie, quando l'IA suggeriva la categoria sbagliata i meno esperti passavano da quasi l'80% di risposte giuste a meno del 20%. Anche i più esperti scendevano dall'82% al 45,5% (Dratsch e colleghi, <em>Radiology</em>, 2023).</li>
+      <li><strong>Basta sapere che è un'IA.</strong> In un esperimento del 2024 le persone seguivano il consiglio di un'IA anche quando contraddiceva le informazioni che avevano davanti e il loro stesso giudizio, con danni per sé e per gli altri (Klingbeil, Grützner e Schreck, <em>Computers in Human Behavior</em>).</li>
+    </ul>
+    <h3 style="margin-top:20px">Quattro abitudini che aiutano</h3>
+    <ul>
+      <li><strong>Pensa prima di chiedere.</strong> Fatti un'idea tua prima di leggere la risposta della macchina: così hai qualcosa con cui confrontarla.</li>
+      <li><strong>Sicura non vuol dire giusta.</strong> Un'IA scrive con lo stesso tono quando ha ragione e quando sbaglia.</li>
+      <li><strong>Chiedi da dove viene.</strong> Per le cose che contano, cerca la fonte e controllala.</li>
+      <li><strong>L'IA è un supporto, non il decisore.</strong> La decisione, e la responsabilità, restano tue.</li>
+    </ul>
+    <p class="small">Di questi temi mi occupo anche nella formazione: <a href="/analisi-e-formazione/">Analisi e formazione</a>.</p>
+  </div>
+
+  <div class="share">
+    <h3>Sfida qualcuno</h3>
+    <p class="small muted">Copia il tuo risultato con il link al test.</p>
+    <div class="row">
+      <button type="button" class="btn" id="copy">Copia il risultato</button>
+      <button type="button" class="btn ghost" id="again">Rifai il test</button>
+    </div>
+    <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+  </div>
+
+  <footer>
+    <p>Fonti: J. M. Logg, J. A. Minson, D. A. Moore, <a href="https://www.hks.harvard.edu/publications/algorithm-appreciation-people-prefer-algorithmic-human-judgment" rel="noopener">Algorithm appreciation: People prefer algorithmic to human judgment</a>, <em>Organizational Behavior and Human Decision Processes</em>, 2019; T. Dratsch e colleghi, <a href="https://www.rsna.org/media/press/i/2432" rel="noopener">Automation bias in mammography</a>, <em>Radiology</em>, 2023; A. Klingbeil, C. Grützner, P. Schreck, <a href="https://doi.org/10.1016/j.chb.2024.108352" rel="noopener">Trust and reliance on AI</a>, <em>Computers in Human Behavior</em>, 2024. Le risposte alle domande sono spiegate in "Rivedi le risposte".</p>
+  </footer>
+</section>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* c = indice della risposta giusta, w = consiglio sbagliato (plausibile) */
+const GEN = [
+  { q:"Qual è il lago più profondo d'Italia?", o:["Lago di Garda","Lago di Como","Lago Maggiore","Lago Trasimeno"], c:1, w:0,
+    e:"Il Lago di Como supera i 400 metri di profondità. Il Maggiore arriva a circa 370, il Garda a circa 350." },
+  { q:"Qual è la regione italiana più grande?", o:["Piemonte","Sardegna","Sicilia","Lombardia"], c:2, w:0,
+    e:"La Sicilia, con circa 25.800 km². Il Piemonte segue di poco, con circa 25.400 km²." },
+  { q:"Quale di queste città ha più abitanti?", o:["Palermo","Torino","Genova","Bologna"], c:1, w:0,
+    e:"Torino, con circa 850.000 abitanti. Palermo ne ha circa 630.000, Genova circa 560.000." },
+  { q:"Con quale paese l'Italia ha il confine più lungo?", o:["Francia","Austria","Svizzera","Slovenia"], c:2, w:0,
+    e:"Con la Svizzera: circa 740 km. Quello con la Francia è lungo circa 500 km." },
+  { q:"In che anno è stata inaugurata la prima linea della metropolitana di Milano?", o:["1955","1964","1972","1980"], c:1, w:2,
+    e:"Nel 1964, con la linea rossa M1." },
+  { q:"Quante sono le regioni italiane a statuto speciale?", o:["3","4","5","6"], c:2, w:1,
+    e:"Cinque: Sicilia, Sardegna, Valle d'Aosta, Trentino-Alto Adige e Friuli-Venezia Giulia." },
+  { q:"Quante ossa ha il corpo di un adulto?", o:["186","206","226","256"], c:1, w:2,
+    e:"206. Alla nascita sono di più, perché molte si saldano crescendo." },
+  { q:"Quanti abitanti ha l'Italia, più o meno?", o:["49 milioni","59 milioni","69 milioni","79 milioni"], c:1, w:0,
+    e:"Circa 59 milioni, e la popolazione sta calando da diversi anni." }
+];
+const TEM = [
+  { q:"Quanto impiega la luce del Sole ad arrivare sulla Terra?", o:["Circa 8 secondi","Circa 8 minuti","Circa 8 ore","Circa 1 giorno"], c:1, w:0,
+    e:"Circa 8 minuti e 20 secondi: il Sole è a circa 150 milioni di km." },
+  { q:"A che altezza orbita la Stazione Spaziale Internazionale?", o:["Circa 40 km","Circa 400 km","Circa 4.000 km","Circa 36.000 km"], c:1, w:3,
+    e:"Circa 400 km. A 36.000 km ci sono i satelliti geostazionari, che sembrano fermi nel cielo." },
+  { q:"Quanto dista la Luna dalla Terra, in media?", o:["Circa 38.000 km","Circa 384.000 km","Circa 3,8 milioni di km","Circa 150 milioni di km"], c:1, w:2,
+    e:"Circa 384.000 km. 150 milioni di km è la distanza dal Sole." },
+  { q:"Quanti anni ha l'universo, più o meno?", o:["4,6 miliardi","13,8 miliardi","27 miliardi","100 miliardi"], c:1, w:0,
+    e:"Circa 13,8 miliardi di anni. 4,6 miliardi è l'età del Sistema solare e della Terra." },
+  { q:"In che anno si è tenuto il seminario di Dartmouth, considerato la nascita dell'intelligenza artificiale?", o:["1946","1956","1969","1983"], c:1, w:2,
+    e:"Nel 1956, negli Stati Uniti. Il nome \"intelligenza artificiale\" era nella proposta scritta l'anno prima." },
+  { q:"Come si chiamava il computer che nel 1997 batté a scacchi il campione del mondo Garry Kasparov?", o:["Watson","Deep Blue","AlphaGo","HAL 9000"], c:1, w:0,
+    e:"Deep Blue, di IBM. Watson vinse un quiz televisivo nel 2011, AlphaGo batté il campione di Go Lee Sedol nel 2016." },
+  { q:"In che anno una donna italiana è andata per la prima volta nello spazio?", o:["1998","2007","2014","2021"], c:2, w:1,
+    e:"Nel 2014: Samantha Cristoforetti partì per la Stazione Spaziale Internazionale." },
+  { q:"Di quanto era più calda la Terra nel 2025 rispetto a prima della rivoluzione industriale?", o:["Circa 0,4 °C","Circa 1,4 °C","Circa 2,9 °C","Circa 4,5 °C"], c:1, w:2,
+    e:"Circa 1,4 °C secondo l'Organizzazione meteorologica mondiale. Il decennio 2015-2025 è il più caldo mai misurato." },
+  { q:"Quale gas contribuisce di più al riscaldamento globale causato dall'uomo?", o:["Metano","Anidride carbonica","Ozono","Protossido di azoto"], c:1, w:0,
+    e:"L'anidride carbonica (CO₂), soprattutto da carbone, petrolio e gas. Il metano è il secondo." },
+  { q:"Quanto spende l'Italia in ricerca e sviluppo, rispetto al suo PIL?", o:["Circa 0,5%","Circa 1,3%","Circa 2,2%","Circa 3,5%"], c:1, w:2,
+    e:"Circa l'1,3% (1,31% nel 2023, dati Eurostat). La media dell'Unione europea è circa il 2,2%." }
+];
+const SRC = {
+  ai:{ who:"Assistente IA", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 7V4M9 12h.01M15 12h.01M9 16h6"/></svg>' },
+  exp:{ who:"Esperto della materia", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>' }
+};
+const $ = id => document.getElementById(id);
+const shuffle = a => { a = a.slice(); for (let i = a.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+const K = 'ABCD';
+let T = [], cur = 0, phase = 0;
+
+function setup(){
+  const qs = shuffle(shuffle(GEN).slice(0,5).concat(shuffle(TEM).slice(0,5)));
+  const src = shuffle(['ai','ai','ai','ai','ai','exp','exp','exp','exp','exp']);
+  // in ogni fonte 2 o 3 consigli sbagliati, 5 in tutto
+  const nWrongAi = Math.random() < 0.5 ? 2 : 3;
+  const aiIdx = src.map((s,i)=>s==='ai'?i:-1).filter(i=>i>=0), exIdx = src.map((s,i)=>s==='exp'?i:-1).filter(i=>i>=0);
+  const wrong = new Set(shuffle(aiIdx).slice(0,nWrongAi).concat(shuffle(exIdx).slice(0,5-nWrongAi)));
+  T = qs.map((q,i) => ({ q, src:src[i], wrong:wrong.has(i), adv: wrong.has(i) ? q.w : q.c, first:null, final:null }));
+  cur = 0;
+}
+function render(){
+  const t = T[cur];
+  phase = 0;
+  $('pn').textContent = 'Domanda ' + (cur+1) + ' di ' + T.length;
+  $('ptag').textContent = 'Rispondi da solo';
+  $('pbar').style.width = (cur/T.length*100) + '%';
+  $('qt').textContent = t.q.q;
+  $('opts').innerHTML = t.q.o.map((o,i) => '<button type="button" class="opt" data-i="' + i + '" aria-pressed="false"><span class="k">' + K[i] + '</span><span class="lab">' + o + '</span></button>').join('');
+  $('adv').innerHTML = '';
+  $('nextrow').hidden = true;
+}
+function mark(){
+  const t = T[cur];
+  $('opts').querySelectorAll('.opt').forEach(b => {
+    const i = +b.dataset.i;
+    b.setAttribute('aria-pressed', String(i === (phase ? t.final : t.first)));
+    b.querySelectorAll('.mine,.sug').forEach(x => x.remove());
+    if (phase){
+      if (i === t.first) b.insertAdjacentHTML('beforeend', '<span class="mine">la tua prima risposta</span>');
+      if (i === t.adv) b.insertAdjacentHTML('beforeend', '<span class="sug ' + t.src + '">consiglio</span>');
+    }
+  });
+}
+$('opts').addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  const t = T[cur], i = +b.dataset.i;
+  if (phase === 0){
+    t.first = t.final = i; phase = 1;
+    mark();
+    $('ptag').textContent = 'Ricevi un consiglio';
+    const s = SRC[t.src];
+    $('adv').innerHTML = '<div class="advice ' + t.src + '"><span class="av">' + s.icon + '</span><span class="who">' + s.who + '</span><p class="say"><span class="typing" aria-label="sta scrivendo"><i></i><i></i><i></i></span></p></div>';
+    $('opts').querySelectorAll('.opt').forEach(o => o.disabled = true);
+    setTimeout(() => {
+      $('adv').querySelector('.say').innerHTML = 'Secondo me la risposta giusta è la <strong>' + K[t.adv] + ': ' + t.q.o[t.adv] + '</strong>. Ne sono abbastanza sicuro.';
+      $('opts').querySelectorAll('.opt').forEach(o => o.disabled = false);
+      mark();
+      $('ptag').textContent = 'Confermi o cambi?';
+      try { $('nextrow').hidden = false; $('nextrow').scrollIntoView({ behavior:'smooth', block:'nearest' }); } catch(e) {}
+      $('nextrow').hidden = false;
+      $('next').textContent = cur === T.length-1 ? 'Conferma e vedi il risultato' : 'Conferma e vai avanti';
+    }, 1100);
+  } else {
+    t.final = i; mark();
+  }
+});
+$('next').addEventListener('click', () => {
+  if (cur < T.length-1){ cur++; render(); $('game').scrollIntoView({ behavior:'smooth', block:'start' }); }
+  else results();
+});
+
+function stats(){
+  const S = { ai:{n:0,sw:0}, exp:{n:0,sw:0}, first:0, final:0, wrongFollowed:0, lostRight:0 };
+  T.forEach(t => {
+    if (t.first === t.q.c) S.first++;
+    if (t.final === t.q.c) S.final++;
+    if (t.first !== t.adv){ S[t.src].n++; if (t.final === t.adv) S[t.src].sw++; }
+    if (t.wrong && t.first !== t.adv && t.final === t.adv) S.wrongFollowed++;
+    if (t.first === t.q.c && t.final !== t.q.c) S.lostRight++;
+  });
+  return S;
+}
+const volte = n => n === 1 ? '1 volta' : n + ' volte';
+const rate = o => o.n ? o.sw/o.n : null;
+const su = o => volte(o.sw) + ' su ' + o.n;
+function results(){
+  const S = stats();
+  $('game').hidden = true; $('result').hidden = false;
+  const ra = rate(S.ai), re = rate(S.exp);
+  let h;
+  if (ra === null && re === null) h = 'I consigli erano sempre <strong>uguali alle tue risposte</strong>: questa volta non c\'era niente da cambiare.';
+  else h = 'Quando ti contraddiceva, hai seguito <strong>l\'IA ' + (S.ai.n ? su(S.ai) : '—') + '</strong> e <strong>l\'esperto ' + (S.exp.n ? su(S.exp) : '—') + '</strong>.';
+  $('res-h').innerHTML = h;
+  $('tiles').innerHTML =
+    '<div class="tile"><b>' + S.first + '/10</b><span>giuste da solo</span></div>' +
+    '<div class="tile"><b>' + S.final + '/10</b><span>giuste dopo i consigli</span></div>' +
+    '<div class="tile"><b>' + S.wrongFollowed + '</b><span>consigli sbagliati che hai seguito</span></div>' +
+    '<div class="tile"><b>' + S.lostRight + '</b><span>risposte giuste che hai cambiato</span></div>';
+  const row = (k, lab) => {
+    const o = S[k], r = rate(o);
+    return '<span>' + lab + '</span><span class="t"><i class="' + k + '" style="width:' + (r === null ? 0 : r*100) + '%"></i></span><span class="v">' + (r === null ? '—' : Math.round(r*100) + '%') + '</span>' +
+      '<span class="n">' + (o.n ? 'hai cambiato idea ' + volte(o.sw) + ' su ' + o.n : 'non ti ha mai contraddetto') + '</span>';
+  };
+  $('pairs').innerHTML = row('ai','Assistente IA') + row('exp','Esperto');
+  let rd;
+  if (ra === null || re === null) rd = 'Una delle due fonti non ti ha mai contraddetto, quindi il confronto questa volta non si può fare. Rifai il test per vederlo.';
+  else if (ra - re >= 0.25) rd = '<strong>Ti sei fidato di più dell\'IA.</strong> A parità di consiglio, la firma "Assistente IA" ti ha convinto più spesso. È proprio l\'AI authority bias.';
+  else if (re - ra >= 0.25) rd = '<strong>Ti sei fidato di più dell\'esperto.</strong> A parità di consiglio, la firma di una persona competente ti ha convinto più spesso di quella della macchina.';
+  else if (ra + re === 0) rd = '<strong>Non hai mai cambiato idea.</strong> Sei rimasto sulle tue risposte, chiunque firmasse il consiglio: utile quando sai le cose, rischioso quando non le sai.';
+  else rd = '<strong>Hai trattato le due fonti più o meno allo stesso modo.</strong> La firma non ha fatto molta differenza: hai giudicato i consigli per quello che dicevano.';
+  if (S.wrongFollowed > 0) rd += ' Attenzione però: ' + (S.wrongFollowed === 1 ? 'una volta hai seguito un consiglio sbagliato.' : 'hai seguito ' + S.wrongFollowed + ' consigli sbagliati.');
+  $('reading').innerHTML = rd;
+  $('rv').innerHTML = T.map(t => {
+    const ok = t.final === t.q.c;
+    return '<li><p class="qq">' + t.q.q + '</p>' +
+      '<p class="meta">Risposta giusta: <strong>' + t.q.o[t.q.c] + '</strong>. ' +
+      'Tu: ' + t.q.o[t.first] + (t.final !== t.first ? ' → ' + t.q.o[t.final] : '') + ' <span class="' + (ok ? 'ok' : 'ko') + '">' + (ok ? '✓ giusta' : '✗ sbagliata') + '</span>. ' +
+      'Consiglio (' + SRC[t.src].who + '): ' + t.q.o[t.adv] + ', ' + (t.wrong ? '<span class="ko">sbagliato</span>' : '<span class="ok">giusto</span>') + '.</p>' +
+      '<p class="ex">' + t.q.e + '</p></li>';
+  }).join('');
+  window.__last = S;
+  $('result').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+function startGame(){
+  setup(); document.querySelector('.start').hidden = true; $('result').hidden = true; $('game').hidden = false; $('copy-status').textContent = '';
+  render(); $('game').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+$('go').addEventListener('click', startGame);
+$('again').addEventListener('click', startGame);
+$('copy').addEventListener('click', async () => {
+  const S = window.__last, st = $('copy-status');
+  const url = location.origin + location.pathname;
+  const txt = 'Ho fatto il test "Ti fidi della macchina?": quando mi contraddicevano ho seguito l\'IA ' + (S.ai.n ? su(S.ai) : '0 volte') +
+    ' e l\'esperto ' + (S.exp.n ? su(S.exp) : '0 volte') + '. Ma c\'era un trucco. Provalo: ' + url;
+  try { await navigator.clipboard.writeText(txt); st.textContent = 'Risultato copiato: incollalo dove vuoi.'; }
+  catch(e) { st.textContent = txt; }
+});
+})();
+</script>
+</body>
+</html>

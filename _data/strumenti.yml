@@ -17,3 +17,10 @@
   status: "Calcolatore"
   tagline: "Il peso dell'affitto, gli anni per comprare e il confronto con il 1995."
   description: "Inserisci stipendio e città e scopri quanto pesa l'affitto, quanti anni servono per l'anticipo e quanto costerebbe il mutuo. Poi il confronto con un giovane del 1995 e la classifica dei 109 capoluoghi di provincia, con i dati ufficiali dell'Agenzia delle Entrate."
+
+- title: "Ti fidi della macchina?"
+  url: "/strumenti/fiducia-ia/"
+  category: "Intelligenza artificiale"
+  status: "Test · 3 minuti"
+  tagline: "Quanto ti fidi di un consiglio, se a dartelo è un'IA?"
+  description: "Un piccolo esperimento in dieci domande: rispondi da solo, ricevi un consiglio da un'intelligenza artificiale o da un esperto e decidi se cambiare idea. Alla fine scopri quanto ti sei fidato, e di chi, e cos'è l'AI authority bias."
