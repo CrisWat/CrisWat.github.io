@@ -24,3 +24,17 @@
   status: "Test · 3 minuti"
   tagline: "Quanto ti fidi di un consiglio, se a dartelo è un'IA?"
   description: "Un piccolo esperimento in dieci domande: rispondi da solo, ricevi un consiglio da un'intelligenza artificiale o da un esperto e decidi se cambiare idea. Alla fine scopri quanto ti sei fidato, e di chi, e cos'è l'AI authority bias."
+
+- title: "Tieni in piedi le pensioni"
+  url: "/strumenti/pensioni-del-futuro/"
+  category: "Pensioni e futuro"
+  status: "Simulatore"
+  tagline: "Cosa serve per pagare le pensioni di domani, e quanto prenderà un ragazzo di oggi."
+  description: "Scegli quante donne e quanti giovani lavorano, quanti bambini nascono, chi arriva e chi parte, e le regole sull'età della pensione. Guarda come cambia la spesa fino al 2070, con le previsioni ufficiali della Ragioneria Generale dello Stato."
+
+- title: "Porta tu la ricerca al 3%"
+  url: "/strumenti/ricerca-al-3-per-cento/"
+  category: "Ricerca e università"
+  status: "Gioco"
+  tagline: "Fai tu il Governo: decidi come spendere per la ricerca e trova i soldi per pagare."
+  description: "Oggi l'Italia dà alla ricerca 1,40 euro ogni 100 di ricchezza prodotta, l'Europa punta a 3. Scegli dove investire, dalle università ai giovani ricercatori, e trova le coperture come in una vera legge di bilancio."

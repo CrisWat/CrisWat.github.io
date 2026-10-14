@@ -1,0 +1,634 @@
+---
+layout: null
+title: "Tieni in piedi le pensioni"
+description: "Un gioco semplice per capire cosa serve per pagare le pensioni di domani. Con i dati della Ragioneria Generale dello Stato."
+permalink: /strumenti/pensioni-del-futuro/
+---
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% seo %}
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF6EF;
+  --surface: #FFFFFF;
+  --ink: #1E2A3A;
+  --muted: #566170;
+  --line: #E3DCCD;
+  --base: #8C96A6;
+  --accent: #22408C;
+  --on-accent: #FFFFFF;
+  --accent-soft: #E3E9F7;
+  --area: rgba(34, 64, 140, 0.12);
+  --target: #A86B00;
+  --ok: #2F7A5B;
+  --warn: #9C4A12;
+  --warn-soft: #FBEADB;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14181F;
+    --surface: #1C222C;
+    --ink: #ECE6DA;
+    --muted: #A9B1BD;
+    --line: #2E3644;
+    --base: #77818F;
+    --accent: #8FA8F0;
+    --on-accent: #14181F;
+    --accent-soft: #24304A;
+    --area: rgba(143, 168, 240, 0.16);
+    --target: #E0A84A;
+    --ok: #6CC49B;
+    --warn: #F0A06A;
+    --warn-soft: #3A2618;
+    color-scheme: dark;
+  }
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 230px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 1.125rem; line-height: 1.6; }
+main { max-width: 68rem; margin: 0 auto; padding: 0 1.25rem 4rem; }
+.narrow { max-width: 42rem; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2.2rem, 7vw, 3.4rem); letter-spacing: -0.01em; }
+h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+h3 { font-size: 1.3rem; margin-bottom: 0.35rem; }
+p { margin: 0 0 1rem; }
+a { color: var(--accent); }
+.lead { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; }
+.small { font-size: 0.95rem; color: var(--muted); }
+strong { font-weight: 700; }
+
+header.intro { padding: 2.5rem 0 1.5rem; }
+header.intro .kicker { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
+header.intro h1 { margin-bottom: 1rem; }
+
+/* Area di gioco: grafico fisso + scelte */
+.play { display: grid; grid-template-columns: 1fr; }
+.panel {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  margin: 0 -1.25rem; padding: 0.6rem 1.25rem 0.5rem;
+}
+.panel-title { font-size: 0.85rem; font-weight: 700; margin: 0 0 0.2rem; line-height: 1.3; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .grid text, .chart .xaxis text { fill: var(--muted); font-size: 11px; font-family: var(--sans); }
+.chart .base { fill: none; stroke: var(--base); stroke-width: 2.5; stroke-dasharray: 6 4; }
+.chart .mine { fill: none; stroke: var(--accent); stroke-width: 3.5; stroke-linejoin: round; }
+.chart .gap { fill: var(--area); }
+.chart .dot-base { fill: var(--base); }
+.chart .dot-mine { fill: var(--accent); }
+.chart .lbl { font-size: 12px; font-weight: 700; font-family: var(--sans); }
+.chart .lbl.base-l { fill: var(--muted); }
+.chart .lbl.mine-l { fill: var(--accent); }
+.legend { display: flex; flex-wrap: wrap; gap: 0 1rem; font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
+.legend span::before { content: ""; display: inline-block; width: 18px; height: 0; vertical-align: middle; margin-right: 0.35rem; border-top: 3px solid var(--accent); }
+.legend span.b::before { border-top: 3px dashed var(--base); }
+.panel-say { font-size: 0.92rem; line-height: 1.4; margin: 0.35rem 0 0; }
+.panel-say strong.ok { color: var(--ok); }
+.panel-say strong.warn { color: var(--warn); }
+
+@media (min-width: 900px) {
+  .play { grid-template-columns: minmax(0, 1fr) 24rem; gap: 2.5rem; align-items: start; }
+  .panel {
+    grid-column: 2; grid-row: 1; top: calc(env(safe-area-inset-top, 0px) + 1rem);
+    margin: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); padding: 1rem;
+  }
+  .panel-title { font-size: 1rem; }
+  .panel-say { font-size: 1rem; }
+  .levers { grid-column: 1; grid-row: 1; }
+  html { scroll-padding-top: 1rem; }
+}
+
+.group { padding-top: 2rem; }
+.group-head { display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; }
+.when { font-size: 0.95rem; color: var(--muted); margin: 0 0 0.25rem; }
+.lever { border-top: 1px solid var(--line); padding: 1.25rem 0 1rem; }
+.lever p { margin-bottom: 0.6rem; }
+
+/* Pulsanti di scelta */
+fieldset.pick { border: 0; padding: 0; margin: 0; min-width: 0; }
+fieldset.pick legend { font-weight: 700; padding: 0; margin-bottom: 0.45rem; }
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 0.5rem; }
+.opts label { position: relative; display: block; cursor: pointer; }
+.opts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.opts span {
+  display: block; height: 100%; padding: 0.6rem 0.75rem; border: 1.5px solid var(--line); border-radius: 6px;
+  background: var(--surface); font-weight: 700; line-height: 1.3; font-size: 1rem;
+}
+.opts span small { display: block; font-weight: 400; color: var(--muted); font-size: 0.85rem; margin-top: 0.15rem; }
+.opts input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.opts input:checked + span small { color: var(--on-accent); opacity: 0.85; }
+.opts input:focus-visible + span { outline: 3px solid var(--target); outline-offset: 2px; }
+.opts.two { grid-template-columns: 1fr; }
+
+.msg { margin: 0.75rem 0 0; padding: 0.7rem 0.9rem; border-radius: 4px; font-size: 1rem; line-height: 1.5; background: var(--accent-soft); }
+.msg.warn { background: var(--warn-soft); }
+.msg:empty { display: none; }
+.msg span { display: block; }
+.msg span + span { margin-top: 0.5rem; }
+details.need { margin-top: 0.6rem; font-size: 1rem; }
+details.need summary { cursor: pointer; color: var(--accent); font-weight: 700; }
+details.need summary:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; }
+details.need p { margin: 0.4rem 0 0; }
+
+.result { margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 4px; }
+.result p:last-child { margin-bottom: 0; }
+.result .verdict { font-family: var(--serif); font-size: 1.25rem; line-height: 1.45; }
+
+/* Pensione del ragazzo */
+.young { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.25rem; margin-top: 1rem; }
+.young fieldset.pick + fieldset.pick { margin-top: 1rem; }
+.young .big { font-family: var(--serif); font-size: 2.6rem; font-weight: 600; line-height: 1.1; color: var(--accent); display: block; }
+.bars { display: grid; gap: 0.5rem; margin: 0.75rem 0 0.5rem; }
+.bar-row { display: grid; grid-template-columns: 9rem 1fr 4.2rem; gap: 0.6rem; align-items: center; font-size: 0.95rem; }
+.bar-track { height: 16px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--accent); transition: width 0.25s ease; }
+.bar-fill.old { background: var(--base); }
+.bar-row .n { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.checks { display: grid; gap: 0.5rem; margin-top: 1rem; }
+.checks label { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.6rem 0.8rem; border: 1.5px solid var(--line); border-radius: 6px; background: var(--bg); cursor: pointer; font-size: 1rem; }
+.checks input { margin-top: 0.35rem; accent-color: var(--accent); width: 1.15rem; height: 1.15rem; flex: none; }
+.checks input:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; }
+
+button.reset { font: inherit; font-weight: 700; color: var(--accent); background: transparent; border: 1.5px solid var(--accent); border-radius: 4px; padding: 0.6rem 1.1rem; cursor: pointer; margin-top: 1rem; }
+button.reset:hover { background: var(--accent-soft); }
+button.reset:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; }
+
+section.after { padding-top: 2.5rem; }
+details.method { border-top: 1px solid var(--line); padding: 0.9rem 0; }
+details.method:last-of-type { border-bottom: 1px solid var(--line); }
+details.method summary { cursor: pointer; font-weight: 700; }
+details.method ul { padding-left: 1.2rem; margin: 0.75rem 0 0; }
+details.method li { margin-bottom: 0.5rem; font-size: 1rem; }
+.disclosure { margin-top: 1.5rem; font-size: 1rem; color: var(--muted); }
+
+@media (max-width: 480px) {
+  body { font-size: 1.0625rem; }
+  .opts { grid-template-columns: 1fr 1fr; }
+  .opts.two { grid-template-columns: 1fr; }
+  .bar-row { grid-template-columns: 7rem 1fr 3.6rem; font-size: 0.88rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.site-back{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:1.25rem 0 0;margin:0;font-size:.92rem;color:var(--muted)}
+.site-back a{color:var(--muted);font-weight:600;text-decoration:none}
+.site-back a:hover{color:var(--ink);text-decoration:underline}
+.collab{margin-top:1rem;font-size:1rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<nav class="site-back" aria-label="Percorso"><a href="/">Cristiano Fanelli</a><span aria-hidden="true">›</span><a href="/strumenti/">Strumenti</a></nav>
+
+<header class="intro narrow">
+  <p class="kicker">Pensioni e futuro</p>
+  <h1>Tieni in piedi le pensioni</h1>
+  <p class="lead">In Italia chi lavora paga, con i suoi contributi, le pensioni di chi ha già smesso di lavorare.</p>
+  <p>Oggi, ogni 100 euro guadagnati dall'Italia, 15 vanno ai pensionati. Tra 15 anni saranno 17, perché andranno in pensione moltissime persone nate negli anni Sessanta. Poi la spesa scende.</p>
+  <p><strong>Prova tu.</strong> Scegli cosa cambiare e guarda la linea blu nel grafico.</p>
+</header>
+
+<div class="play">
+
+  <!-- Grafico sempre visibile -->
+  <div class="panel" aria-label="Grafico della spesa per pensioni">
+    <p class="panel-title">Ogni 100 € guadagnati dall'Italia, quanti vanno alle pensioni</p>
+    <div class="chart" id="chart" role="img" aria-label="Grafico dal 2025 al 2070. Linea grigia: cosa prevede lo Stato. Linea blu: con le tue scelte. Il riassunto è scritto sotto."></div>
+    <div class="legend" aria-hidden="true"><span class="b">Cosa prevede lo Stato</span><span>Con le tue scelte</span></div>
+    <p class="panel-say" id="say" aria-live="polite"></p>
+  </div>
+
+  <div class="levers">
+
+    <!-- LAVORO -->
+    <section class="group" aria-labelledby="h-work">
+      <h2 id="h-work">Più persone che lavorano</h2>
+      <p class="when">Aiuta subito.</p>
+
+      <div class="lever">
+        <h3>Donne</h3>
+        <p>Oggi lavora poco più di una donna su due. In Europa, due su tre.</p>
+        <fieldset class="pick">
+          <legend>Nel 2050 quante donne lavorano?</legend>
+          <div class="opts">
+            <label><input type="radio" name="women" value="59" checked><span>Come previsto<small>59 su 100</small></span></label>
+            <label><input type="radio" name="women" value="63"><span>Di più<small>63 su 100</small></span></label>
+            <label><input type="radio" name="women" value="67"><span>Come in Europa<small>67 su 100</small></span></label>
+          </div>
+        </fieldset>
+        <details class="need"><summary>Cosa servirebbe?</summary><p>Asili nido, scuole a tempo pieno, congedi anche per i papà, aiuto per gli anziani di famiglia.</p></details>
+      </div>
+
+      <div class="lever">
+        <h3>Giovani</h3>
+        <p>Oggi tra i 20 e i 29 anni lavora meno di un giovane su due. In Europa, due su tre.</p>
+        <fieldset class="pick">
+          <legend>Nel 2050 quanti giovani lavorano?</legend>
+          <div class="opts">
+            <label><input type="radio" name="young" value="48" checked><span>Come oggi<small>48 su 100</small></span></label>
+            <label><input type="radio" name="young" value="57"><span>Di più<small>57 su 100</small></span></label>
+            <label><input type="radio" name="young" value="66"><span>Come in Europa<small>66 su 100</small></span></label>
+          </div>
+        </fieldset>
+        <details class="need"><summary>Cosa servirebbe?</summary><p>Scuola più vicina al lavoro, meno contratti precari, uffici per il lavoro che funzionano, case e trasporti che costano meno.</p></details>
+      </div>
+    </section>
+
+    <!-- PERSONE -->
+    <section class="group" aria-labelledby="h-people">
+      <h2 id="h-people">Più persone in Italia</h2>
+      <p class="when">Aiuta, ma più tardi.</p>
+
+      <div class="lever">
+        <h3>Bambini</h3>
+        <p>Oggi nascono pochi bambini: in media poco più di 1 per ogni donna.</p>
+        <fieldset class="pick">
+          <legend>Nel futuro quanti bambini nascono?</legend>
+          <div class="opts">
+            <label><input type="radio" name="fert" value="1.20"><span>Meno<small>1,2 per donna</small></span></label>
+            <label><input type="radio" name="fert" value="1.44" checked><span>Come previsto<small>1,44 per donna</small></span></label>
+            <label><input type="radio" name="fert" value="1.70"><span>Di più<small>1,7 per donna</small></span></label>
+            <label><input type="radio" name="fert" value="1.90"><span>Molti di più<small>1,9 per donna</small></span></label>
+          </div>
+        </fieldset>
+        <p class="msg" id="m-fert"></p>
+        <details class="need"><summary>Cosa servirebbe?</summary><p>Aiuti per i figli, asili, case per le giovani coppie, lavoro sicuro. Nessuno sa con certezza quanti bambini in più nascerebbero.</p></details>
+      </div>
+
+      <div class="lever">
+        <h3>Chi arriva e chi parte</h3>
+        <p>Ogni anno arrivano persone dall'estero e partono italiani, anche tanti giovani.</p>
+        <fieldset class="pick">
+          <legend>Ogni anno, rispetto a quanto previsto:</legend>
+          <div class="opts">
+            <label><input type="radio" name="migr" value="-50000"><span>Meno persone<small>50.000 in meno</small></span></label>
+            <label><input type="radio" name="migr" value="0" checked><span>Come previsto<small>circa 166.000 in più</small></span></label>
+            <label><input type="radio" name="migr" value="50000"><span>Di più<small>50.000 in più</small></span></label>
+            <label><input type="radio" name="migr" value="100000"><span>Molte di più<small>100.000 in più</small></span></label>
+          </div>
+        </fieldset>
+        <p class="msg" id="m-migr"></p>
+        <details class="need"><summary>Cosa servirebbe?</summary><p>Ingressi regolari per lavorare, corsi di lingua, lotta al lavoro in nero. E motivi per far restare, o tornare, i nostri giovani.</p></details>
+      </div>
+    </section>
+
+    <!-- LAVORARE MEGLIO -->
+    <section class="group" aria-labelledby="h-skills">
+      <h2 id="h-skills">Lavorare meglio</h2>
+      <p class="when">Aiuta tanto, in 10-20 anni.</p>
+
+      <div class="lever">
+        <h3>Scuola, ricerca, tecnologie</h3>
+        <p>Se si impara di più e le aziende usano macchine e idee migliori, ogni lavoratore produce di più. Il Paese guadagna di più e le pensioni pesano meno.</p>
+        <fieldset class="pick">
+          <legend>Nei prossimi anni si lavora:</legend>
+          <div class="opts">
+            <label><input type="radio" name="prod" value="-0.25"><span>Peggio<small>crescita più lenta</small></span></label>
+            <label><input type="radio" name="prod" value="0" checked><span>Come previsto</span></label>
+            <label><input type="radio" name="prod" value="0.25"><span>Meglio<small>un po' più veloce</small></span></label>
+            <label><input type="radio" name="prod" value="0.5"><span>Molto meglio<small>molto più veloce</small></span></label>
+          </div>
+        </fieldset>
+        <details class="need"><summary>Cosa servirebbe?</summary><p>Più ragazzi che studiano fino in fondo, formazione per chi lavora, più ricerca (vedi il gioco <a href="/strumenti/ricerca-al-3-per-cento/">Porta tu la ricerca al 3%</a>), imprese più forti.</p></details>
+      </div>
+    </section>
+
+    <!-- SCELTE DIFFICILI -->
+    <section class="group" aria-labelledby="h-hard">
+      <h2 id="h-hard">Le scelte difficili</h2>
+      <p class="when">Qui decidi una legge.</p>
+
+      <div class="lever">
+        <h3>A che età si va in pensione?</h3>
+        <p>Oggi la legge dice: se in media si vive più a lungo, si va in pensione un po' più tardi. Molti vorrebbero fermarla a 67 anni.</p>
+        <fieldset class="pick">
+          <legend>Tu cosa scegli?</legend>
+          <div class="opts two">
+            <label><input type="radio" name="age" value="0" checked><span>Più tardi, se si vive di più<small>la legge di oggi</small></span></label>
+            <label><input type="radio" name="age" value="1"><span>Sempre a 67 anni</span></label>
+          </div>
+        </fieldset>
+        <p class="msg warn" id="m-age"></p>
+      </div>
+
+      <div class="lever">
+        <h3>Quanto vale ogni mese la pensione nuova?</h3>
+        <p>Oggi la legge dice: se si vive più a lungo, i soldi versati vanno divisi su più anni. Così la pensione di ogni mese è un po' più bassa.</p>
+        <fieldset class="pick">
+          <legend>Tu cosa scegli?</legend>
+          <div class="opts two">
+            <label><input type="radio" name="ct" value="0" checked><span>Come dice la legge di oggi</span></label>
+            <label><input type="radio" name="ct" value="1"><span>Non si abbassa più<small>pensioni nuove un po' più alte</small></span></label>
+          </div>
+        </fieldset>
+        <p class="msg warn" id="m-ct"></p>
+      </div>
+    </section>
+
+    <div class="result" aria-live="polite">
+      <p class="verdict" id="verdict"></p>
+      <p class="msg" id="extra"></p>
+    </div>
+    <button type="button" class="reset" id="reset">Ricomincia da capo</button>
+  </div>
+</div>
+
+<!-- PENSIONE DEL RAGAZZO -->
+<section class="after narrow" aria-labelledby="h-young">
+  <h2 id="h-young">E un ragazzo di oggi, quanto prenderà?</h2>
+  <p>Chi oggi ha poco più di 20 anni andrà in pensione intorno al 2070. La sua pensione dipende da quanti anni lavora in regola.</p>
+
+  <div class="young">
+    <fieldset class="pick">
+      <legend>Che lavoro fa?</legend>
+      <div class="opts">
+        <label><input type="radio" name="job" value="d" checked><span>Dipendente</span></label>
+        <label><input type="radio" name="job" value="a"><span>Partita IVA<small>lavora in proprio</small></span></label>
+      </div>
+    </fieldset>
+    <fieldset class="pick">
+      <legend>Per quanti anni lavora in nero o resta senza lavoro?</legend>
+      <div class="opts">
+        <label><input type="radio" name="gap" value="0" checked><span>Mai</span></label>
+        <label><input type="radio" name="gap" value="3"><span>3 anni</span></label>
+        <label><input type="radio" name="gap" value="6"><span>6 anni</span></label>
+        <label><input type="radio" name="gap" value="10"><span>10 anni</span></label>
+      </div>
+    </fieldset>
+    <div class="checks">
+      <label><input type="checkbox" id="c-late"><span>Va in pensione <strong>2 anni più tardi</strong></span></label>
+      <label><input type="checkbox" id="c-fund"><span>Mette soldi da parte in un <strong>fondo pensione</strong></span></label>
+    </div>
+
+    <p style="margin:1.25rem 0 0" aria-live="polite">Se l'ultimo stipendio è di <strong>1.000 €</strong>, la pensione sarà di circa<span class="big" id="y-big">580 €</span></p>
+    <div class="bars" aria-hidden="true">
+      <div class="bar-row"><span>Il ragazzo di oggi</span><div class="bar-track"><div class="bar-fill" id="b-young"></div></div><span class="n" id="n-young">580 €</span></div>
+      <div class="bar-row"><span>Chi è andato in pensione nel 2010</span><div class="bar-track"><div class="bar-fill old" id="b-old"></div></div><span class="n" id="n-old">740 €</span></div>
+    </div>
+    <p class="small">Cifre prima delle tasse, per 38 anni di lavoro meno gli anni senza contributi.</p>
+    <p class="msg" id="m-young"></p>
+  </div>
+</section>
+
+<!-- METODO -->
+<section class="after narrow" aria-labelledby="h-method">
+  <h2 id="h-method">Per chi vuole sapere come funziona</h2>
+  <p>Il gioco usa i calcoli ufficiali della Ragioneria Generale dello Stato: lo scenario previsto e le sue simulazioni di cosa succede se cambia una cosa alla volta.</p>
+
+  <details class="method">
+    <summary>Le semplificazioni</summary>
+    <ul>
+      <li>Ogni scelta sposta la linea in proporzione alle simulazioni della Ragioneria. Esempio: la Ragioneria ha calcolato l'effetto di circa 36.000 immigrati in più all'anno; con 72.000 il gioco raddoppia l'effetto. Quando si va molto oltre le simulazioni ufficiali, il gioco lo segnala.</li>
+      <li>Gli effetti delle diverse scelte vengono sommati. Nella realtà si influenzano a vicenda.</li>
+      <li>I dati della Ragioneria sono ogni 5 anni, arrotondati al decimo. Tra un dato e l'altro tracciamo una linea retta.</li>
+      <li>Donne e giovani: i punti di occupazione del gruppo sono trasformati in punti di occupazione totale (le donne sono circa metà della popolazione in età da lavoro, i giovani tra 20 e 29 anni circa un sesto). Per i giovani la Ragioneria non pubblica una previsione: partiamo dal dato di oggi.</li>
+      <li>Gli effetti di età e calcolo bloccati sono letti dal grafico della Ragioneria (circa un decimo di punto di precisione).</li>
+      <li>I miliardi sono calcolati sul PIL di oggi (1 punto = circa 22 miliardi); gli euro a testa dividono per circa 59 milioni di abitanti.</li>
+      <li>La pensione del ragazzo usa i «tassi di sostituzione» lordi della Ragioneria per chi va in pensione nel 2070 con 38 anni di contributi. Ogni anno di contributi in meno vale circa 1,4 punti per un dipendente e 1,1 per una partita IVA.</li>
+    </ul>
+  </details>
+
+  <details class="method">
+    <summary>Cosa non c'è in questo gioco</summary>
+    <ul>
+      <li>Il costo delle politiche necessarie (asili, formazione, integrazione): è molto incerto e non lo mostriamo per non dare numeri inventati.</li>
+      <li>Altre scelte difficili: quanto far crescere ogni anno le pensioni già pagate, i contributi da versare, le uscite anticipate come Quota 103, una pensione minima garantita per i giovani.</li>
+      <li>Le entrate: quanti contributi entrano e quanto mette lo Stato con le tasse. La linea mostra la spesa, come fanno la Ragioneria e l'Unione europea.</li>
+    </ul>
+  </details>
+
+  <details class="method">
+    <summary>Le fonti</summary>
+    <ul>
+      <li>Ragioneria Generale dello Stato, «Le tendenze di medio-lungo periodo del sistema pensionistico e socio-sanitario», Rapporto n. 27 (2026): scenario nazionale base (Tabella A3.N3), simulazioni su fecondità, immigrazione, tasso di attività e produttività (Tabelle A3.C1-C6), riquadro sui meccanismi automatici (requisiti e coefficienti fermi dal 2026), tassi di sostituzione (Tabelle C e 6.2).</li>
+      <li>Ipotesi ufficiali: fecondità da 1,18 (2024) a 1,44 (2070); saldo migratorio verso circa 166.000 persone l'anno; donne occupate (15-64 anni) 59,2% nel 2050; produttività +1,2% l'anno a regime.</li>
+      <li>Eurostat, 2025: donne occupate 15-64 anni 53,8% in Italia e 66,6% nell'Unione europea; giovani occupati 20-29 anni 47,6% in Italia e 65,5% nell'Unione europea.</li>
+      <li>ISTAT: PIL 2024 pari a 2.210,6 miliardi; popolazione al 1° gennaio 2026 pari a 58,9 milioni.</li>
+    </ul>
+  </details>
+
+  <p class="disclosure">Le opinioni espresse su questo sito sono personali. Hai trovato un errore? <a href="/contatti/">Scrivimi</a>.</p>
+  <p class="collab"><strong>Hai un commento su questo strumento o un'idea per uno nuovo?</strong> <a href="/contatti/">Scrivimi</a>. Trovi gli altri strumenti in <a href="/strumenti/">Strumenti</a>.</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  // ---------- Dati della Ragioneria (Rapporto n. 27, 2026) ----------
+  var YRS = [2025, 2030, 2035, 2040, 2045, 2050, 2055, 2060, 2065, 2070];
+  var BASE = [[2025,15.2],[2030,15.7],[2035,16.6],[2040,17.0],[2041,17.1],[2044,17.1],[2045,17.0],[2050,16.2],[2055,15.1],[2060,14.2],[2065,13.9],[2070,14.0]];
+  var P_ACT  = [0,-0.1,-0.2,-0.2,-0.2,-0.25,-0.3,-0.2,-0.2,-0.1];  // +2 punti di tasso di attività al 2050
+  var P_FERT = [0,0,0,0,0,-0.05,-0.05,-0.1,-0.2,-0.3];              // +0,245 figli per donna al 2070
+  var P_MIGR = [0,0,0,-0.1,-0.1,-0.2,-0.3,-0.3,-0.4,-0.4];          // +36.750 persone l'anno
+  var P_PROD = [0,-0.1,-0.3,-0.45,-0.6,-0.6,-0.6,-0.6,-0.5,-0.5];   // +0,25 punti di crescita annua
+  var P_AGE  = [0,0.3,0.45,0.6,0.5,0.45,0.5,0.75,0.8,0.9];          // requisiti fermi dal 2026
+  var P_CT   = [0,0.15,0.15,0.25,0.3,0.4,0.55,0.7,0.8,1.0];         // coefficienti fermi dal 2026
+  var MLD_PER_PUNTO = 22.1;     // miliardi per punto di PIL
+  var ABITANTI_MLN = 58.943;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function nf(x, d) { return x.toLocaleString("it-IT", { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function interpPairs(pairs, y) {
+    if (y <= pairs[0][0]) return pairs[0][1];
+    for (var i = 1; i < pairs.length; i++) {
+      if (y <= pairs[i][0]) { var a = pairs[i - 1], b = pairs[i]; return a[1] + (b[1] - a[1]) * (y - a[0]) / (b[0] - a[0]); }
+    }
+    return pairs[pairs.length - 1][1];
+  }
+  function interpProf(prof, y) { return interpPairs(YRS.map(function (yy, i) { return [yy, prof[i]]; }), y); }
+  function radio(name) { var r = document.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : null; }
+  function setMsg(id, parts) {
+    var el = $(id); el.textContent = "";
+    parts.forEach(function (t) { var s = document.createElement("span"); s.textContent = t; el.appendChild(s); });
+  }
+  function mldNum(pp) { return Math.abs(pp) * MLD_PER_PUNTO; }
+  function mldText(pp) { var m = mldNum(pp); return m < 1 ? "meno di 1 miliardo" : nf(Math.round(m), 0) + " miliardi"; }
+  function testa(pp) {
+    var e = mldNum(pp) * 1000 / ABITANTI_MLN;
+    var r = e >= 100 ? Math.round(e / 10) * 10 : Math.round(e);
+    return nf(r, 0) + " € a testa";
+  }
+
+  // ---------- Grafico ----------
+  function drawChart(base, mine) {
+    var host = $("chart");
+    var W = Math.round(Math.max(280, Math.min(720, host.clientWidth || 360)));
+    var wide = window.matchMedia("(min-width: 900px)").matches;
+    var H = wide ? Math.round(W * 0.72) : 150;
+    var ML = 34, MR = 44, MT = 18, MB = 22;
+    var all = base.concat(mine).map(function (p) { return p[1]; });
+    var ymin = Math.min(13, Math.floor(Math.min.apply(null, all) - 0.2));
+    var ymax = Math.max(18, Math.ceil(Math.max.apply(null, all) + 0.4));
+    var x = function (yr) { return ML + (yr - 2025) / 45 * (W - ML - MR); };
+    var y = function (v) { return MT + (ymax - v) / (ymax - ymin) * (H - MT - MB); };
+    var path = function (pts) { return pts.map(function (p, i) { return (i ? "L" : "M") + x(p[0]).toFixed(1) + " " + y(p[1]).toFixed(1); }).join(" "); };
+    var step = (H < 200 && ymax - ymin > 4) ? 2 : 1;
+
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" xmlns="http://www.w3.org/2000/svg"><g class="grid">';
+    for (var v = ymin; v <= ymax; v++) {
+      s += '<line x1="' + ML + '" x2="' + (W - MR) + '" y1="' + y(v) + '" y2="' + y(v) + '"/>';
+      if ((v - ymin) % step === 0) s += '<text x="' + (ML - 5) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + v + ' €</text>';
+    }
+    s += '</g><g class="xaxis">';
+    [2025, 2040, 2055, 2070].forEach(function (yr) { s += '<text x="' + x(yr) + '" y="' + (H - 5) + '" text-anchor="middle">' + yr + '</text>'; });
+    s += '</g>';
+    var area = path(mine) + " " + base.slice().reverse().map(function (p) { return "L" + x(p[0]).toFixed(1) + " " + y(p[1]).toFixed(1); }).join(" ") + " Z";
+    s += '<path class="gap" d="' + area + '"/>';
+    s += '<path class="base" d="' + path(base) + '"/>';
+    s += '<path class="mine" d="' + path(mine) + '"/>';
+
+    var pk = function (pts) { var b = pts[0]; pts.forEach(function (p) { if (p[1] > b[1] + 1e-9) b = p; }); return b; };
+    var pb = pk(base), pm = pk(mine);
+    var same = Math.abs(pm[1] - pb[1]) < 0.05;
+    s += '<circle class="dot-base" cx="' + x(pb[0]) + '" cy="' + y(pb[1]) + '" r="3.5"/>';
+    s += '<circle class="dot-mine" cx="' + x(pm[0]) + '" cy="' + y(pm[1]) + '" r="4.5"/>';
+    if (same) {
+      s += '<text class="lbl mine-l" x="' + x(pm[0]) + '" y="' + (y(pm[1]) - 8) + '" text-anchor="middle">' + nf(pm[1], 1) + ' €</text>';
+    } else {
+      var up = pm[1] > pb[1];
+      s += '<text class="lbl mine-l" x="' + x(pm[0]) + '" y="' + (y(pm[1]) + (up ? -8 : 15)) + '" text-anchor="middle">' + nf(pm[1], 1) + ' €</text>';
+      s += '<text class="lbl base-l" x="' + x(pb[0]) + '" y="' + (y(pb[1]) + (up ? 15 : -8)) + '" text-anchor="middle">' + nf(pb[1], 1) + ' €</text>';
+    }
+    var lb = base[base.length - 1], lm = mine[mine.length - 1];
+    var d = lm[1] - lb[1], sep = Math.abs(y(lm[1]) - y(lb[1])) < 14 ? 7 : 0;
+    s += '<text class="lbl mine-l" x="' + (x(2070) + 5) + '" y="' + (y(lm[1]) + 4 + (d < 0 ? sep : -sep)) + '">' + nf(lm[1], 1) + ' €</text>';
+    if (Math.abs(d) >= 0.25) s += '<text class="lbl base-l" x="' + (x(2070) + 5) + '" y="' + (y(lb[1]) + 4 + (d < 0 ? -sep : sep)) + '">' + nf(lb[1], 1) + ' €</text>';
+    s += '</svg>';
+    host.innerHTML = s;
+    return { pb: pb, pm: pm, lb: lb, lm: lm };
+  }
+
+  // ---------- Calcolo ----------
+  function scales() {
+    var women = parseFloat(radio("women")), young = parseFloat(radio("young"));
+    var actPts = (women - 59) * 0.5 + (young - 48) / 6;
+    return {
+      act: actPts / 2,
+      fert: (parseFloat(radio("fert")) - 1.44) / 0.245,
+      migr: parseFloat(radio("migr")) / 36750,
+      prod: parseFloat(radio("prod")) / 0.25,
+      age: radio("age") === "1" ? 1 : 0,
+      ct: radio("ct") === "1" ? 1 : 0
+    };
+  }
+  function effectAt(sc, yr) {
+    return sc.act * interpProf(P_ACT, yr) + sc.fert * interpProf(P_FERT, yr) + sc.migr * interpProf(P_MIGR, yr) +
+      sc.prod * interpProf(P_PROD, yr) + sc.age * interpProf(P_AGE, yr) + sc.ct * interpProf(P_CT, yr);
+  }
+
+  function update() {
+    var sc = scales();
+    var base = [], mine = [];
+    for (var yr = 2025; yr <= 2070; yr++) {
+      var b = interpPairs(BASE, yr);
+      base.push([yr, b]);
+      mine.push([yr, b + effectAt(sc, yr)]);
+    }
+    var r = drawChart(base, mine);
+    var dPeak = r.pm[1] - r.pb[1];
+    var d70 = r.lm[1] - r.lb[1];
+
+    // Frase sotto il grafico (sempre visibile)
+    var say = $("say");
+    say.textContent = "";
+    var t1 = document.createElement("span");
+    t1.textContent = "Anno più difficile: " + r.pm[0] + ", con " + nf(r.pm[1], 1) + " € su 100. ";
+    say.appendChild(t1);
+    var t2 = document.createElement("strong");
+    if (Math.abs(dPeak) < 0.05) {
+      t2.textContent = Math.abs(d70) < 0.05 ? "Come previsto dallo Stato." : "Il picco non cambia: le tue scelte aiutano più avanti.";
+    } else if (dPeak < 0) {
+      t2.textContent = "Risparmi " + mldText(dPeak) + " l'anno (" + testa(dPeak) + ").";
+      t2.className = "ok";
+    } else {
+      t2.textContent = "Spendi " + mldText(dPeak) + " in più l'anno (" + testa(dPeak) + ").";
+      t2.className = "warn";
+    }
+    say.appendChild(t2);
+
+    // Messaggi sulle scelte
+    setMsg("m-fert", sc.fert !== 0 ? ["Guarda il grafico: la linea si muove solo dopo il 2050. I bambini che nascono oggi lavoreranno tra 20-25 anni."] : []);
+    var m = parseFloat(radio("migr"));
+    setMsg("m-migr", m > 0 ? ["Funziona solo se chi arriva lavora in regola. Tra 30-35 anni anche loro andranno in pensione."] :
+      (m < 0 ? ["Meno persone che lavorano: meno contributi e meno ricchezza. Le pensioni pesano di più."] : []));
+    setMsg("m-age", sc.age ? [
+      "Costa circa " + mldText(0.6) + " l'anno intorno al 2040 (" + testa(0.6) + ") e fa crescere molto il debito dello Stato.",
+      "E chi va in pensione prima prende una pensione più bassa, perché ha lavorato meno anni."
+    ] : []);
+    setMsg("m-ct", sc.ct ? [
+      "Costa fino a circa " + mldText(1.0) + " l'anno nel 2070 (" + testa(1.0) + ") e fa crescere il debito dello Stato."
+    ] : []);
+
+    // Riassunto finale
+    var v;
+    if (Math.abs(dPeak) < 0.05 && Math.abs(d70) < 0.05) {
+      v = "Per ora segui le previsioni dello Stato: il momento più difficile è il 2041, con 17,1 € su 100. Nel 2070 si scende a 14 €.";
+    } else {
+      v = "Con le tue scelte, nell'anno più difficile vanno alle pensioni " + nf(r.pm[1], 1) + " € su 100 (lo Stato prevede " + nf(r.pb[1], 1) + " €). Nel 2070: " + nf(r.lm[1], 1) + " € (lo Stato prevede 14 €).";
+    }
+    $("verdict").textContent = v;
+    var extra = [];
+    if (["act", "fert", "migr", "prod"].some(function (k) { return Math.abs(sc[k]) > 2.05; })) extra.push("Attenzione: hai scelto cambiamenti molto grandi, più grandi di quelli calcolati dallo Stato. Il risultato è meno sicuro.");
+    if ((sc.age || sc.ct) && (sc.act > 0 || sc.migr > 0 || sc.prod > 0 || sc.fert > 0)) extra.push("Stai pagando le scelte difficili con più lavoro, più bambini o più crescita. Ma quei risultati non sono sicuri, mentre il costo di una legge è sicuro.");
+    if (!sc.age && !sc.ct && dPeak < -0.3) extra.push("Più lavoro e più crescita abbassano il momento più difficile. Ma per arrivarci servono anni e soldi.");
+    setMsg("extra", extra);
+  }
+
+  // ---------- Pensione del ragazzo (tassi di sostituzione lordi, 2070) ----------
+  function updateYoung() {
+    var job = radio("job"), gap = parseFloat(radio("gap"));
+    var late = $("c-late").checked, fund = $("c-fund").checked;
+    var base = job === "d" ? 58.4 : 46.8;
+    var perYear = job === "d" ? 1.4 : 1.125;
+    var rate = base - gap * perYear + (late ? (job === "d" ? 7.2 : 6.2) : 0) + (fund ? (job === "d" ? 7.9 : 8.7) : 0);
+    var old = job === "d" ? 73.6 : 72.1;
+    var euro = Math.round(rate) * 10;   // su 1.000 € di stipendio, arrotondato a 10 €
+    var euroOld = Math.round(old) * 10;
+    $("y-big").textContent = nf(euro, 0) + " €";
+    $("n-young").textContent = nf(euro, 0) + " €";
+    $("n-old").textContent = nf(euroOld, 0) + " €";
+    $("b-young").style.width = Math.min(100, rate) + "%";
+    $("b-old").style.width = old + "%";
+    var msgs = [];
+    if (gap > 0) msgs.push("Ogni anno senza contributi toglie circa " + (job === "d" ? 14 : 11) + " € di pensione al mese ogni 1.000 € di stipendio. Per sempre.");
+    if (job === "a") msgs.push("Chi lavora con partita IVA versa meno contributi: per questo prende una pensione più bassa.");
+    if (fund) msgs.push("Il fondo pensione aiuta, ma bisogna riuscire a mettere da parte dei soldi: è difficile per chi guadagna poco.");
+    if (gap === 0 && !late && !fund && job === "d") msgs.push("Anche lavorando sempre in regola, il ragazzo di oggi prenderà meno, rispetto al suo stipendio, di chi è andato in pensione nel 2010.");
+    setMsg("m-young", msgs);
+  }
+
+  // ---------- Eventi ----------
+  document.querySelectorAll('.levers input[type="radio"]').forEach(function (el) { el.addEventListener("change", update); });
+  document.querySelectorAll('.young input').forEach(function (el) { el.addEventListener("change", updateYoung); });
+  $("reset").addEventListener("click", function () {
+    [["women", "59"], ["young", "48"], ["fert", "1.44"], ["migr", "0"], ["prod", "0"], ["age", "0"], ["ct", "0"]].forEach(function (p) {
+      document.querySelector('input[name="' + p[0] + '"][value="' + p[1] + '"]').checked = true;
+    });
+    update();
+    document.querySelector(".play").scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
+  var rt;
+  window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(update, 150); });
+  update();
+  updateYoung();
+})();
+</script>
+</body>
+</html>

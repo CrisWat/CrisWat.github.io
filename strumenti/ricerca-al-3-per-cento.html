@@ -1,0 +1,857 @@
+---
+layout: null
+title: "Porta tu la ricerca al 3%"
+description: "Un gioco per capire quanto costa portare la spesa italiana per la ricerca al 3% e dove trovare i soldi."
+permalink: /strumenti/ricerca-al-3-per-cento/
+---
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% seo %}
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF6EF;
+  --surface: #FFFFFF;
+  --ink: #1E2A3A;
+  --muted: #566170;
+  --line: #E3DCCD;
+  --base: #9AA5B5;
+  --accent: #22408C;
+  --accent-soft: #E3E9F7;
+  --target: #A86B00;
+  --ok: #2F7A5B;
+  --arms: #5A4F8C;
+  --warn: #9C4A12;
+  --warn-soft: #FBEADB;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14181F;
+    --surface: #1C222C;
+    --ink: #ECE6DA;
+    --muted: #A9B1BD;
+    --line: #2E3644;
+    --base: #5E6878;
+    --accent: #8FA8F0;
+    --accent-soft: #24304A;
+    --target: #E0A84A;
+    --ok: #6CC49B;
+    --arms: #B4A8E8;
+    --warn: #F0A06A;
+    --warn-soft: #3A2618;
+    color-scheme: dark;
+  }
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+main { max-width: 42rem; margin: 0 auto; padding: 0 1.25rem 4rem; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2.2rem, 7vw, 3.4rem); letter-spacing: -0.01em; }
+h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h3 { font-size: 1.35rem; margin-bottom: 0.4rem; }
+p { margin: 0 0 1rem; }
+a { color: var(--accent); }
+.lead { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; }
+.small { font-size: 0.95rem; color: var(--muted); }
+strong { font-weight: 700; }
+
+header.intro { padding: 2.5rem 0 1rem; }
+header.intro .kicker { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
+header.intro h1 { margin-bottom: 1rem; }
+
+.how { margin: 0 0 1.5rem; padding-left: 1.4rem; }
+.how li { margin-bottom: 0.3rem; }
+
+.words {
+  border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
+  padding: 1.1rem 1.25rem 0.4rem; margin-bottom: 2rem;
+}
+.words h2 { font-size: 1.3rem; margin-bottom: 0.75rem; }
+.words dl { margin: 0; }
+.words dt { font-weight: 700; }
+.words dd { margin: 0 0 0.8rem; }
+
+/* Il righello */
+.scale {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 1.5rem 1.25rem 1.25rem;
+  margin: 0 0 2rem;
+}
+.scale-now { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 1.25rem; line-height: 1.35; }
+.scale-now .big { font-size: 3rem; font-weight: 600; line-height: 1; color: var(--accent); display: block; margin: 0.4rem 0 0.2rem; }
+.scale-now .sub { font-family: var(--sans); font-size: 0.95rem; color: var(--muted); }
+.ruler { position: relative; height: 128px; }
+.ruler .track {
+  position: absolute; left: 0; right: 0; top: 52px; height: 22px;
+  background: repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px calc(100% / 35));
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.ruler .fill-base, .ruler .fill-add { position: absolute; top: 52px; height: 22px; left: 0; }
+.ruler .fill-base { background: var(--base); }
+.ruler .fill-add { background: var(--accent); transition: width 0.25s ease, left 0.25s ease; }
+.ruler .goal { position: absolute; top: 30px; height: 56px; width: 0; border-left: 2px dashed var(--target); }
+.ruler .goal-label {
+  position: absolute; top: 4px; transform: translateX(calc(-100% + 1px)); padding-right: 6px;
+  color: var(--target); font-weight: 700; font-size: 0.85rem; white-space: nowrap;
+}
+.ruler .mark { position: absolute; top: 74px; width: 0; height: 10px; border-left: 1px solid var(--muted); }
+.ruler .mark-label { position: absolute; top: 88px; font-size: 0.8rem; color: var(--muted); white-space: nowrap; line-height: 1.25; }
+.ruler .mark-label.center { transform: translateX(-50%); text-align: center; }
+.ruler .mark-label.right { transform: translateX(-100%); text-align: right; }
+.ruler .axis { position: absolute; top: 34px; font-size: 0.75rem; color: var(--muted); }
+.scale-note { margin: 0.75rem 0 0; font-size: 0.95rem; color: var(--muted); }
+
+/* Barra fissa */
+.status {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  margin: 0 -1.25rem; padding: 0.6rem 1.25rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;
+}
+.status div { min-width: 0; }
+.status .k { font-size: 0.75rem; color: var(--muted); display: block; line-height: 1.3; }
+.status .v { font-weight: 700; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.status .v.ok { color: var(--ok); }
+.status .v.warn { color: var(--warn); }
+
+/* Passi */
+section.step { padding-top: 2.5rem; }
+.step-head { display: flex; gap: 0.9rem; align-items: baseline; margin-bottom: 0.5rem; }
+.step-num {
+  font-family: var(--serif); font-size: 1.1rem; font-weight: 600;
+  width: 2rem; height: 2rem; border-radius: 50%; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--ink);
+}
+
+.lever { border-top: 1px solid var(--line); padding: 1.5rem 0 1.25rem; }
+.control { margin-top: 0.75rem; }
+.control label { display: block; font-weight: 700; margin-bottom: 0.2rem; }
+.readout { display: flex; justify-content: space-between; gap: 0.25rem 1rem; flex-wrap: wrap; margin-top: 0.3rem; font-size: 1rem; }
+.readout .val { font-weight: 700; }
+.readout .cost { color: var(--muted); }
+.hint { font-size: 0.95rem; color: var(--muted); margin: 0.5rem 0 0; }
+.msg {
+  margin: 0.75rem 0 0; padding: 0.75rem 0.9rem; border-radius: 4px;
+  font-size: 1rem; line-height: 1.5; background: var(--accent-soft);
+}
+.msg.warn { background: var(--warn-soft); }
+.msg:empty { display: none; }
+.msg span { display: block; }
+.msg span + span { margin-top: 0.5rem; }
+
+input[type="range"] {
+  width: 100%; height: 2.5rem; margin: 0; background: transparent;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 6px; background: var(--line); border-radius: 3px; }
+input[type="range"]::-moz-range-track { height: 6px; background: var(--line); border-radius: 3px; }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 28px; height: 28px; margin-top: -11px;
+  border-radius: 50%; background: var(--accent); border: 3px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--accent);
+}
+.lever.debt input[type="range"]::-webkit-slider-thumb { background: var(--warn); box-shadow: 0 0 0 1px var(--warn); }
+.lever.debt input[type="range"]::-moz-range-thumb { background: var(--warn); box-shadow: 0 0 0 1px var(--warn); }
+input[type="range"]:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; border-radius: 4px; }
+
+fieldset { border: 0; padding: 0; margin: 1rem 0 0; }
+legend { font-weight: 700; margin-bottom: 0.5rem; padding: 0; }
+.choices { display: grid; gap: 0.5rem; }
+.choices label {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  padding: 0.65rem 0.8rem; border: 1px solid var(--line); border-radius: 4px;
+  background: var(--surface); cursor: pointer; font-size: 1rem;
+}
+.choices input { margin-top: 0.35rem; accent-color: var(--accent); width: 1.1rem; height: 1.1rem; flex: none; }
+.choices label:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.choices input:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; }
+
+/* Copertura */
+.cover-box { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0 0.5rem; }
+.cover-box p { margin: 0; }
+.cover-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--line); margin: 0.75rem 0 0.5rem; }
+.cover-bar span { display: block; height: 100%; transition: width 0.25s ease; }
+.cover-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: 0.85rem; color: var(--muted); }
+.cover-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 0.35rem; }
+
+/* Risultato */
+.result {
+  margin-top: 1rem; padding: 1.5rem 1.25rem;
+  background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 4px;
+}
+.result p:last-child { margin-bottom: 0; }
+.result .verdict { font-family: var(--serif); font-size: 1.35rem; line-height: 1.45; }
+
+button.reset {
+  font: inherit; font-weight: 700; color: var(--accent); background: transparent;
+  border: 1.5px solid var(--accent); border-radius: 4px; padding: 0.6rem 1.1rem; cursor: pointer; margin-top: 1rem;
+}
+button.reset:hover { background: var(--accent-soft); }
+button.reset:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; }
+
+
+/* Torta della spesa pubblica */
+.pie-wrap { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: center; margin-top: 1rem; }
+@media (min-width: 640px) { .pie-wrap { grid-template-columns: 260px 1fr; } }
+.pie-fig { position: relative; width: min(280px, 100%); aspect-ratio: 1; margin: 0 auto; }
+.pie-fig svg { width: 100%; height: 100%; display: block; }
+.pie-fig path { cursor: pointer; transition: opacity 0.2s ease; stroke: var(--bg); stroke-width: 1.2; }
+.pie-fig path.dim { opacity: 0.3; }
+.pie-center {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; pointer-events: none; padding: 0 30%;
+}
+.pie-center span { font-size: 0.8rem; color: var(--muted); line-height: 1.25; }
+.pie-center strong { font-family: var(--serif); font-size: 1.5rem; line-height: 1.15; margin: 0.15rem 0; }
+.pie-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
+.pie-legend button {
+  width: 100%; display: grid; grid-template-columns: 14px 1fr auto; gap: 0.6rem; align-items: center;
+  font: inherit; font-size: 0.98rem; color: var(--ink); text-align: left;
+  background: transparent; border: 1px solid transparent; border-radius: 4px; padding: 0.3rem 0.5rem; cursor: pointer;
+}
+.pie-legend button:hover { background: var(--surface); }
+.pie-legend button[aria-pressed="true"] { background: var(--surface); border-color: var(--line); font-weight: 700; }
+.pie-legend button:focus-visible { outline: 3px solid var(--target); outline-offset: 1px; }
+.pie-legend i { width: 14px; height: 14px; border-radius: 3px; display: block; }
+.pie-legend .lv { font-variant-numeric: tabular-nums; font-weight: 700; }
+.pie-legend li.mine button { color: var(--accent); }
+.pie-detail { min-height: 3.2em; margin: 1rem 0 0; }
+
+details { border-top: 1px solid var(--line); padding: 0.9rem 0; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; }
+summary:focus-visible { outline: 3px solid var(--target); outline-offset: 2px; }
+details ul { padding-left: 1.2rem; margin: 0.75rem 0 0; }
+details li { margin-bottom: 0.5rem; font-size: 1rem; }
+.disclosure { margin-top: 1.5rem; font-size: 1rem; color: var(--muted); }
+
+@media (max-width: 480px) {
+  body { font-size: 1.0625rem; }
+  .status .v { font-size: 0.92rem; }
+  .ruler .mark-label { font-size: 0.72rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.site-back{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:1.25rem 0 0;margin:0;font-size:.92rem;color:var(--muted)}
+.site-back a{color:var(--muted);font-weight:600;text-decoration:none}
+.site-back a:hover{color:var(--ink);text-decoration:underline}
+.collab{margin-top:1rem;font-size:1rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<nav class="site-back" aria-label="Percorso"><a href="/">Cristiano Fanelli</a><span aria-hidden="true">›</span><a href="/strumenti/">Strumenti</a></nav>
+
+<header class="intro">
+  <p class="kicker">Ricerca e università</p>
+  <h1>Porta tu la ricerca al 3%</h1>
+  <p class="lead">Su 100 euro di ricchezza che l'Italia produce, solo 1 euro e 40 centesimi vanno alla ricerca. L'Europa punta ad arrivare a 3 euro. La Germania ci è già arrivata.</p>
+  <p>In questo gioco fai tu il Governo. Prima decidi come spendere per la ricerca. Poi trovi i soldi per pagare, come in una vera legge di bilancio.</p>
+  <ol class="how">
+    <li>Sposta i cursori per decidere dove spendere.</li>
+    <li>Trova i soldi per pagare le tue scelte.</li>
+    <li>Leggi il risultato in fondo alla pagina.</li>
+  </ol>
+</header>
+
+<aside class="words" aria-labelledby="h-words">
+  <h2 id="h-words">Quattro parole da sapere</h2>
+  <dl>
+    <dt>Ricerca</dt>
+    <dd>Il lavoro di chi scopre cose nuove: nuove cure, nuovi materiali, nuove tecnologie. La fanno università, enti pubblici e imprese.</dd>
+    <dt>PIL</dt>
+    <dd>Il valore di tutto quello che l'Italia produce in un anno. Nel 2024 erano circa 2.211 miliardi di euro.</dd>
+    <dt>Miliardo</dt>
+    <dd>Mille milioni. Se lo dividi tra tutti gli abitanti d'Italia, 1 miliardo fa circa 17 euro a testa.</dd>
+    <dt>Copertura</dt>
+    <dd>Il modo in cui paghi una spesa. Se una spesa si ripete ogni anno, anche i soldi per pagarla devono arrivare ogni anno.</dd>
+  </dl>
+</aside>
+
+<div class="scale" aria-labelledby="scale-title">
+  <p class="scale-now" id="scale-title">Quanto va alla ricerca, su 100 euro di ricchezza
+    <span class="big" id="pct-big">1,40 €</span>
+    <span class="sub" id="pct-sub">cioè l'1,40% del PIL</span>
+  </p>
+  <div class="ruler" aria-hidden="true">
+    <span class="axis" style="left:0">0 €</span>
+    <div class="track"></div>
+    <div class="fill-base" id="fill-base"></div>
+    <div class="fill-add" id="fill-add"></div>
+    <div class="goal" id="goal"></div>
+    <span class="goal-label" id="goal-label">Obiettivo europeo: 3 €</span>
+    <div class="mark" id="m-it"></div><span class="mark-label center" id="l-it">Italia oggi<br>1,40 €</span>
+    <div class="mark" id="m-eu"></div><span class="mark-label center" id="l-eu">Media europea<br>2,20 €</span>
+    <div class="mark" id="m-de"></div><span class="mark-label right" id="l-de">Germania<br>3,10 €</span>
+  </div>
+  <p class="scale-note">Per aggiungere 10 centesimi servono circa 2,2 miliardi in più ogni anno. Per arrivare a 3 euro ne servono circa 35: quasi 600 euro a testa, ogni anno.</p>
+</div>
+
+<div class="status" aria-live="polite">
+  <div><span class="k">Ricerca su 100 €</span><span class="v" id="s-pct">1,40 €</span></div>
+  <div><span class="k">Costo all'anno</span><span class="v" id="s-cost">0 euro</span></div>
+  <div><span class="k">Soldi trovati</span><span class="v" id="s-cover">nessuna spesa</span></div>
+</div>
+
+<!-- PASSO 1 -->
+<section class="step" aria-labelledby="h-spend">
+  <div class="step-head"><span class="step-num" aria-hidden="true">1</span><h2 id="h-spend">Decidi dove spendere</h2></div>
+  <p>Hai cinque modi per far crescere la ricerca. Puoi usarne uno solo o tutti insieme.</p>
+
+  <div class="lever">
+    <h3>Più soldi alle università</h3>
+    <p>Ogni anno lo Stato dà alle università un fondo per pagare stipendi, laboratori e servizi. Nel 2026 sono 9,4 miliardi. Rispetto all'anno prima il fondo è cresciuto pochissimo (+0,27%), mentre i prezzi sono saliti di più (+1,5% nel 2025). In pratica, con quei soldi le università comprano un po' meno di prima.</p>
+    <div class="control">
+      <label for="r-ffo">Di quanto aumenti il fondo?</label>
+      <input type="range" id="r-ffo" min="0" max="10" step="0.5" value="0">
+      <div class="readout"><span class="val" id="v-ffo">+0%</span><span class="cost" id="c-ffo">costa 0 euro</span></div>
+      <p class="hint">Con circa +1,2% il fondo torna a valere quanto prima dell'aumento dei prezzi.</p>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Un contratto vero per i giovani ricercatori</h3>
+    <p>Più di 25.000 persone fanno ricerca nelle università con un «assegno di ricerca». È un contratto debole: dura poco, dà meno diritti e paga meno. Trasformarlo in un contratto da ricercatore, con più diritti, costa allo Stato circa 31.000 euro in più all'anno per ogni persona.</p>
+    <div class="control">
+      <label for="r-pd">Quanti assegni trasformi in contratti veri?</label>
+      <input type="range" id="r-pd" min="0" max="100" step="5" value="0">
+      <div class="readout"><span class="val" id="v-pd">0%</span><span class="cost" id="c-pd">costa 0 euro</span></div>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Non lasciare a casa chi lavorava ai progetti PNRR</h3>
+    <p>Il PNRR è il grande piano pagato con i fondi europei dopo il Covid. Ha finanziato migliaia di contratti di ricerca che ora stanno finendo. Puoi creare nuovi posti da ricercatore per non perdere queste persone e quello che sanno fare. Ogni posto costa circa 54.900 euro l'anno.</p>
+    <div class="control">
+      <label for="r-pnrr">Quanti nuovi posti crei?</label>
+      <input type="range" id="r-pnrr" min="0" max="5000" step="250" value="0">
+      <div class="readout"><span class="val" id="v-pnrr">0 posti</span><span class="cost" id="c-pnrr">costa 0 euro</span></div>
+      <p class="hint">Quanti siano esattamente i contratti in scadenza non risulta ancora da nessun dato ufficiale.</p>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Più soldi per i progetti di ricerca</h3>
+    <p>Sono soldi messi a gara. I gruppi di ricerca presentano un progetto ed esperti indipendenti scelgono i migliori.</p>
+    <div class="control">
+      <label for="r-bandi">Quanto aggiungi ogni anno?</label>
+      <input type="range" id="r-bandi" min="0" max="5000" step="100" value="0">
+      <div class="readout"><span class="val" id="v-bandi">0 euro</span><span class="cost" id="c-bandi">costa 0 euro</span></div>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Meno tasse alle imprese che fanno ricerca</h3>
+    <p>Più della metà della ricerca italiana la fanno le imprese (il 56,6%). Lo Stato può far pagare meno tasse a chi investe in ricerca. Il problema è che alcune imprese incassano lo sconto ma investono poco di più. Quanto funzioni davvero in Italia, nessuno lo ha ancora misurato.</p>
+    <div class="control">
+      <label for="r-cred">Quanto sconto dai ogni anno?</label>
+      <input type="range" id="r-cred" min="0" max="10000" step="100" value="0">
+      <div class="readout"><span class="val" id="v-cred">0 euro</span><span class="cost" id="c-cred">costa 0 euro</span></div>
+    </div>
+    <fieldset>
+      <legend>Secondo te, se lo Stato fa 1 euro di sconto, quanto spende in più l'impresa in ricerca?</legend>
+      <div class="choices">
+        <label><input type="radio" name="leva" value="0.34"><span><strong>34 centesimi.</strong> Funziona poco. È quanto ha stimato l'OCSE per la Francia.</span></label>
+        <label><input type="radio" name="leva" value="1" checked><span><strong>1 euro.</strong> Una via di mezzo prudente.</span></label>
+        <label><input type="radio" name="leva" value="1.4"><span><strong>1 euro e 40.</strong> Funziona bene. È la media stimata dall'OCSE in 20 Paesi.</span></label>
+      </div>
+      <p class="hint">L'OCSE è l'organizzazione che riunisce i Paesi più industrializzati del mondo e ne studia l'economia.</p>
+    </fieldset>
+  </div>
+</section>
+
+<!-- PASSO 2 -->
+<section class="step" aria-labelledby="h-cover">
+  <div class="step-head"><span class="step-num" aria-hidden="true">2</span><h2 id="h-cover">Trova i soldi</h2></div>
+  <p>Ora devi pagare. Ogni scelta toglie qualcosa a qualcuno: sotto ogni cursore trovi a chi.</p>
+
+  <div class="cover-box" aria-live="polite">
+    <p id="cover-line">Non hai ancora speso nulla.</p>
+    <div class="cover-bar" aria-hidden="true">
+      <span id="b-sad" style="width:0;background:var(--ok)"></span>
+      <span id="b-bonus" style="width:0;background:var(--accent)"></span>
+      <span id="b-arms" style="width:0;background:var(--arms)"></span>
+      <span id="b-debt" style="width:0;background:var(--warn)"></span>
+    </div>
+    <div class="cover-legend" aria-hidden="true">
+      <span><i style="background:var(--ok)"></i>Sussidi che inquinano</span>
+      <span><i style="background:var(--accent)"></i>Bonus fiscali</span>
+      <span><i style="background:var(--arms)"></i>Armi</span>
+      <span><i style="background:var(--warn)"></i>Debito</span>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Tagliare i sussidi che inquinano</h3>
+    <p>Ogni anno lo Stato concede 22,4 miliardi di sconti e aiuti che il Ministero dell'Ambiente considera dannosi per l'ambiente. Un esempio: il carburante degli aerei non paga l'accisa, la tassa che invece paghi tu quando fai benzina. Ma una parte di questi aiuti va a famiglie, camionisti e agricoltori.</p>
+    <div class="control">
+      <label for="r-sad">Quanto tagli ogni anno?</label>
+      <input type="range" id="r-sad" min="0" max="22400" step="100" value="0">
+      <div class="readout"><span class="val" id="v-sad">0 euro</span></div>
+      <p class="msg" id="m-sad"></p>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Ridurre i bonus fiscali</h3>
+    <p>Detrazioni, esenzioni e bonus fanno pagare meno tasse a molte persone e imprese. Nel 2026 valgono in tutto circa 129,7 miliardi, divisi in 573 voci diverse. Le più grandi sono i bonus per la casa. Una delle più usate è lo sconto sulle spese mediche.</p>
+    <div class="control">
+      <label for="r-bonus">Quanto recuperi ogni anno?</label>
+      <input type="range" id="r-bonus" min="0" max="20000" step="100" value="0">
+      <div class="readout"><span class="val" id="v-bonus">0 euro</span></div>
+      <p class="msg" id="m-bonus"></p>
+    </div>
+  </div>
+
+  <div class="lever">
+    <h3>Togliere soldi all'acquisto di armi</h3>
+    <p>Nel 2026 l'Italia spende per le forze armate circa 33,9 miliardi. Di questi, 13,2 miliardi servono a comprare nuove armi e nuovi mezzi militari: aerei, navi, carri armati, munizioni. Qui puoi spostarne una parte sulla ricerca. Gli stipendi dei militari e le missioni restano come sono.</p>
+    <div class="control">
+      <label for="r-arms">Quanto togli ogni anno?</label>
+      <input type="range" id="r-arms" min="0" max="13200" step="100" value="0">
+      <div class="readout"><span class="val" id="v-arms">0 euro</span></div>
+      <p class="msg" id="m-arms"></p>
+    </div>
+  </div>
+
+  <div class="lever debt">
+    <h3>Fare debito</h3>
+    <p>Vuol dire prendere i soldi in prestito. È la strada più facile, ma non è una vera copertura: i soldi vanno restituiti con gli interessi, da chi verrà dopo di noi. La Costituzione (articolo 81) chiede che ogni nuova spesa dica come verrà pagata, e le regole europee mettono un limite al debito.</p>
+    <div class="control">
+      <label for="r-debt">Quanto prendi in prestito ogni anno?</label>
+      <input type="range" id="r-debt" min="0" max="40000" step="100" value="0">
+      <div class="readout"><span class="val" id="v-debt">0 euro</span></div>
+      <p class="msg warn" id="m-debt"></p>
+    </div>
+  </div>
+</section>
+
+<!-- PASSO 3 -->
+<section class="step" aria-labelledby="h-result">
+  <div class="step-head"><span class="step-num" aria-hidden="true">3</span><h2 id="h-result">Il tuo risultato</h2></div>
+  <div class="result" aria-live="polite">
+    <p class="verdict" id="verdict">Sposta i cursori del passo 1 per cominciare.</p>
+    <p id="verdict-cover"></p>
+    <p id="verdict-lesson" class="small"></p>
+  </div>
+  <button type="button" class="reset" id="reset">Ricomincia da capo</button>
+</section>
+
+<!-- TORTA -->
+<section class="step" aria-labelledby="h-pie">
+  <h2 id="h-pie">Dove vanno i soldi pubblici</h2>
+  <p>Nel 2024 Stato, Regioni, Comuni ed enti pubblici hanno speso in tutto circa 1.109 miliardi di euro. Ecco come li hanno divisi, su 100 euro. Tocca una voce per saperne di più.</p>
+  <div class="pie-wrap">
+    <div class="pie-fig">
+      <svg id="pie" viewBox="0 0 220 220" role="img" aria-label="Diagramma a torta: come si dividono 100 euro di spesa pubblica. I valori sono elencati nella legenda."><g id="slices"></g></svg>
+      <div class="pie-center" aria-hidden="true">
+        <span id="pc-name">Spesa pubblica</span>
+        <strong id="pc-val">100 €</strong>
+        <span id="pc-sub">1.109 miliardi</span>
+      </div>
+    </div>
+    <ul class="pie-legend" id="legend"></ul>
+  </div>
+  <p class="pie-detail" id="pie-detail" aria-live="polite"></p>
+  <p class="msg" id="pie-note"></p>
+  <p class="small">Le scelte su sussidi e bonus fiscali non compaiono nella torta: sono tasse che lo Stato rinuncia a incassare, non spese. La ricerca pubblica non ha una fetta sua: è sparsa dentro istruzione, economia e funzionamento dello Stato.</p>
+</section>
+
+<!-- METODO -->
+<section class="step" aria-labelledby="h-method">
+  <h2 id="h-method">Come funzionano i calcoli</h2>
+  <p>Il gioco è volutamente semplice. Serve a capire gli ordini di grandezza, non a scrivere una legge di bilancio.</p>
+
+  <details>
+    <summary>Le semplificazioni che abbiamo fatto</summary>
+    <ul>
+      <li>La ricchezza del Paese (il PIL) resta quella del 2024. Se l'economia cresce, servono più soldi per restare allo stesso livello.</li>
+      <li>Ogni euro dato a università, ricercatori e progetti viene contato tutto come ricerca. È un'ipotesi generosa: una parte del fondo per le università paga anche le lezioni, quindi l'effetto vero è un po' più basso.</li>
+      <li>Le misure funzionano subito a pieno regime. Nella realtà servono anni per assumere persone, far partire i progetti e cambiare i contratti per le armi.</li>
+      <li>Una parte dei soldi per le armi paga anche la progettazione di nuovi mezzi nelle imprese della difesa, che conta come ricerca. Tagliarla può ridurre un po' la ricerca delle imprese. Il gioco non lo calcola.</li>
+      <li>La torta usa i dati del 2024, gli ultimi completi. Le tue scelte vengono aggiunte a quella fotografia come se valessero già quell'anno. I tagli alle armi riducono la fetta della difesa.</li>
+      <li>Nella torta la difesa vale 28,3 miliardi, mentre sopra parliamo di 33,9. Non è un errore: la torta è del 2024 e segue le regole europee, che mettono una parte dei soldi per le armi (quelli del Ministero delle Imprese) nella voce «economia». La cifra di 33,9 miliardi è una stima per il 2026 che li somma tutti.</li>
+      <li>Tutti i costi sono annuali e si ripetono ogni anno. I costi per persona dividono la spesa tra tutti gli abitanti.</li>
+      <li>I costi di contratti e assegni sono stime ricavate dalle tabelle di alcune università (tasse e contributi compresi), in attesa della tabella ufficiale del Ministero.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Da dove vengono i numeri</summary>
+    <ul>
+      <li>ISTAT, Ricerca e sviluppo in Italia: spesa 2024 pari a 31,0 miliardi, 1,40% del PIL; imprese 56,6% del totale.</li>
+      <li>ISTAT, conti nazionali (aggiornamento del 22 settembre 2026): PIL 2024 pari a 2.210,6 miliardi. Inflazione 2025 (indice NIC): +1,5%. Popolazione al 1° gennaio 2026: 58.943.000 (dato provvisorio).</li>
+      <li>Eurostat, comunicato del 4 dicembre 2025: spesa per la ricerca nell'Unione europea al 2,2% del PIL nel 2024, Germania al 3,1%.</li>
+      <li>Ministero dell'Università e della Ricerca: Fondo di finanziamento ordinario 2026 pari a 9,415 miliardi; assegnisti di ricerca al 31 dicembre 2024 pari a 25.153.</li>
+      <li>OCSE, progetto microBeRD (Appelt e altri, 2020): in media 1,4 euro di ricerca in più per ogni euro di aiuto pubblico alle imprese; per la Francia 0,34.</li>
+      <li>Ministero dell'Ambiente e della Sicurezza Energetica, Catalogo dei sussidi ambientalmente dannosi e favorevoli (luglio 2026): 22,4 miliardi di sussidi dannosi nel 2025.</li>
+      <li>Ministero dell'Economia e delle Finanze, Rapporto annuale sulle spese fiscali: 573 voci per 129,7 miliardi nel 2026; bonus casa in calo da 37,9 a 12,4 miliardi entro il 2028 secondo le leggi già in vigore.</li>
+      <li>Eurostat, spesa delle amministrazioni pubbliche per funzione (classificazione COFOG, dati 2024, aggiornamento di luglio 2026): totale 1.109,15 miliardi; protezione sociale 468,1; servizi generali 170,4; sanità 146,1; economia 112,4; istruzione 89,2; ordine pubblico e sicurezza 39,1; difesa 28,3; ambiente 19,8. Pensioni di vecchiaia e ai superstiti (circa il 32,4% della spesa) e interessi sul debito (87,8 miliardi, il 4,0% del PIL) sono separati dalle voci in cui li mette Eurostat. Casa, territorio e cultura sono calcolati per differenza.</li>
+      <li>Osservatorio Mil€x, Annuario 2026 (elaborazione sui bilanci dei Ministeri della Difesa e delle Imprese): spesa militare diretta 2026 pari a 33,9 miliardi; acquisto di armamenti 13,2 miliardi, di cui oltre 3 miliardi nel bilancio del Ministero delle Imprese. La NATO conta per l'Italia una spesa più alta (circa il 2% del PIL) perché include anche voci come pensioni e Carabinieri.</li>
+    </ul>
+  </details>
+
+  <p class="disclosure">Trasparenza: lavoro in un ente pubblico di ricerca, l'INAF. Tienine conto quando valuti queste proposte. Hai trovato un errore nei calcoli? <a href="/contatti/">Scrivimi</a>.</p>
+  <p class="collab"><strong>Hai un commento su questo strumento o un'idea per uno nuovo?</strong> <a href="/contatti/">Scrivimi</a>. Trovi gli altri strumenti in <a href="/strumenti/">Strumenti</a>.</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  // Dati di base, in milioni di euro
+  var PIL = 2210600;          // PIL 2024
+  var RS0 = 31000;            // spesa in ricerca 2024
+  var FFO = 9415;             // fondo università 2026
+  var ASSEGNISTI = 25153;
+  var DIFF_POSTDOC = 0.031;   // 31.000 euro
+  var COSTO_RIC = 0.0549;     // 54.900 euro
+  var ABITANTI = 58.943;      // milioni di persone
+  var SCALE_MAX = 3.5;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var inputs = ["r-ffo", "r-pd", "r-pnrr", "r-bandi", "r-cred", "r-sad", "r-bonus", "r-arms", "r-debt"];
+
+  function nf(x, d) { return x.toLocaleString("it-IT", { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function euro(mln) {
+    var a = Math.abs(mln);
+    if (a < 0.5) return "0 euro";
+    if (a < 1000) return nf(Math.round(mln), 0) + " milioni";
+    var b = mln / 1000;
+    return (Math.abs(b - Math.round(b)) < 0.05 ? nf(Math.round(b), 0) : nf(b, 1)) + (Math.round(b) === 1 && Math.abs(b - 1) < 0.05 ? " miliardo" : " miliardi");
+  }
+  function testa(mln) {
+    var e = mln / ABITANTI;
+    if (e < 1) return "meno di 1 euro a testa";
+    return "circa " + nf(Math.round(e), 0) + " euro a testa";
+  }
+  function su100(p) { return nf(p, 2) + " €"; }
+  function pos(v) { return Math.min(v, SCALE_MAX) / SCALE_MAX * 100; }
+  function val(id) { return parseFloat($(id).value); }
+  function leva() {
+    var r = document.querySelector('input[name="leva"]:checked');
+    return r ? parseFloat(r.value) : 1;
+  }
+  function setMsg(id, parts) {
+    var el = $(id);
+    el.textContent = "";
+    parts.forEach(function (t) { var s = document.createElement("span"); s.textContent = t; el.appendChild(s); });
+  }
+
+  function placeRuler() {
+    $("goal").style.left = pos(3) + "%";
+    $("goal-label").style.left = pos(3) + "%";
+    [["m-it", "l-it", 1.40], ["m-eu", "l-eu", 2.24], ["m-de", "l-de", 3.1]].forEach(function (m) {
+      $(m[0]).style.left = pos(m[2]) + "%";
+      $(m[1]).style.left = pos(m[2]) + "%";
+    });
+    $("fill-base").style.width = pos(RS0 / PIL * 100) + "%";
+  }
+
+
+  // Torta della spesa pubblica 2024 (miliardi, Eurostat COFOG)
+  var PIE = [
+    { k: "pensioni", n: "Pensioni", d: "Pensioni di vecchiaia e pensioni ai superstiti (le reversibilità).", v: 359.4, c: "#B9A27A" },
+    { k: "sanita", n: "Sanità", d: "Ospedali, medici di famiglia, farmaci, prevenzione.", v: 146.08, c: "#4F8F73" },
+    { k: "economia", n: "Economia e trasporti", d: "Trasporti, aiuti alle imprese, agricoltura, energia, lavoro.", v: 112.38, c: "#D3A84A" },
+    { k: "sociale", n: "Altri aiuti sociali", d: "Invalidità, famiglie e figli, disoccupazione, lotta alla povertà.", v: 108.74, c: "#DCCDAF" },
+    { k: "istruzione", n: "Scuola e università", d: "Scuole di ogni livello, università, diritto allo studio.", v: 89.18, c: "#6FA0B5" },
+    { k: "interessi", n: "Interessi sul debito", d: "Quello che paghiamo ogni anno a chi ha prestato soldi allo Stato.", v: 87.8, c: "#B5652E" },
+    { k: "stato", n: "Funzionamento dello Stato", d: "Parlamento, governo, uffici delle tasse, rapporti con l'estero e altro.", v: 82.61, c: "#A3ACB9" },
+    { k: "sicurezza", n: "Sicurezza e giustizia", d: "Polizia, vigili del fuoco, tribunali, carceri.", v: 39.09, c: "#7E8C6A" },
+    { k: "altro", n: "Casa, territorio e cultura", d: "Case popolari, acqua, illuminazione, musei, sport.", v: 35.74, c: "#CDB8C9" },
+    { k: "difesa", n: "Difesa", d: "Forze armate e acquisto di armi e mezzi militari.", v: 28.30, c: "#5A4F8C" },
+    { k: "ambiente", n: "Ambiente", d: "Rifiuti, fognature, lotta all'inquinamento, natura.", v: 19.83, c: "#9DBF6A" },
+    { k: "ricerca", n: "La tua ricerca in più", d: "Le nuove spese per la ricerca che hai scelto nel passo 1.", v: 0, c: "var(--accent)", mine: true }
+  ];
+  var DIFESA0 = 28.30;
+  var pieSel = null;
+  var pieState = [];
+
+  function arc(a0, a1) {
+    var cx = 110, cy = 110, R = 104, r = 64;
+    var p = function (rad, a) { return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)]; };
+    var large = (a1 - a0) > Math.PI ? 1 : 0;
+    var o0 = p(R, a0), o1 = p(R, a1), i1 = p(r, a1), i0 = p(r, a0);
+    return "M" + o0[0] + " " + o0[1] + " A" + R + " " + R + " 0 " + large + " 1 " + o1[0] + " " + o1[1] +
+      " L" + i1[0] + " " + i1[1] + " A" + r + " " + r + " 0 " + large + " 0 " + i0[0] + " " + i0[1] + " Z";
+  }
+  function bn(x) {
+    if (x < 1) return nf(Math.round(x * 1000), 0) + " milioni";
+    return nf(x, x < 10 ? 1 : 0) + (x < 1.05 && x >= 0.95 ? " miliardo" : " miliardi");
+  }
+  function perHead(x) {
+    var e = x * 1000 / ABITANTI;
+    if (e < 1) return "meno di 1 euro a testa";
+    var rr = e >= 1000 ? Math.round(e / 100) * 100 : (e >= 100 ? Math.round(e / 10) * 10 : Math.round(e));
+    return "circa " + nf(rr, 0) + " euro a testa all'anno";
+  }
+
+  function buildLegend() {
+    var ul = $("legend");
+    PIE.forEach(function (it) {
+      var li = document.createElement("li");
+      if (it.mine) li.className = "mine";
+      var b = document.createElement("button");
+      b.type = "button"; b.setAttribute("aria-pressed", "false"); b.dataset.k = it.k;
+      b.innerHTML = '<i style="background:' + it.c + '"></i><span class="ln"></span><span class="lv"></span>';
+      b.querySelector(".ln").textContent = it.n;
+      b.addEventListener("click", function () { pieSel = (pieSel === it.k) ? null : it.k; renderPieSel(); });
+      li.appendChild(b); ul.appendChild(li);
+      it.li = li; it.btn = b;
+    });
+  }
+
+  function drawPie(costMln, armsMln) {
+    var research = costMln / 1000;
+    var difesa = Math.max(0, DIFESA0 - armsMln / 1000);
+    var items = PIE.map(function (it) {
+      var v = it.k === "ricerca" ? research : (it.k === "difesa" ? difesa : it.v);
+      return { it: it, v: v };
+    });
+    var total = items.reduce(function (a, b) { return a + b.v; }, 0);
+    pieState = items.map(function (x) { return { it: x.it, v: x.v, share: x.v / total * 100 }; });
+
+    // angoli: la fetta della ricerca, se presente, ha almeno 1,5 gradi per essere visibile
+    var MIN = 1.5 * Math.PI / 180, full = 2 * Math.PI;
+    var angs = pieState.map(function (x) { return x.v / total * full; });
+    var ri = pieState.findIndex(function (x) { return x.it.k === "ricerca"; });
+    var enlarged = false;
+    if (angs[ri] > 0 && angs[ri] < MIN) {
+      angs[ri] = MIN; enlarged = true;
+      // ridistribuisce il piccolo eccesso sulle altre fette in proporzione
+      var sumOthers = angs.reduce(function (a, b, i) { return i === ri ? a : a + b; }, 0);
+      angs = angs.map(function (a, i) { return i === ri ? a : a * (full - MIN) / sumOthers; });
+    }
+
+    var g = $("slices"); g.textContent = "";
+    var a = -Math.PI / 2;
+    pieState.forEach(function (x, i) {
+      if (angs[i] <= 0) return;
+      var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", arc(a, a + angs[i]));
+      path.style.fill = x.it.c;
+      path.dataset.k = x.it.k;
+      path.addEventListener("click", function () { pieSel = (pieSel === x.it.k) ? null : x.it.k; renderPieSel(); });
+      g.appendChild(path);
+      x.path = path;
+      a += angs[i];
+    });
+
+    pieState.forEach(function (x) {
+      x.it.li.hidden = x.it.mine && x.v <= 0;
+      x.it.btn.querySelector(".lv").textContent = x.v > 0 ? nf(x.share, 2) + " €" : "";
+    });
+    if (pieSel === "ricerca" && research <= 0) pieSel = null;
+
+    // Nota sotto la torta
+    var notes = [];
+    if (research > 0) {
+      notes.push("La tua nuova spesa per la ricerca vale " + nf(research / total * 100, 2) + " euro ogni 100 di spesa pubblica" + (enlarged ? " (nel disegno l'abbiamo allargata un po', altrimenti non si vedrebbe)." : "."));
+      var it = pieState.find(function (x) { return x.it.k === "interessi"; });
+      notes.push("Per confronto: gli interessi sul debito valgono " + nf(it.share, 2) + " euro, le pensioni " + nf(pieState[0].share, 2) + " euro.");
+    }
+    if (armsMln > 0) {
+      notes.push("Con il tuo taglio alle armi, la fetta della difesa passa da " + nf(DIFESA0 / 1109.15 * 100, 2) + " a " + nf(difesa / total * 100, 2) + " euro su 100.");
+    }
+    setMsg("pie-note", notes);
+    renderPieSel();
+  }
+
+  function renderPieSel() {
+    var sel = pieState.find(function (x) { return x.it.k === pieSel; });
+    pieState.forEach(function (x) {
+      if (x.path) x.path.classList.toggle("dim", !!sel && x !== sel);
+      x.it.btn.setAttribute("aria-pressed", sel && x === sel ? "true" : "false");
+    });
+    var total = pieState.reduce(function (a, b) { return a + b.v; }, 0);
+    if (!sel) {
+      $("pc-name").textContent = "Spesa pubblica";
+      $("pc-val").textContent = "100 €";
+      $("pc-sub").textContent = bn(total);
+      $("pie-detail").textContent = "In tutto " + bn(total) + " in un anno, " + perHead(total) + ".";
+    } else {
+      $("pc-name").textContent = sel.it.n;
+      $("pc-val").textContent = nf(sel.share, 2) + " €";
+      $("pc-sub").textContent = "su 100";
+      $("pie-detail").textContent = sel.it.d + " In tutto " + bn(sel.v) + ", " + perHead(sel.v) + ".";
+    }
+  }
+
+  function update() {
+    var ffoP = val("r-ffo"), pdP = val("r-pd"), posti = val("r-pnrr"),
+        bandi = val("r-bandi"), cred = val("r-cred"),
+        sad = val("r-sad"), bonus = val("r-bonus"), arms = val("r-arms"), debt = val("r-debt");
+
+    // Quanto costa
+    var cFfo = FFO * ffoP / 100;
+    var nPd = Math.round(ASSEGNISTI * pdP / 100);
+    var cPd = nPd * DIFF_POSTDOC;
+    var cPnrr = posti * COSTO_RIC;
+    var cost = cFfo + cPd + cPnrr + bandi + cred;
+
+    // Quanta ricerca in più
+    var addRS = cFfo + cPd + cPnrr + bandi + cred * leva();
+    var basePct = RS0 / PIL * 100;
+    var newPct = (RS0 + addRS) / PIL * 100;
+    var gap3 = Math.max(0, PIL * 0.03 - (RS0 + addRS));
+
+    // Letture dei cursori
+    $("v-ffo").textContent = "+" + nf(ffoP, ffoP % 1 ? 1 : 0) + "%";
+    $("c-ffo").textContent = "costa " + euro(cFfo);
+    $("v-pd").textContent = pdP + "%, cioè circa " + nf(nPd, 0) + " persone";
+    $("c-pd").textContent = "costa " + euro(cPd);
+    $("v-pnrr").textContent = nf(posti, 0) + " posti";
+    $("c-pnrr").textContent = "costa " + euro(cPnrr);
+    $("v-bandi").textContent = euro(bandi);
+    $("c-bandi").textContent = "costa " + euro(bandi);
+    $("v-cred").textContent = euro(cred);
+    $("c-cred").textContent = cred > 0 ? "costa " + euro(cred) + ", porta " + euro(cred * leva()) + " di ricerca" : "costa 0 euro";
+    $("v-sad").textContent = euro(sad);
+    $("v-bonus").textContent = euro(bonus);
+    $("v-arms").textContent = euro(arms);
+    $("v-debt").textContent = euro(debt);
+
+    // Righello
+    $("pct-big").textContent = su100(newPct);
+    $("pct-sub").textContent = "cioè l'" + nf(newPct, 2) + "% del PIL";
+    $("fill-add").style.left = pos(basePct) + "%";
+    $("fill-add").style.width = Math.max(0, pos(newPct) - pos(basePct)) + "%";
+
+    // Copertura
+    var realCover = sad + bonus + arms;
+    var totalFound = realCover + debt;
+    var denom = Math.max(cost, totalFound, 1);
+    $("b-sad").style.width = (sad / denom * 100) + "%";
+    $("b-bonus").style.width = (bonus / denom * 100) + "%";
+    $("b-arms").style.width = (arms / denom * 100) + "%";
+    $("b-debt").style.width = (debt / denom * 100) + "%";
+
+    var coverLine, sCover, sClass = "";
+    var covered = realCover >= cost - 0.5;
+    if (cost < 0.5) {
+      coverLine = totalFound > 0.5 ? "Hai trovato " + euro(totalFound) + ", ma non hai ancora deciso come spenderli." : "Non hai ancora speso nulla.";
+      sCover = "nessuna spesa";
+    } else if (covered) {
+      coverLine = "Devi pagare " + euro(cost) + " l'anno. Li hai trovati tutti." + (realCover - cost > 0.5 ? " Anzi, ne hai " + euro(realCover - cost) + " in più." : "");
+      sCover = "tutti"; sClass = "ok";
+    } else if (totalFound >= cost - 0.5) {
+      coverLine = "Devi pagare " + euro(cost) + " l'anno. " + euro(cost - realCover) + " li prendi in prestito: quella parte non è coperta.";
+      sCover = Math.round(realCover / cost * 100) + "%, il resto a debito"; sClass = "warn";
+    } else {
+      coverLine = "Devi pagare " + euro(cost) + " l'anno. Ti mancano ancora " + euro(cost - totalFound) + ".";
+      sCover = Math.round(realCover / cost * 100) + "%"; sClass = "warn";
+    }
+    $("cover-line").textContent = coverLine;
+
+    // Barra fissa
+    $("s-pct").textContent = su100(newPct);
+    $("s-cost").textContent = euro(cost);
+    $("s-cover").textContent = sCover;
+    $("s-cover").className = "v " + sClass;
+
+    // Messaggi sulle coperture
+    var mSad = [];
+    if (sad > 0) {
+      mSad.push("Attenzione: circa 2,5 miliardi di questi sussidi sono già in via di eliminazione, perché il gasolio pagherà la stessa accisa della benzina. Quei soldi sono già nei conti dello Stato e non si possono usare due volte.");
+      if (sad > 5000) mSad.push("Sopra i 5 miliardi tocchi aiuti che usano famiglie, camionisti e agricoltori. Per non colpire chi guadagna poco servono aiuti diversi, che costano anche loro.");
+      if (sad > 15000) mSad.push("Stai eliminando quasi tutti i sussidi dell'elenco: è molto difficile farlo approvare.");
+    }
+    setMsg("m-sad", mSad);
+
+    var mBonus = [];
+    if (bonus > 0) {
+      mBonus.push("Attenzione: i bonus per la casa stanno già calando per legge (da 37,9 a 12,4 miliardi entro il 2028). Quel risparmio è già nei conti dello Stato e non si può usare due volte.");
+      if (bonus > 5000) mBonus.push("Sopra i 5 miliardi tocchi sconti usati da milioni di famiglie, come quelli per la casa o per le spese mediche.");
+    }
+    setMsg("m-bonus", mBonus);
+
+    var mArms = [];
+    if (arms > 0) {
+      if (arms <= 3000) mArms.push("Puoi partire dagli oltre 3 miliardi per le armi che oggi passano dal Ministero delle Imprese, invece che da quello della Difesa.");
+      mArms.push("Molti acquisti sono contratti già firmati che durano anni, a volte insieme ad altri Paesi. Per liberare i soldi serve tempo e si rischia di pagare delle penali.");
+      mArms.push("L'Italia si è impegnata con gli alleati della NATO ad aumentare la spesa militare fino al 5% del PIL entro il 2035. Tagliare va nella direzione opposta: va detto chiaramente e discusso con gli alleati.");
+      if (arms >= 13000) mArms.push("Stai azzerando l'acquisto di nuove armi.");
+      else if (arms > 6600) mArms.push("Stai togliendo più della metà dei soldi per le nuove armi.");
+    }
+    setMsg("m-arms", mArms);
+
+    setMsg("m-debt", debt > 0 ? ["In 10 anni questa scelta aggiunge circa " + euro(debt * 10) + " di debito, più gli interessi."] : []);
+
+    // Risultato
+    var verdict, vCover = "", lesson = "";
+    if (cost < 0.5) {
+      verdict = "Sposta i cursori del passo 1 per cominciare.";
+    } else {
+      verdict = "Con le tue scelte, su 100 euro di ricchezza la ricerca passerebbe da 1,40 a " + su100(newPct) + ". Spendi " + euro(cost) + " l'anno, " + testa(cost) + ".";
+      verdict += gap3 > 0
+        ? " Per arrivare a 3 euro mancano ancora " + euro(gap3) + " l'anno."
+        : " Hai raggiunto l'obiettivo europeo di 3 euro.";
+
+      if (covered) vCover = "Hai trovato tutti i soldi in modo stabile, come chiede la Costituzione.";
+      else if (totalFound >= cost - 0.5) vCover = "Una parte, " + euro(cost - realCover) + " l'anno, la paghi con il debito. Per la Costituzione non è una copertura valida.";
+      else vCover = "Non hai ancora trovato tutti i soldi: ne mancano " + euro(cost - totalFound) + " l'anno.";
+
+      var publicPart = cFfo + cPd + cPnrr + bandi;
+      if (newPct - basePct < 0.05) {
+        lesson = "Anche spese molto importanti per le persone, come dare un contratto vero ai ricercatori, spostano poco questo numero. Costano qualche centinaio di milioni, mentre per ogni 10 centesimi in più ne servono 2.200.";
+      } else if (cred > 0 && cred * leva() > publicPart) {
+        lesson = "Gran parte della crescita viene dalle imprese. Ma tutto dipende da quanto funzionano davvero gli sconti sulle tasse: prova a cambiare la risposta sui 34 centesimi e guarda cosa succede.";
+      } else if (gap3 > 0) {
+        lesson = "Per avvicinarsi davvero a 3 euro servono insieme più soldi pubblici e più ricerca nelle imprese. I Paesi che ci sono riusciti ci hanno messo molti anni.";
+      } else {
+        lesson = "Arrivare a 3 euro in un solo anno è un esercizio, non un piano realistico: i Paesi che ci sono riusciti ci hanno messo molti anni.";
+      }
+    }
+    $("verdict").textContent = verdict;
+    $("verdict-cover").textContent = vCover;
+    $("verdict-lesson").textContent = lesson;
+
+    drawPie(cost, arms);
+  }
+
+  inputs.forEach(function (id) { $(id).addEventListener("input", update); });
+  document.querySelectorAll('input[name="leva"]').forEach(function (r) { r.addEventListener("change", update); });
+  $("reset").addEventListener("click", function () {
+    inputs.forEach(function (id) { $(id).value = 0; });
+    document.querySelector('input[name="leva"][value="1"]').checked = true;
+    update();
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
+
+  placeRuler();
+  buildLegend();
+  update();
+})();
+</script>
+</body>
+</html>
