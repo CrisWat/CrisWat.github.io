@@ -4,8 +4,8 @@ title: "Chi sono"
 permalink: /chi-sono/
 redirect_from: /about/
 eyebrow: "Chi sono"
-description: "Cristiano Fanelli, astrofisico e ricercatore INAF a Bologna: percorso, lavoro, impegno pubblico e valori."
-intro: "Sono un astrofisico. Credo in un Paese in cui scienza e giustizia sociale costruiscono insieme il futuro. A Bologna sviluppo sistemi di intelligenza artificiale per studiare le stelle."
+description: "Cristiano Fanelli, astrofisico e ricercatore INAF a Bologna, analista di intelligence: percorso, lavoro, impegno pubblico e valori."
+intro: "Sono astrofisico e analista di intelligence. Credo in un Paese in cui scienza e giustizia sociale costruiscono insieme il futuro. A Bologna sviluppo sistemi di intelligenza artificiale per studiare le stelle; come analista mi occupo di spazio, tecnologie emergenti e sicurezza."
 ---
 
 ## Il mio percorso
