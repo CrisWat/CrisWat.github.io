@@ -38,3 +38,10 @@
   status: "Gioco"
   tagline: "Fai tu il Governo: decidi come spendere per la ricerca e trova i soldi per pagare."
   description: "Oggi l'Italia dà alla ricerca 1,40 euro ogni 100 di ricchezza prodotta, l'Europa punta a 3. Scegli dove investire, dalle università ai giovani ricercatori, e trova le coperture come in una vera legge di bilancio."
+
+- title: "Marta e Marco"
+  url: "/strumenti/marta-e-marco/"
+  category: "Lavoro e parità"
+  status: "Gioco"
+  tagline: "Stessa laurea, stesso lavoro, stesso stipendio. Cosa succede nei 40 anni dopo?"
+  description: "Scegli cosa accade nella vita di Marta e Marco, dai figli al part-time, e guarda come si allontanano i loro stipendi. Un gioco sul divario di stipendio tra donne e uomini, con i dati INPS."
