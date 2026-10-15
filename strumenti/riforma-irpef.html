@@ -172,6 +172,8 @@ details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace
 .plan-pin .leg2{margin-top:4px;font-size:.85rem}
 .plan-pin #plan-read{margin:4px 0 0;min-height:2.9em;font-size:.88rem;line-height:1.45}
 #plan-note{margin:10px 0 18px}
+/* i campi del passo 2 non finiscono sotto il grafico fisso quando ricevono il focus */
+:is(#ctrl, #fx) :is(input, textarea, button, summary){scroll-margin-top:calc(var(--pin-h, 0px) + 24px)}
 @media (max-height:520px){ .plan-pin{position:static;margin:0;padding:0;border:0;box-shadow:none} }
 .plan-head h3{margin:0}
 .plan-head .seg{margin:0}
@@ -249,16 +251,11 @@ details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace
   <div id="ctrl"></div>
   <details class="fx" id="fx" hidden>
     <summary>Vedi o modifica la formula</summary>
-    <p class="small muted" style="margin-top:10px">La formula descrive:</p>
-    <div class="seg" role="group" aria-label="Cosa descrive la formula">
-      <button type="button" data-fm="avg" aria-pressed="true">Tasse ogni 100 € di reddito</button>
-      <button type="button" data-fm="marg" aria-pressed="false">Aliquota su ogni euro in più</button>
-      <button type="button" data-fm="T" aria-pressed="false">Imposta in euro</button>
-    </div>
+    <p class="small muted" style="margin-top:10px">La formula dice quale aliquota si paga su ogni euro in più quando il reddito è <b>y</b>. Ogni euro paga l'aliquota del suo livello di reddito, come con gli scaglioni.</p>
     <label class="fx-lab" for="fx-ta">Formula</label>
     <textarea id="fx-ta" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="fx-st fx-help"></textarea>
     <p class="fx-st" id="fx-st" role="status" aria-live="polite"></p>
-    <p class="small muted" id="fx-help"><b>y</b> è il reddito in euro; <b>a</b>, <b>b</b> e <b>c</b> sono i cursori qui sopra. Le aliquote si scrivono in punti: 23 vuol dire 23%. Si possono usare + − * / ^, i decimali con il punto (0.5), 28k per 28.000 e le funzioni min, max, clamp(x, minimo, massimo), pos, log, log2, exp, sqrt. Per esempio: <code>min(45, 20 + b*y/10000)</code>.</p>
+    <p class="small muted" id="fx-help"><b>y</b> è il reddito in euro; <b>a</b>, <b>b</b> e <b>c</b> sono i cursori qui sopra. Le aliquote si scrivono in punti: 23 vuol dire 23%, e restano sempre tra 0 e 100. Si possono usare + − * / ^, i decimali con il punto (0.5), 28k per 28.000 e le funzioni min, max, clamp(x, minimo, massimo), pos, log, log2, exp, sqrt. Per esempio: <code>min(45, 20 + b*y/10000)</code>.</p>
   </details>
   <p class="note">Le detrazioni, cioè gli sconti per lavoro, pensione, figli e spese come quelle mediche, restano quelle di oggi.</p>
   <div class="zero">
@@ -358,7 +355,7 @@ details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace
     <li><strong>I redditi.</strong> Sono quelli dichiarati per il 2024 da 40,7 milioni di contribuenti, divisi in 31 fasce di reddito, come li pubblica il Ministero dell'Economia. Dentro ogni fascia i redditi sono distribuiti in modo uniforme.</li>
     <li><strong>Le detrazioni.</strong> Restano quelle del 2024, fascia per fascia. Il calcolo è tarato in modo da riprodurre esattamente l'IRPEF pagata quell'anno, 197,4 miliardi. Le regole di oggi (23%, 33% e 43%) applicate agli stessi redditi danno 194,8 miliardi: è il punto di partenza.</li>
     <li><strong>Nessuno riceve soldi indietro.</strong> Se con la riforma l'imposta scende sotto zero, si paga zero.</li>
-    <li><strong>La curva a scelta.</strong> La formula può descrivere quanto si paga ogni 100 € di reddito, l'aliquota su ogni euro in più oppure direttamente l'imposta in euro. In ogni caso l'imposta resta tra zero e il reddito. Il ritocco moltiplica le imposte di tutti per lo stesso numero.</li>
+    <li><strong>La curva a scelta.</strong> Come per gli scaglioni, la curva indica l'aliquota su ogni euro in più: ogni euro di reddito paga l'aliquota del suo livello e l'imposta è la somma di tutti questi pezzi. Così l'aliquota massima che scegli non viene mai superata. Il ritocco moltiplica le imposte di tutti per lo stesso numero.</li>
     <li><strong>Il salario minimo.</strong> Usa le stime dell'Istat: con 9 € l'ora circa 3 milioni di lavoratori guadagnerebbero 2,8 miliardi in più all'anno, con 10 € circa 5 milioni guadagnerebbero 6,4 miliardi in più. Gli aumenti vanno soprattutto ai redditi più bassi.</li>
     <li><strong>La tassa sui patrimoni.</strong> Riguarda chi ha almeno qualche milione di euro: circa 50.000 persone hanno più di 5,4 milioni. I numeri seguono le stime di Oxfam Italia e del manifesto "Tax the rich" firmato da oltre 130 economisti. Sotto i 5,4 milioni sono un'estensione di quelle stime, quindi meno sicuri.</li>
     <li><strong>Il tuo calcolo.</strong> È indicativo. Tiene conto delle detrazioni per lavoro o pensione (compresa quella per i dipendenti tra 20.000 e 40.000 euro introdotta nel 2025), ma non di quelle per familiari a carico e spese, né delle addizionali regionali e comunali, né dei bonus in busta paga.</li>
@@ -618,10 +615,9 @@ function gridIndex(y){
   if (y <= 2e5) return Math.min(799, Math.floor(y/250));
   return Math.min(GN-2, 800 + Math.floor(Math.log(y/2e5)/GLR));
 }
-function makeTax(Fc, mode, p){
+// la formula è sempre l'aliquota su ogni euro in più: l'imposta è la sua somma euro per euro
+function makeTax(Fc, p){
   const fn = Fc.fn, a = p.a, b = p.b, c = p.c;
-  if (mode === 'T') return y => { const v = fn(y,a,b,c); return v > 0 ? (v < y ? v : y) : 0; };
-  if (mode === 'avg') return y => { if (y <= 0) return 0; let t = fn(y,a,b,c); if (!(t > 0)) return 0; if (t > 100) t = 100; return t*y/100; };
   const cum = new Float64Array(GN); let prev = mClamp(fn(0,a,b,c));
   for (let i=1; i<GN; i++){ const v = mClamp(fn(GX[i],a,b,c)); cum[i] = cum[i-1] + (prev + v)*0.005*(GX[i] - GX[i-1]); prev = v; }
   const last = prev;
@@ -642,17 +638,17 @@ const SC_PRESETS = [
   ['Fino al 2021', [15000, 28000, 55000, 75000], [23, 27, 38, 41, 43]]
 ];
 const LIB = {
-  log:   {name:"Sale con il logaritmo", mode:'avg', f:'clamp(a + b*log2(y/10000), 0, c)', p:{
-    a:[15, 0, 30, 0.5, "Tasse ogni 100 € a 10.000 € di reddito"], b:[6.1, 0, 15, 0.1, "Punti in più ogni volta che il reddito raddoppia"], c:[45, 20, 70, 0.5, "Massimo ogni 100 €"]}},
-  twolog:{name:"Due salite diverse", mode:'avg', f:'clamp(15 + a*log2(clamp(y, 10k, 100k)/10k) + b*log2(max(y, 100k)/100k), 15, c)', p:{
-    a:[6.16, 0, 15, 0.1, "Salita fino a 100.000 €: punti in più a ogni raddoppio"], b:[4, 0, 15, 0.1, "Salita oltre 100.000 €: punti in più a ogni raddoppio"], c:[45, 20, 70, 0.5, "Massimo ogni 100 €"]}},
-  gs:    {name:"Si avvicina a un massimo", mode:'avg', f:'c*(1 - (1 + a*(y/10000)^b)^(-1/b))', p:{
-    a:[0.407, 0.05, 2, 0.005, "Quanto in fretta sale"], b:[1, 0.2, 3, 0.05, "Forma della curva"], c:[45, 20, 70, 0.5, "Massimo a cui ci si avvicina, ogni 100 €"]}},
-  hsv:   {name:"Progressività costante", mode:'T', f:'y - a*25000*(y/25000)^(1 - b)', p:{
-    a:[0.779, 0.6, 1, 0.001, "Quanto resta in tasca a 25.000 € (1 = niente tasse)"], b:[0.15, 0, 0.4, 0.005, "Progressività (0 = aliquota unica)"]}},
-  exp:   {name:"Sale verso un tetto", mode:'marg', f:'b + (c - b)*(1 - exp(-y/(1000*a)))', p:{
+  log:   {name:"Sale con il logaritmo", f:'clamp(a + b*log2(y/10000), 0, c)', p:{
+    a:[24.3, 0, 40, 0.1, "Aliquota a 10.000 € di reddito"], b:[5, 0, 15, 0.1, "Punti in più ogni volta che il reddito raddoppia"], c:[45, 20, 70, 0.5, "Aliquota massima"]}},
+  twolog:{name:"Due salite diverse", f:'clamp(23 + a*log2(clamp(y, 10k, 100k)/10k) + b*log2(max(y, 100k)/100k), 23, c)', p:{
+    a:[3.6, 0, 15, 0.1, "Salita fino a 100.000 €: punti in più a ogni raddoppio"], b:[8, 0, 15, 0.1, "Salita oltre 100.000 €: punti in più a ogni raddoppio"], c:[55, 20, 70, 0.5, "Aliquota massima"]}},
+  gs:    {name:"Si avvicina a un massimo", f:'c*(1 - (1 + a*(y/10000)^b)^(-1/b))', p:{
+    a:[1.095, 0.05, 4, 0.005, "Quanto in fretta sale"], b:[1, 0.2, 3, 0.05, "Forma della curva"], c:[45, 20, 70, 0.5, "Aliquota massima, a cui ci si avvicina"]}},
+  hsv:   {name:"Progressività costante", f:'clamp(100 - (100 - a)*(y/25000)^(-b), 0, c)', p:{
+    a:[31.9, 0, 60, 0.1, "Aliquota a 25.000 € di reddito"], b:[0.12, 0, 0.4, 0.005, "Progressività (0 = aliquota unica)"], c:[55, 20, 90, 0.5, "Aliquota massima"]}},
+  exp:   {name:"Sale verso un tetto", f:'b + (c - b)*(1 - exp(-y/(1000*a)))', p:{
     a:[36.3, 5, 150, 0.5, "Velocità: migliaia di euro per fare il 63% della salita"], b:[15, 0, 40, 0.5, "Aliquota sul primo euro"], c:[45, 20, 70, 0.5, "Aliquota verso cui si tende"]}},
-  custom:{name:"Scrivo io", mode:null, f:null, p:null}
+  custom:{name:"Scrivo io", f:null, p:null}
 };
 const PRESETS_W = {
   none:  {label:'Nessuna', rows:[]},
@@ -664,7 +660,7 @@ const PRESETS_W = {
 function libState(id){
   const L = LIB[id], spec = {};
   for (const k of ['a','b','c']){ const q = L.p[k]; spec[k] = q ? {v:q[0], min:q[1], max:q[2], step:q[3], label:q[4]} : {v:1, min:0, max:100, step:0.1, label:'Parametro ' + k}; }
-  return {preset:id, mode:L.mode, f:L.f, spec, adj:0};
+  return {preset:id, f:L.f, spec, adj:0};
 }
 const DEF = {opt:'sc', sc:{th:[28000, 50000], r:[23, 33, 43]}, flat:{r:36, s:8000}, grad:{a:18, m:43, y:60000}, lib:libState('log'),
   mw:0, mwDist:'low', wp:'none', wtRows:[], wtEro:20, cat:'dip', inc:30000, cmp:true, pv:'marg'};
@@ -681,7 +677,7 @@ function toHash(){
   if (state.opt === 'grad') p.set('g', [state.grad.a, state.grad.m, state.grad.y].join(','));
   if (state.opt === 'lib'){
     const L = state.lib; p.set('lp', L.preset);
-    if (L.preset === 'custom'){ p.set('lm', L.mode); p.set('lf', L.f); }
+    if (L.preset === 'custom') p.set('lf', L.f);
     p.set('lv', ['a','b','c'].map(k => L.spec[k].v).join(','));
     if (L.preset === 'custom') p.set('lr', ['a','b','c'].map(k => L.spec[k].min + ':' + L.spec[k].max).join(','));
     if (L.adj) p.set('la', L.adj);
@@ -706,8 +702,10 @@ function fromHash(){
     if (state.opt === 'lib' && LIB[p.get('lp')]){
       const id = p.get('lp');
       if (id === 'custom'){
-        const src = p.get('lf') || '', mode = ['avg','marg','T'].includes(p.get('lm')) ? p.get('lm') : 'avg';
-        try { F = compile(src); state.lib = libState('log'); state.lib.preset = 'custom'; state.lib.mode = mode; state.lib.f = src;
+        const src = p.get('lf') || '';
+        // i vecchi link con formule di altro tipo non si possono più leggere allo stesso modo
+        try { if (p.has('lm') && p.get('lm') !== 'marg') throw 0;
+          F = compile(src); state.lib = libState('log'); state.lib.preset = 'custom'; state.lib.f = src;
           ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k);
           const rr = (p.get('lr') || '').split(',');
           ['a','b','c'].forEach((k, i) => { const [lo, hi] = (rr[i] || '').split(':').map(parseFloat); if (isFinite(lo) && isFinite(hi) && hi > lo){ const S = state.lib.spec[k]; S.min = lo; S.max = hi; S.step = niceStep(hi - lo, 200); } });
@@ -739,7 +737,7 @@ function taxFor(st){
     return y => y <= 0 ? 0 : (y <= Y ? a*y + b*y*y/2 : top + M*(y - Y));
   }
   if (st.opt === 'lib'){
-    const base = makeTax(F, st.lib.mode, libVals(st.lib)), k = 1 + (st.lib.adj || 0)/100;
+    const base = makeTax(F, libVals(st.lib)), k = 1 + (st.lib.adj || 0)/100;
     return y => { const t = base(y)*k; return t > 0 ? (t < y ? t : y) : 0; };
   }
   const th = st.sc.th, r = st.sc.r.map(v => v/100);
@@ -946,13 +944,7 @@ function chooseLib(id){
 function syncFx(){
   if (state.opt !== 'lib') return;
   if ($('fx-ta').value !== state.lib.f && document.activeElement !== $('fx-ta')) $('fx-ta').value = state.lib.f;
-  document.querySelectorAll('[data-fm]').forEach(b => b.setAttribute('aria-pressed', b.dataset.fm === state.lib.mode));
 }
-document.querySelectorAll('[data-fm]').forEach(b => b.addEventListener('click', () => {
-  if (state.lib.mode === b.dataset.fm) return;
-  state.lib.mode = b.dataset.fm; state.lib.preset = 'custom'; ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k);
-  renderCtrl(); update();
-}));
 let fxTimer = null;
 $('fx-ta').addEventListener('input', () => { clearTimeout(fxTimer); fxTimer = setTimeout(applyFx, 400); });
 function applyFx(){
@@ -967,7 +959,7 @@ function applyFx(){
   $('fx-ta').removeAttribute('aria-invalid');
   const wasPreset = state.lib.preset;
   state.lib.f = src;
-  const match = Object.keys(LIB).find(k => LIB[k].f === src && LIB[k].mode === state.lib.mode);
+  const match = Object.keys(LIB).find(k => LIB[k].f === src);
   if (match && match === wasPreset){ /* nessun cambiamento */ }
   else if (!match){ state.lib.preset = 'custom'; ['a','b','c'].forEach(k => state.lib.spec[k].label = 'Parametro ' + k); }
   renderCtrl(); update();
@@ -975,8 +967,7 @@ function applyFx(){
 function checkFx(R){
   if (state.opt !== 'lib' || $('fx-ta').getAttribute('aria-invalid') === 'true') return;
   const p = libVals(state.lib), v = F.fn(50000, p.a, p.b, p.c), notes = [];
-  if (state.lib.mode === 'T' && isFinite(v) && v > 0 && v < 100) notes.push(`A 50.000 € la formula vale ${fmtNum(v, 1)}: sembra un'aliquota, non un'imposta in euro. Prova a scegliere «Tasse ogni 100 €» o «Aliquota su ogni euro in più».`);
-  if (state.lib.mode !== 'T' && isFinite(v) && v > 100) notes.push(`A 50.000 € la formula vale ${nf0.format(v)}: sembra un importo in euro. Prova a scegliere «Imposta in euro».`);
+  if (isFinite(v) && v > 100) notes.push(`A 50.000 € la formula dà un'aliquota di ${nf0.format(v)}: oltre 100 non ha senso, il calcolo si ferma a 100.`);
   if (R < 0.2*BASE0) notes.push(`Con questi valori le tasse sui redditi quasi spariscono (${money(R)}): controlla i cursori.`);
   $('fx-st').textContent = notes.join(' ');
 }
@@ -1237,7 +1228,9 @@ try { new IntersectionObserver(es => { for (const e of es) $('dock').classList.t
   const chk = () => { tk = false; const r = pin.getBoundingClientRect(), sec = (pin.previousElementSibling || pin.parentElement).getBoundingClientRect();
     pin.classList.toggle('stuck', getComputedStyle(pin).position === 'sticky' && Math.abs(r.top) <= 1 && sec.top < -1); };
   addEventListener('scroll', () => { if (!tk){ tk = true; requestAnimationFrame(chk); } }, {passive:true});
-  addEventListener('resize', chk); chk();
+  const setH = () => document.documentElement.style.setProperty('--pin-h', getComputedStyle(pin).position === 'sticky' ? pin.offsetHeight + 'px' : '0px');
+  addEventListener('resize', () => { chk(); setH(); }); chk(); setH();
+  try { new ResizeObserver(setH).observe(pin); } catch(e) {}
 })();
 let rz = null;
 new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(() => { if (last){ drawBars(last.A); drawPlan(); drawChart(); } }, 80); }).observe(document.querySelector('.wrap'));
