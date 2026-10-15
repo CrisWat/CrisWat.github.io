@@ -163,12 +163,21 @@ details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace
 /* grafico della riforma */
 .plan{margin:22px 0 0}
 .plan-head{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+/* grafico fisso in alto mentre si scorrono le opzioni */
+.plan-pin{position:sticky;top:0;z-index:4;margin:0 -20px;padding:8px 20px 6px;
+  padding-top:calc(8px + env(safe-area-inset-top,0px));
+  background:var(--paper);border-bottom:1px solid transparent;transition:box-shadow .2s ease,border-color .2s ease}
+.plan-pin.stuck{border-bottom-color:var(--rule);box-shadow:0 8px 14px -12px rgba(0,0,0,.45)}
+.plan-pin .chart{margin-top:4px}
+.plan-pin .leg2{margin-top:4px;font-size:.85rem}
+.plan-pin #plan-read{margin:4px 0 0;min-height:2.9em;font-size:.88rem;line-height:1.45}
+#plan-note{margin:10px 0 18px}
+@media (max-height:520px){ .plan-pin{position:static;margin:0;padding:0;border:0;box-shadow:none} }
 .plan-head h3{margin:0}
 .plan-head .seg{margin:0}
 .cmp{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;cursor:pointer;margin-top:4px}
 .cmp input{width:20px;height:20px;accent-color:var(--line)}
 .leg2 i.d{border-top:8px solid var(--same);width:14px}
-#plan-read{margin:8px 0 2px}
 
 /* barra fissa */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--ink);color:var(--paper);
@@ -223,6 +232,20 @@ details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace
 <section class="step" aria-labelledby="s2">
   <h2 id="s2"><span class="n">2</span>Regola i numeri</h2>
   <p class="intro" id="s2-intro"></p>
+  <div class="plan plan-head">
+    <h3>Il grafico della tua riforma</h3>
+    <div class="seg" role="group" aria-label="Cosa mostra il grafico">
+      <button type="button" data-pv="marg" aria-pressed="true">Aliquota su ogni euro in più</button>
+      <button type="button" data-pv="avg" aria-pressed="false">Tasse ogni 100 € di reddito</button>
+    </div>
+    <label class="cmp"><input type="checkbox" class="cmp-box" checked> Confronta con oggi</label>
+  </div>
+  <figure class="plan-pin" id="plan-pin" style="margin-block:0">
+    <div class="chart" id="plan"></div>
+    <ul class="leg2" id="plan-leg"></ul>
+    <p class="small" id="plan-read"></p>
+  </figure>
+  <p class="small muted" id="plan-note"></p>
   <div id="ctrl"></div>
   <details class="fx" id="fx" hidden>
     <summary>Vedi o modifica la formula</summary>
@@ -237,20 +260,6 @@ details.fx code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace
     <p class="fx-st" id="fx-st" role="status" aria-live="polite"></p>
     <p class="small muted" id="fx-help"><b>y</b> è il reddito in euro; <b>a</b>, <b>b</b> e <b>c</b> sono i cursori qui sopra. Le aliquote si scrivono in punti: 23 vuol dire 23%. Si possono usare + − * / ^, i decimali con il punto (0.5), 28k per 28.000 e le funzioni min, max, clamp(x, minimo, massimo), pos, log, log2, exp, sqrt. Per esempio: <code>min(45, 20 + b*y/10000)</code>.</p>
   </details>
-  <figure class="plan">
-    <div class="plan-head">
-      <h3>Il grafico della tua riforma</h3>
-      <div class="seg" role="group" aria-label="Cosa mostra il grafico">
-        <button type="button" data-pv="marg" aria-pressed="true">Aliquota su ogni euro in più</button>
-        <button type="button" data-pv="avg" aria-pressed="false">Tasse ogni 100 € di reddito</button>
-      </div>
-      <label class="cmp"><input type="checkbox" class="cmp-box" checked> Confronta con oggi</label>
-    </div>
-    <div class="chart" id="plan"></div>
-    <ul class="leg2" id="plan-leg"></ul>
-    <p class="small" id="plan-read"></p>
-    <p class="small muted" id="plan-note"></p>
-  </figure>
   <p class="note">Le detrazioni, cioè gli sconti per lavoro, pensione, figli e spese come quelle mediche, restano quelle di oggi.</p>
   <div class="zero">
     <button type="button" class="btn ghost" id="zero">Rendi la riforma a costo zero</button>
@@ -1107,10 +1116,14 @@ function planXmax(){
   if (state.opt === 'grad') m = Math.max(m, state.grad.y*1.25);
   return Math.min(1e6, Math.ceil(m/50000)*50000);
 }
+let planVH = window.innerHeight, planVW = window.innerWidth;
+window.addEventListener('resize', () => {
+  if (window.innerWidth !== planVW || Math.abs(window.innerHeight - planVH) > 160){ planVW = window.innerWidth; planVH = window.innerHeight; if (last) drawPlan(); }
+});
 function drawPlan(){
   if (!last) return;
-  document.querySelectorAll('.plan [data-pv]').forEach(b => b.setAttribute('aria-pressed', b.dataset.pv === state.pv));
-  const box = $('plan'), W = Math.max(290, box.clientWidth), H = Math.round(Math.min(340, Math.max(240, W*0.58)));
+  document.querySelectorAll('.plan-head [data-pv]').forEach(b => b.setAttribute('aria-pressed', b.dataset.pv === state.pv));
+  const box = $('plan'), W = Math.max(290, box.clientWidth), H = Math.round(Math.min(340, Math.max(240, W*0.58), Math.max(150, planVH*(W < 500 ? 0.27 : 0.32))));
   const ml = 40, mr = 10, mt = 12, mb = 32, pw = W - ml - mr, ph = H - mt - mb, f = last.f, xmax = planXmax(), marg = state.pv === 'marg';
   const valNew = y => marg ? marginalFor(state, y) : (y < 100 ? 0 : Math.max(0, f(y))/y*100);
   const valOld = y => marg ? margToday(y) : (y < 100 ? 0 : irpef2026(y)/y*100);
@@ -1144,11 +1157,11 @@ function drawPlan(){
   svg.addEventListener('pointermove', e => { if (e.buttons) pick(e); });
   $('plan-leg').innerHTML = `<li><i></i>La tua riforma</li>${state.cmp ? '<li><i class="t"></i>Oggi</li>' : ''}<li><i class="d"></i>Quante persone hanno quel reddito</li>`;
   $('plan-read').innerHTML = marg
-    ? `A ${euro(px)} di reddito, su ogni euro in più la riforma prende <b>${fmtNum(a, 0, 1)} centesimi</b>${state.cmp ? `, oggi ${fmtNum(b, 0, 1)}` : ''}. Tocca il grafico per scegliere un altro reddito.`
-    : `A ${euro(px)} di reddito si pagano <b>${fmtNum(a, 1)} € ogni 100</b>${state.cmp ? `, oggi ${fmtNum(b, 1)}` : ''}, prima delle detrazioni. Tocca il grafico per scegliere un altro reddito.`;
+    ? `A ${euro(px)} di reddito, su ogni euro in più la riforma prende <b>${fmtNum(a, 0, 1)} centesimi</b>${state.cmp ? `, oggi ${fmtNum(b, 0, 1)}` : ''}.`
+    : `A ${euro(px)} di reddito si pagano <b>${fmtNum(a, 1)} € ogni 100</b>${state.cmp ? `, oggi ${fmtNum(b, 1)}` : ''}, prima delle detrazioni.`;
   $('plan-note').textContent = marg
-    ? "L'aliquota su ogni euro in più è la percentuale che va in tasse quando il reddito cresce di un euro. Le barre chiare mostrano quante persone hanno quel reddito."
-    : 'Quanti euro di imposta si pagano ogni 100 € di reddito, prima delle detrazioni. Le barre chiare mostrano quante persone hanno quel reddito.';
+    ? "L'aliquota su ogni euro in più è la percentuale che va in tasse quando il reddito cresce di un euro. Le barre chiare mostrano quante persone hanno quel reddito. Tocca il grafico per scegliere un altro reddito."
+    : 'Quanti euro di imposta si pagano ogni 100 € di reddito, prima delle detrazioni. Le barre chiare mostrano quante persone hanno quel reddito. Tocca il grafico per scegliere un altro reddito.';
 }
 
 /* ---------- e tu? ---------- */
@@ -1219,6 +1232,13 @@ rebase(); renderCtrl(); renderW();
 $('status').textContent = statusText();
 update();
 try { new IntersectionObserver(es => { for (const e of es) $('dock').classList.toggle('off', e.isIntersecting); }, {threshold:0.05}).observe($('results')); } catch(e) {}
+(() => {
+  const pin = $('plan-pin'); let tk = false;
+  const chk = () => { tk = false; const r = pin.getBoundingClientRect(), sec = (pin.previousElementSibling || pin.parentElement).getBoundingClientRect();
+    pin.classList.toggle('stuck', getComputedStyle(pin).position === 'sticky' && Math.abs(r.top) <= 1 && sec.top < -1); };
+  addEventListener('scroll', () => { if (!tk){ tk = true; requestAnimationFrame(chk); } }, {passive:true});
+  addEventListener('resize', chk); chk();
+})();
 let rz = null;
 new ResizeObserver(() => { clearTimeout(rz); rz = setTimeout(() => { if (last){ drawBars(last.A); drawPlan(); drawChart(); } }, 80); }).observe(document.querySelector('.wrap'));
 })();
