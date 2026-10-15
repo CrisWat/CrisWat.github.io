@@ -5,7 +5,7 @@ permalink: /chi-sono/
 redirect_from: /about/
 eyebrow: "Chi sono"
 description: "Cristiano Fanelli, astrofisico e ricercatore INAF a Bologna, analista di intelligence: percorso, lavoro, impegno pubblico e valori."
-intro: "Sono astrofisico e analista di intelligence. Credo in un Paese in cui scienza e giustizia sociale costruiscono insieme il futuro. A Bologna sviluppo sistemi di intelligenza artificiale per studiare le stelle; come analista mi occupo di spazio, tecnologie emergenti e sicurezza."
+intro: "Sono romano e vengo da una famiglia semplice, dove nulla è mai stato dato per scontato. Nel 2011 sono arrivato a Bologna per studiare, grazie ai sacrifici dei miei genitori. Per contribuire a mantenermi, la sera lavoravo dietro un bancone, servendo birre e spritz. Oggi sono astrofisico all'INAF e analista di intelligence, ma non ho dimenticato da dove vengo. So quanto devo ai sacrifici della mia famiglia, e so che non tutti hanno la possibilità di ricevere lo stesso sostegno. Per questo credo in un Paese dove il diritto di costruirsi un futuro non debba dipendere dalle possibilità economiche della propria famiglia. Dove siano le istituzioni a garantire a ciascuno le opportunità di studiare, crescere e realizzarsi, senza lasciare nessuno indietro."
 ---
 
 ## Il mio percorso
