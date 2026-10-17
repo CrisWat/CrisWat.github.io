@@ -8,7 +8,7 @@ _site/
 
 # Bundler
 .bundle/
-vendor/
+/vendor/
 
 # Editors
 .vscode/

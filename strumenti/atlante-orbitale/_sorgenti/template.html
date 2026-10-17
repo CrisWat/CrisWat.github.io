@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlante orbitale</title>
+<meta name="description" content="Atlante interattivo dello spazio circumterrestre: orbite, satelliti, stazioni spaziali, rocket body, nubi di detriti e sindrome di Kessler, su dati di catalogo pubblici.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a12; --bg2:#0b1220; --panel:#0f1828; --panel2:#132036; --line:#1f2d45; --line2:#2a3c5c;
+  --ink:#e6edf7; --ink2:#a9b6cc; --ink3:#6f7f99; --acc:#5ad1ff; --acc2:#ffd166; --warn:#ff8a5b; --bad:#ff5d7a; --ok:#7be495;
+  --c-pa:#4cc9f0; --c-pi:#8391ad; --c-rb:#f4a261; --c-db:#ff5d7a; --c-uk:#b9a7ff;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace; --sans:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+a{color:var(--acc)}
+h1,h2,h3{font-weight:600;letter-spacing:-.01em;line-height:1.2}
+h2{font-size:1.7rem;margin:0 0 .4rem}
+h3{font-size:1.1rem;margin:0 0 .5rem}
+p{margin:.4rem 0 .8rem;color:var(--ink2)}
+p strong,li strong{color:var(--ink)}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:20;background:rgba(6,10,18,.88);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:20px;height:54px}
+.brand{font-family:var(--mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:.85rem;white-space:nowrap}
+.brand b{color:var(--acc);font-weight:500}
+nav.toc{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.toc a{color:var(--ink2);text-decoration:none;font-size:.85rem;padding:6px 10px;border-radius:6px;white-space:nowrap}
+nav.toc a:hover,nav.toc a.on{background:var(--panel2);color:var(--ink)}
+section{padding:64px 0 24px;border-bottom:1px solid var(--line)}
+.kicker{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:6px}
+.lede{font-size:1.05rem;max-width:820px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}.wrap{padding:0 16px}h2{font-size:1.4rem}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.card.tight{padding:12px 14px}
+.card h3 small{font-family:var(--mono);font-weight:400;color:var(--ink3);font-size:.75rem;margin-left:6px}
+.stat{font-family:var(--mono);font-size:1.6rem;font-weight:500;color:var(--ink);line-height:1.1}
+.stat small{font-size:.8rem;color:var(--ink3);font-weight:400}
+.lbl{font-size:.78rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono)}
+.note{font-size:.85rem;color:var(--ink3)}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:2px 8px;border-radius:99px;border:1px solid var(--line2);color:var(--ink2);margin:0 4px 4px 0}
+details.deep{margin:10px 0;border:1px solid var(--line);border-radius:8px;background:var(--bg2)}
+details.deep summary{cursor:pointer;padding:10px 14px;font-size:.9rem;color:var(--acc2);font-family:var(--mono);list-style:none}
+details.deep summary::before{content:'+ ';}
+details.deep[open] summary::before{content:'− ';}
+details.deep>div{padding:0 14px 12px;color:var(--ink2);font-size:.92rem}
+.formula{font-family:var(--mono);background:var(--panel2);padding:8px 12px;border-radius:6px;color:var(--ink);display:block;margin:6px 0;overflow-x:auto;font-size:.88rem}
+/* ===== globe ===== */
+#globeSec{padding-top:0}
+.globeWrap{position:relative;height:min(78vh,820px);min-height:520px;background:radial-gradient(ellipse at 60% 40%,#0c1830 0%,#060a12 70%);border-bottom:1px solid var(--line)}
+#globe{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+#globe:active{cursor:grabbing}
+.gpanel{z-index:2;position:absolute;top:14px;left:14px;width:290px;max-height:calc(100% - 28px);overflow:auto;background:rgba(11,18,32,.9);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-size:.85rem;backdrop-filter:blur(6px)}
+.gpanel h1{font-size:1.15rem;margin:0 0 2px}
+.gpanel .sub{color:var(--ink3);font-size:.78rem;margin-bottom:10px}
+.gpanel fieldset{border:0;padding:0;margin:0 0 12px}
+.gpanel legend{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px;padding:0}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button,.btn{font:inherit;font-size:.78rem;background:var(--panel2);color:var(--ink2);border:1px solid var(--line2);border-radius:6px;padding:4px 8px;cursor:pointer}
+.seg button.on,.btn.on{background:var(--acc);border-color:var(--acc);color:#04121d;font-weight:500}
+.btn:hover,.seg button:hover{border-color:var(--acc)}
+.btn.big{font-size:.9rem;padding:8px 14px}
+.chk{display:flex;align-items:center;gap:8px;margin:3px 0;cursor:pointer;color:var(--ink2)}
+.chk input{accent-color:var(--acc)}
+.chk .sw{width:10px;height:10px;border-radius:50%;flex:none}
+.chk .n{margin-left:auto;font-family:var(--mono);font-size:.75rem;color:var(--ink3)}
+select,input[type=text],input[type=number]{font:inherit;font-size:.82rem;background:var(--bg2);color:var(--ink);border:1px solid var(--line2);border-radius:6px;padding:5px 8px;width:100%}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.clock{font-family:var(--mono);font-size:.8rem;color:var(--ink);margin:6px 0}
+.clock .warn{color:var(--warn)}
+.legendBox{position:absolute;right:14px;bottom:14px;background:rgba(11,18,32,.88);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:.78rem;max-width:260px}
+.legendBox div{display:flex;align-items:center;gap:6px;margin:2px 0;color:var(--ink2)}
+.legendBox i{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.views{position:absolute;right:14px;top:14px;display:flex;gap:4px}
+.info{z-index:3;position:absolute;right:14px;top:54px;width:300px;background:rgba(11,18,32,.94);border:1px solid var(--line2);border-radius:var(--r);padding:12px 14px;font-size:.82rem;display:none}
+.info.on{display:block}
+.info.on ~ .legendBox{display:none}
+.info h3{margin:0 0 2px;font-size:1rem}
+.info .x{position:absolute;right:8px;top:6px;background:none;border:0;color:var(--ink3);font-size:1.1rem;cursor:pointer}
+.info table{width:100%;border-collapse:collapse;margin-top:6px}
+.info td{padding:2px 0;vertical-align:top}
+.info td:first-child{color:var(--ink3);width:46%}
+.info td:last-child{font-family:var(--mono);color:var(--ink)}
+.info .expl{margin-top:8px;font-size:.8rem;color:var(--ink2);border-top:1px solid var(--line);padding-top:8px}
+.tag{position:absolute;pointer-events:none;font-family:var(--mono);font-size:.72rem;color:#fff;background:rgba(6,10,18,.7);border:1px solid var(--line2);padding:1px 6px;border-radius:4px;transform:translate(8px,-50%);white-space:nowrap}
+.results{margin-top:4px;max-height:160px;overflow:auto}
+.results div{padding:3px 6px;border-radius:4px;cursor:pointer;color:var(--ink2);font-size:.78rem}
+.results div:hover{background:var(--panel2);color:var(--ink)}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);color:var(--ink3);font-size:.9rem;pointer-events:none}
+.mobToggle{display:none}
+@media (max-width:760px){
+  .gpanel{width:auto;right:14px;max-height:46%;top:auto;bottom:14px}
+  .views{left:14px;flex-wrap:wrap}
+  .views .btn{font-size:.72rem;padding:4px 6px}
+  .gpanel.min .body{display:none}
+  .mobToggle{display:inline-block;float:right}
+  .legendBox{display:none}
+  .info{left:14px;right:14px;width:auto;top:54px}
+}
+/* charts */
+.chart{width:100%;display:block}
+.chart text{fill:var(--ink3);font-family:var(--mono);font-size:10px}
+.chart .ax{stroke:var(--line2)}
+.chart .gl{stroke:var(--line);stroke-dasharray:2 3}
+.chart .ann{fill:var(--ink2)}
+.chart .annl{stroke:var(--ink3);stroke-dasharray:2 2}
+canvas.plot{width:100%;display:block;border-radius:6px;background:var(--bg2)}
+.tt{position:fixed;pointer-events:none;z-index:50;background:#0b1220;border:1px solid var(--line2);padding:6px 9px;border-radius:6px;font-size:.78rem;font-family:var(--mono);color:var(--ink);display:none;max-width:280px}
+/* calc */
+.calcOut{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:640px){.calcOut{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.calcOut .card{padding:10px 12px}
+.calcOut .stat{font-size:1.15rem}
+.regime{border-top:3px solid var(--acc)}
+.regime ul{margin:.3rem 0 0;padding-left:1.1rem;color:var(--ink2);font-size:.9rem}
+table.data{width:100%;border-collapse:collapse;font-size:.86rem}
+table.data th{font-family:var(--mono);font-weight:400;font-size:.72rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;text-align:left;border-bottom:1px solid var(--line2);padding:6px 8px}
+table.data td{border-bottom:1px solid var(--line);padding:6px 8px;color:var(--ink2)}
+table.data td.n{font-family:var(--mono);text-align:right;color:var(--ink)}
+table.data th.n{text-align:right}
+.tblwrap{overflow-x:auto}
+.timeline{position:relative;margin:10px 0 0;padding-left:18px;border-left:2px solid var(--line2)}
+.timeline div{margin:0 0 12px;position:relative;font-size:.9rem;color:var(--ink2)}
+.timeline div::before{content:'';position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--acc)}
+.timeline div.fut::before{background:transparent;border:2px solid var(--acc2)}
+.timeline b{font-family:var(--mono);color:var(--ink);font-weight:500;margin-right:6px}
+.ksim{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px}
+@media (max-width:900px){.ksim{grid-template-columns:minmax(0,1fr)}}
+.ctl{margin-bottom:10px}
+.ctl label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--ink2)}
+.ctl label span{font-family:var(--mono);color:var(--ink)}
+.ctl .hint{font-size:.74rem;color:var(--ink3)}
+.alert{border-left:3px solid var(--warn);background:rgba(255,138,91,.07);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.9rem;color:var(--ink2);margin:10px 0}
+.alert.info2{border-left-color:var(--acc);background:rgba(90,209,255,.06)}
+.cloudCard{cursor:default}
+.cloudCard .stat{font-size:1.3rem}
+.cloudCard .btn{margin-top:8px}
+footer{padding:40px 0 60px;color:var(--ink3);font-size:.85rem}
+footer li{margin:4px 0}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand"><b>◉</b> Atlante orbitale</div>
+  <nav class="toc" id="toc">
+    <a href="#globeSec">Globo</a><a href="#regimi">Orbite</a><a href="#chi">Chi c'è lassù</a><a href="#stazioni">Stazioni</a>
+    <a href="#rb">Rocket body</a><a href="#nubi">Nubi di detriti</a><a href="#kessler">Sindrome di Kessler</a><a href="#fonti">Fonti e metodo</a>
+  </nav>
+</div></header>
+
+<!-- ================= GLOBO ================= -->
+<section id="globeSec">
+<div class="globeWrap" id="globeWrap">
+  <canvas id="globe"></canvas>
+  <div class="loading" id="loading">Decodifica del catalogo…</div>
+  <div class="gpanel" id="gpanel">
+    <button class="btn mobToggle" id="mobToggle">▾</button>
+    <h1>Lo spazio attorno alla Terra</h1>
+    <div class="sub"><span id="nTot" class="mono">—</span> oggetti catalogati con elementi orbitali pubblici · snapshot <span class="mono" id="snapDate">—</span></div>
+    <div class="body">
+    <fieldset><legend>Colora per</legend>
+      <div class="seg" id="colorMode">
+        <button data-m="type" class="on">Tipo</button><button data-m="regime">Regime</button><button data-m="mission">Missione</button><button data-m="country">Paese</button>
+      </div>
+    </fieldset>
+    <fieldset><legend>Mostra</legend><div id="typeFilters"></div></fieldset>
+    <fieldset><legend>Evidenzia</legend>
+      <select id="hlSel">
+        <option value="">— nessun gruppo —</option>
+        <optgroup label="Stazioni e voli umani"><option value="station">ISS, Tiangong e veicoli attraccati</option></optgroup>
+        <optgroup label="Costellazioni"><option value="starlink">Starlink (SpaceX)</option><option value="oneweb">OneWeb (Eutelsat)</option><option value="kuiper">Kuiper / Amazon Leo</option><option value="qianfan">Qianfan (G60)</option><option value="guowang">Guowang (Hulianwang)</option><option value="iridium">Iridium</option><option value="gnss">Navigazione (GPS, Galileo, GLONASS, BeiDou…)</option></optgroup>
+        <optgroup label="Nubi di detriti"><option value="c_fengyun">Fengyun-1C (ASAT 2007)</option><option value="c_cosmos2251">Cosmos 2251 (collisione 2009)</option><option value="c_iridium33">Iridium 33 (collisione 2009)</option><option value="c_cz6a">CZ-6A (frammentazione 2024)</option><option value="c_noaa16">NOAA 16 (2015)</option><option value="c_dmsp13">DMSP F13 (2015)</option></optgroup>
+        <optgroup label="Regimi"><option value="r_LEO">Solo LEO</option><option value="r_MEO">Solo MEO</option><option value="r_GEO">Solo GEO</option><option value="r_HEO">Solo HEO</option></optgroup>
+      </select>
+      <div class="note" id="hlInfo" style="margin-top:4px"></div>
+    </fieldset>
+    <fieldset><legend>Cerca (nome o NORAD)</legend>
+      <input type="text" id="search" placeholder="es. ISS, SENTINEL, 25544…" autocomplete="off">
+      <div class="results" id="results"></div>
+    </fieldset>
+    <fieldset><legend>Tempo simulato</legend>
+      <div class="clock" id="clock">—</div>
+      <div class="seg" id="speeds">
+        <button data-s="0">❚❚</button><button data-s="1">1×</button><button data-s="60" class="on">60×</button><button data-s="600">600×</button><button data-s="3600">1 h/s</button><button data-s="86400">1 g/s</button>
+      </div>
+      <div class="seg" style="margin-top:6px"><button id="tSnap">Data snapshot</button><button id="tNow">Ora (estrapolato)</button></div>
+      <div class="note" style="margin-top:6px">Posizioni calcolate dagli elementi medi con modello kepleriano + J2: didattico, non per previsioni di passaggio.</div>
+    </fieldset>
+    </div>
+  </div>
+  <div class="views"><button class="btn" data-v="leo">LEO da vicino</button><button class="btn on" data-v="mid">Fino a MEO</button><button class="btn" data-v="all">Fino a GEO</button><button class="btn" data-v="far">Panoramica</button></div>
+  <div class="info" id="info"></div>
+  <div class="legendBox" id="legend"></div>
+  <div id="tags"></div>
+</div>
+<div class="wrap" style="padding-top:18px">
+  <div class="grid g4" id="topStats"></div>
+  <p class="note" style="margin-top:12px">Trascina per ruotare, rotella/pizzico per lo zoom, clic su un punto per la scheda dell'oggetto. Ogni punto è un oggetto più grande di circa 10 cm in LEO (≈ 0,3–1 m in GEO) tracciato dalla rete di sorveglianza statunitense e reso pubblico; i frammenti più piccoli, molto più numerosi, non compaiono.</p>
+</div>
+</section>
+
+<!-- ================= REGIMI ================= -->
+<section id="regimi"><div class="wrap">
+  <div class="kicker">01 · Meccanica orbitale</div>
+  <h2>Orbite a confronto</h2>
+  <p class="lede">Un'orbita è una caduta continua: il satellite cade verso la Terra ma si muove di lato abbastanza in fretta da «mancarla» sempre. Più è basso, più deve essere veloce e più breve è il giro. Questa sola relazione decide quasi tutto: latenza, copertura, numero di satelliti necessari, vita orbitale, esposizione ai detriti.</p>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card">
+      <h3>Calcolatore orbitale <small>orbita circolare</small></h3>
+      <div class="ctl"><label>Quota <span id="cAltV">550 km</span></label><input type="range" id="cAlt" min="0" max="1000" value="0"></div>
+      <div class="seg" id="cPresets"></div>
+      <div class="calcOut" id="cOut"></div>
+      <details class="deep"><summary>Le formule</summary><div>
+        <span class="formula">v = √(μ / r)     μ = 398 600,44 km³/s²,  r = R⊕ + h</span>
+        <span class="formula">T = 2π √(r³ / μ)     (terza legge di Keplero)</span>
+        <span class="formula">v_fuga = √2 · v_circolare</span>
+        <span class="formula">raggio di copertura (elev. min ε): ψ = arccos(R⊕cos ε / r) − ε</span>
+        Per orbite ellittiche vale la relazione <i>vis-viva</i> v² = μ(2/r − 1/a): la velocità è massima al perigeo e minima all'apogeo. La latenza indicata è il solo tempo di propagazione andata-ritorno terra→satellite→terra al nadir, senza elaborazione né instradamento.
+      </div></details>
+    </div>
+    <div class="card"><h3>Le orbite in scala</h3><svg id="scaleSvg" class="chart" viewBox="0 0 560 360"></svg>
+      <p class="note">Disegno in scala reale delle quote rispetto al raggio terrestre (6 378 km). La LEO è una pellicola sottile: la ISS orbita a una distanza dalla superficie pari a circa 1/16 del raggio terrestre.</p></div>
+  </div>
+  <div class="grid g4" id="regimeCards" style="margin-top:16px"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>Dove sono gli oggetti: distribuzione in quota <small>scala logaritmica</small></h3>
+    <svg id="altHist" class="chart" viewBox="0 0 1100 340"></svg>
+    <p class="note">Quota media (semiasse maggiore − raggio terrestre) di ogni oggetto, in barre impilate per tipo. I picchi raccontano scelte industriali (Starlink a 480–560 km, OneWeb a 1 200 km), vincoli fisici (la fascia geostazionaria a 35 786 km) ed eventi (la nube Fengyun-1C attorno a 850 km).</p>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Quota e inclinazione: le «firme» delle missioni</h3>
+    <canvas id="aiPlot" class="plot" height="420"></canvas>
+    <div class="grid g3" style="margin-top:10px">
+      <div><p class="note"><strong>0° · GEO.</strong> Un satellite sull'equatore a 35 786 km gira con la Terra e appare fermo nel cielo: ideale per TV, meteo e telecomunicazioni regionali, ma con ≈ 240 ms di ritardo andata-ritorno.</p></div>
+      <div><p class="note"><strong>97–99° · eliosincrone (SSO).</strong> Il rigonfiamento equatoriale (J2) fa ruotare il piano orbitale di ≈ 0,986°/giorno, come il Sole apparente: il satellite passa sempre alla stessa ora locale. È l'orbita dell'osservazione della Terra.</p></div>
+      <div><p class="note"><strong>63,4° · Molniya/Tundra.</strong> A questa inclinazione «critica» l'effetto J2 sull'argomento del perigeo si annulla: l'apogeo resta fisso sull'emisfero nord e il satellite vi staziona per ore. Usata da Russia per comunicazioni e allerta precoce.</p></div>
+    </div>
+    <details class="deep"><summary>Perché J2 conta così tanto</summary><div>
+      La Terra è schiacciata ai poli (J2 ≈ 1,083·10⁻³). Questo rigonfiamento produce una precessione del nodo ascendente
+      <span class="formula">dΩ/dt = −(3/2) n J2 (R⊕/p)² cos i</span>
+      che dipende da quota e inclinazione. Scegliendo bene i due parametri si ottiene l'eliosincronia (dΩ/dt = +0,9856°/giorno, solo con i &gt; 90°). La stessa precessione differenziale spiega perché una nube di detriti, nata come un anello stretto, in pochi anni si spalma attorno a tutta la Terra (sezione «Nubi di detriti»). Questo modello è anche quello che anima il globo qui sopra.
+    </div></details>
+  </div>
+</div></section>
+
+<!-- ================= CHI ================= -->
+<section id="chi"><div class="wrap">
+  <div class="kicker">02 · Popolazione</div>
+  <h2>Chi c'è lassù, e cosa fa</h2>
+  <p class="lede">Circa metà degli oggetti catalogati è un satellite funzionante. Il resto è materiale inerte: satelliti spenti, stadi di razzo abbandonati, frammenti di esplosioni e collisioni. E dal 2020 una sola azienda gestisce la maggioranza dei satelliti attivi.</p>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>Composizione del catalogo</h3><svg id="compSvg" class="chart" viewBox="0 0 520 250"></svg><div class="note" id="compNote"></div></div>
+    <div class="card"><h3>Cosa fanno i satelliti <small>payload, per missione primaria</small></h3><svg id="misSvg" class="chart" viewBox="0 0 520 290"></svg></div>
+    <div class="card"><h3>Chi possiede gli oggetti <small>primi 10 per numero</small></h3><svg id="ctrySvg" class="chart" viewBox="0 0 520 300"></svg><div class="note">Paese/organizzazione di registrazione secondo il catalogo SATCAT (CIS = Russia e ex URSS; ESA, ITSO, EUTE ecc. sono organizzazioni). I detriti sono attribuiti al paese dell'oggetto da cui provengono.</div></div>
+    <div class="card"><h3>Quando sono stati lanciati <small>oggetti ancora in orbita</small></h3><svg id="yearSvg" class="chart" viewBox="0 0 520 300"></svg><div class="note">Anno del lancio originario. I detriti ereditano l'anno del corpo genitore: il picco del 1999 è Fengyun-1C (lanciato nel 1999, distrutto nel 2007); quello del 1993 è Cosmos 2251.</div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Le missioni in breve</h3><div class="grid g3" id="misCards"></div></div>
+</div></section>
+
+<!-- ================= STAZIONI ================= -->
+<section id="stazioni"><div class="wrap">
+  <div class="kicker">03 · Volo umano</div>
+  <h2>Le stazioni spaziali</h2>
+  <p class="lede">Oggi in orbita ci sono due stazioni abitate in modo permanente. Entrambe volano basse, tra 380 e 430 km, dove la radiazione è contenuta e i rifornimenti costano meno, ma dove l'atmosfera residua le frena: senza periodiche riaccensioni dei motori rientrerebbero in pochi anni.</p>
+  <div class="grid g2" style="margin-top:16px" id="stationCards"></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>Cronologia</h3><div class="timeline" id="stTimeline"></div></div>
+    <div class="card"><h3>Perché la quota della ISS «scende»</h3>
+      <p>Alla quota della ISS la densità dell'aria è di circa 10⁻¹² kg/m³, un miliardesimo di quella al suolo, ma la stazione la attraversa a 7,7 km/s con pannelli grandi come un campo da calcio. La resistenza riduce il semiasse maggiore di qualche decina di metri al giorno (molto di più col Sole attivo): periodicamente Progress, Cygnus o Dragon alzano l'orbita.</p>
+      <p>Il catalogo misura questo effetto nel termine <span class="mono">ṅ/2</span> degli elementi orbitali: per la ISS nello snapshot vale <span class="mono" id="issNdot">—</span> giri/giorno², pari a un abbassamento di circa <b id="issDecay">—</b> al giorno.</p>
+      <div class="alert info2">Lo stesso freno atmosferico è il principale «spazzino» naturale dei detriti: per questo un frammento a 400 km rientra in pochi anni, uno a 850 km resta per secoli. È il punto chiave per capire la sindrome di Kessler.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= ROCKET BODY ================= -->
+<section id="rb"><div class="wrap">
+  <div class="kicker">04 · Stadi abbandonati</div>
+  <h2>Rocket body: pochi, ma pesanti</h2>
+  <p class="lede">Un rocket body è lo stadio superiore di un lanciatore rimasto in orbita dopo aver rilasciato il carico. Sono pochi rispetto ai frammenti, ma concentrano una frazione enorme della massa: corpi di più tonnellate, senza controllo d'assetto, spesso con propellente residuo e batterie che possono esplodere decenni dopo.</p>
+  <div class="grid g4" id="rbStats" style="margin-top:16px"></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>Le famiglie più massicce <small>massa a secco, GCAT</small></h3><div class="tblwrap"><table class="data" id="rbTable"></table></div></div>
+    <div class="card"><h3>Massa in orbita per tipo e regime <small>tonnellate</small></h3><svg id="massSvg" class="chart" viewBox="0 0 520 260"></svg>
+      <p class="note">In LEO i rocket body rappresentano una quota della massa molto più alta del loro numero. Una collisione tra due stadi da 9 t (come gli SL-16/Zenit raggruppati tra 830 e 850 km) genererebbe da sola, secondo il modello NASA, circa <b id="sl16frag">—</b> frammenti ≥ 10 cm: più di Fengyun-1C.</p></div>
+  </div>
+  <details class="deep"><summary>Cosa si fa oggi: passivazione e rientro</summary><div>
+    Le linee guida IADC e la norma ISO 24113 chiedono di <b>passivare</b> gli stadi (scaricare propellente e pressurizzanti, scollegare le batterie) e di rimuoverli dalla LEO entro 25 anni; l'ESA dal 2023 applica a sé stessa il limite di <b>5 anni</b>, e la FCC lo impone dal 2024 ai satelliti con licenza statunitense. Secondo l'<i>ESA Space Environment Report 2025</i> circa il 90% dei rocket body in LEO rispetta la regola dei 25 anni e oltre la metà rientra in modo controllato; sul limite dei 5 anni la conformità scende a circa l'80%.
+  </div></details>
+</div></section>
+
+<!-- ================= NUBI ================= -->
+<section id="nubi"><div class="wrap">
+  <div class="kicker">05 · Frammentazioni</div>
+  <h2>Nubi di detriti</h2>
+  <p class="lede">Ogni esplosione o collisione produce una nube di frammenti che parte dallo stesso punto con piccole differenze di velocità (decine-centinaia di m/s). Ciascun frammento finisce su un'orbita leggermente diversa: in pochi giorni la nube diventa un anello, in pochi anni un guscio che avvolge la Terra.</p>
+  <div class="grid g3" id="cloudCards" style="margin-top:16px"></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3>Diagramma di Gabbard <small id="gabTitle"></small></h3><canvas id="gabPlot" class="plot" height="340"></canvas>
+      <p class="note">Ogni frammento è disegnato due volte: apogeo (<span style="color:#ffd166">giallo</span>) e perigeo (<span style="color:#ff5d7a">rosso</span>) in funzione del periodo. La «X» che si forma indica il punto di rottura: i pezzi spinti in avanti salgono di apogeo e allungano il periodo, quelli spinti indietro abbassano il perigeo e rientrano prima.</p></div>
+    <div class="card"><h3>Dispersione dei piani orbitali <small id="raanTitle"></small></h3><canvas id="raanPlot" class="plot" height="340"></canvas>
+      <p class="note">Ascensione retta del nodo ascendente (Ω) e inclinazione dei frammenti oggi. Una nube appena nata ha un unico Ω; la precessione J2, diversa per ciascun frammento, la distribuisce su tutti i 360° in alcuni anni. Fengyun-1C (2007) e Cosmos 2251 (2009) sono ormai completamente spalmate; CZ-6A (2024) è ancora in fase di dispersione.</p></div>
+  </div>
+</div></section>
+
+<!-- ================= KESSLER ================= -->
+<section id="kessler"><div class="wrap">
+  <div class="kicker">06 · Instabilità</div>
+  <h2>La sindrome di Kessler</h2>
+  <p class="lede">Nel 1978 Donald Kessler e Burton Cour-Palais (NASA) mostrarono che, oltre una certa densità di oggetti, le collisioni producono frammenti più in fretta di quanto l'atmosfera li rimuova. Ogni collisione aumenta la probabilità della successiva: la popolazione cresce da sola, anche senza nuovi lanci. Non è un evento improvviso da film, ma un processo lento — decenni o secoli — che può rendere alcune quote inutilizzabili.</p>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card"><h3>1 · Le collisioni crescono con N²</h3><p>Il numero atteso di collisioni in un guscio è proporzionale al <b>quadrato</b> del numero di oggetti: raddoppiare la popolazione quadruplica il rischio.</p><span class="formula">Ṅ_coll ≈ ½ · N² · σ · v_rel / V</span><p class="note">σ = sezione d'urto, v_rel ≈ 10 km/s in LEO, V = volume del guscio.</p></div>
+    <div class="card"><h3>2 · Ogni urto è catastrofico</h3><p>A 10 km/s un oggetto di 1 cm porta l'energia di un'auto di una tonnellata a ≈ 40 km/h; uno di 10 cm quella di ≈ 17 kg di tritolo. Oltre 40 J per grammo di bersaglio, il bersaglio si frantuma.</p><span class="formula">N(≥ L) = 0,1 · M^0,75 · L^−1,71</span><p class="note">Modello di frammentazione NASA (Johnson et al., 2001): due oggetti per 1 000 kg totali producono ≈ 900 frammenti ≥ 10 cm.</p></div>
+    <div class="card"><h3>3 · Solo l'atmosfera ripulisce</h3><p>L'unico pozzo naturale è la resistenza atmosferica, che decresce esponenzialmente con la quota. Sotto 500 km i detriti rientrano in anni; tra 800 e 1 000 km restano per secoli.</p><div id="lifeMini"></div></div>
+  </div>
+  <div class="alert" style="margin-top:16px">Il punto di consenso oggi (ESA Space Environment Report 2025, IADC): in alcune bande della LEO, soprattutto 750–1 000 km, la popolazione di detriti continuerebbe a crescere <b>anche fermando del tutto i lanci</b>. Ridurre i nuovi detriti non basta più: serve anche rimuovere attivamente gli oggetti più massicci.</div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Simulatore: evoluzione della LEO in 36 gusci</h3>
+    <p class="note" style="margin-top:0">Popolazione iniziale presa dallo snapshot (oggetti con apogeo &lt; 2 000 km). Tre popolazioni per guscio di 50 km: satelliti <span style="color:var(--c-pa)">attivi</span> (manovrano), oggetti intatti <span style="color:var(--c-rb)">derelitti</span> (satelliti spenti e rocket body), <span style="color:var(--c-db)">frammenti</span> ≥ 10 cm.</p>
+    <div class="seg" id="kPresets" style="margin:8px 0 14px"></div>
+    <div class="ksim">
+      <div id="kCtl"></div>
+      <div>
+        <div class="grid g4" id="kStats"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><span class="lbl">Numero di oggetti in LEO</span><span class="seg" id="kScale"><button data-s="lin" class="on">lineare</button><button data-s="log">log</button></span></div>
+        <svg id="kLine" class="chart" viewBox="0 0 760 270"></svg>
+        <div class="lbl" style="margin-top:10px">Densità per quota nel tempo <span class="note" style="text-transform:none;letter-spacing:0">(tutti gli oggetti, attivi inclusi · oggetti/km³, scala logaritmica)</span></div>
+        <canvas id="kHeat" class="plot" height="260"></canvas>
+        <div id="kMsg"></div>
+      </div>
+    </div>
+    <details class="deep"><summary>Come funziona il modello e cosa NON dice</summary><div>
+      <p>Modello «particelle in una scatola» a gusci, nello spirito degli studi NASA LEGEND / ESA DELTA ma enormemente semplificato. A ogni passo di 3 mesi: (1) <b>collisioni</b> in ciascun guscio secondo la teoria cinetica dei gas, con v_rel = 10 km/s e sezioni d'urto medie; i satelliti attivi evitano la frazione indicata di incontri; (2) i <b>frammenti</b> prodotti seguono il modello NASA (urto catastrofico se l'energia supera 40 J/g) e vengono distribuiti sui gusci vicini (±75 km); (3) <b>decadimento</b>: oggetti derelitti e frammenti scendono di guscio con un tempo di residenza ricavato da vite orbitali tipiche ad attività solare media (frammenti: vita ridotta per l'area/massa maggiore); (4) <b>fine missione</b>: i satelliti attivi si ritirano dopo la vita indicata; una quota pari al tasso PMD viene rimossa, il resto diventa derelitto; (5) i <b>lanci</b> ricostituiscono le flotte; (6) <b>ADR</b>: rimozione dei derelitti nei gusci più a rischio.</p>
+      <p>Se la probabilità annua di impatto per un satellite in un guscio supera la soglia indicata (senza manovre), il guscio viene considerato <b>abbandonato</b> dagli operatori e non vi si lancia più.</p>
+      <p><b>Limiti principali.</b> Orbite trattate come circolari; nessuna dipendenza dall'inclinazione; ciclo solare medio; nessun detrito 1–10 cm (non tracciabile, ma letale: ≈ 1,5 milioni secondo ESA MASTER-8); costellazioni modellate come gas casuale (in realtà sono coordinate, quindi gli urti interni sono sovrastimati); nessuna saturazione: valori oltre 10⁵ frammenti indicano solo che il guscio è diventato inutilizzabile. È uno strumento per capire i <b>meccanismi</b> (N², pozzi, soglie, effetto PMD e ADR), non per prevedere numeri.</p>
+    </div></details>
+  </div>
+</div></section>
+
+<!-- ================= FONTI ================= -->
+<footer id="fonti"><div class="wrap">
+  <div class="kicker">Fonti e metodo</div>
+  <h2 style="color:var(--ink)">Da dove vengono i dati</h2>
+  <ul>
+    <li><b>Elementi orbitali (GP/OMM)</b>: 18th/19th Space Defense Squadron via <a href="https://www.space-track.org">Space-Track.org</a>, file del <span class="mono" id="srcGp">—</span>, <span class="mono" id="srcN">—</span> oggetti in orbita con elementi pubblici. Ridistribuzione dei dati SSA di base consentita citando la fonte (Space-Track User Agreement).</li>
+    <li><b>Catalogo SATCAT</b>: <a href="https://celestrak.org/satcat/">CelesTrak</a> (T.S. Kelso), 12 agosto 2026 — usato per i totali, compresi gli oggetti senza elementi pubblici.</li>
+    <li><b>Masse</b>: <a href="https://planet4589.org/space/gcat/">GCAT</a> (J. McDowell), massa a secco ove disponibile; i detriti non hanno massa nota.</li>
+    <li><b>Classificazione delle missioni</b>: tassonomia SatTrack derivata da GCAT e SATCAT (codici di categoria, stato operativo), con revisione parziale.</li>
+    <li><b>Statistiche di riferimento</b>: <a href="https://www.esa.int/Space_Safety/Space_Debris/ESA_Space_Environment_Report_2025">ESA Space Environment Report 2025</a>; <a href="https://sdup.esoc.esa.int/discosweb/statistics/">ESA DISCOS «Space environment statistics»</a> (aggiornamento 14 ottobre 2026: ≈ 47 130 oggetti tracciati, ≈ 68 450 oggetti &gt; 10 cm stimati, 1,5 milioni tra 1 e 10 cm, oltre 17 400 t in orbita).</li>
+    <li><b>Modelli</b>: D.J. Kessler, B.G. Cour-Palais, «Collision frequency of artificial satellites: the creation of a debris belt», <i>J. Geophys. Res.</i> 83 (1978); N.L. Johnson et al., «NASA's new breakup model of EVOLVE 4.0», <i>Adv. Space Res.</i> 28 (2001); J.-C. Liou, N.L. Johnson, «Risks in space from orbiting debris», <i>Science</i> 311 (2006); J.-C. Liou, «An active debris removal parametric study for LEO environment remediation», <i>Adv. Space Res.</i> 47 (2011).</li>
+  </ul>
+  <p class="note"><b>Limiti.</b> Il catalogo pubblico esclude parte degli oggetti militari e quelli non ancora identificati (<span id="srcGap">—</span>). Le posizioni sul globo derivano da elementi medi SGP4 propagati con un modello kepleriano più perturbazione secolare J2 e decadimento al primo ordine: l'errore cresce con il tempo dallo snapshot (km dopo giorni, centinaia di km dopo settimane in LEO bassa). Gli oggetti rientrati dopo lo snapshot restano visibili. Le classificazioni di missione e stato operativo possono contenere errori.</p>
+</div></footer>
+<div class="tt" id="tt"></div>
+
+<script type="application/octet-stream" id="satdata">__DATA__</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script>__KESSLER__</script>
+<script type="module">__APP__</script>
+</body>
+</html>

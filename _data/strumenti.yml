@@ -45,3 +45,10 @@
   status: "Gioco"
   tagline: "Stessa laurea, stesso lavoro, stesso stipendio. Cosa succede nei 40 anni dopo?"
   description: "Scegli cosa accade nella vita di Marta e Marco, dai figli al part-time, e guarda come si allontanano i loro stipendi. Un gioco sul divario di stipendio tra donne e uomini, con i dati INPS."
+
+- title: "Atlante orbitale"
+  url: "/strumenti/atlante-orbitale/"
+  category: "Spazio"
+  status: "Atlante 3D"
+  tagline: "Tutto quello che gira attorno alla Terra, su un globo da esplorare."
+  description: "Oltre 31.000 oggetti catalogati: satelliti, stazioni spaziali, stadi di razzi e detriti. Confronta le orbite, esplora le nubi di frammenti e simula la sindrome di Kessler, con i dati ufficiali di Space-Track e CelesTrak."
