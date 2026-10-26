@@ -52,3 +52,10 @@
   status: "Atlante 3D"
   tagline: "Tutto quello che gira attorno alla Terra, su un globo da esplorare."
   description: "Oltre 31.000 oggetti catalogati: satelliti, stazioni spaziali, stadi di razzi e detriti. Confronta le orbite, esplora le nubi di frammenti e simula la sindrome di Kessler, con i dati ufficiali di Space-Track e CelesTrak."
+
+- title: "Un giorno senza satelliti"
+  url: "/strumenti/giorno-senza-satelliti/"
+  category: "Spazio"
+  status: "Racconto · 5 minuti"
+  tagline: "Dalla sveglia alla sera: cosa continua, cosa peggiora e cosa si ferma."
+  description: "Immagina che per 24 ore tutti i satelliti smettano di funzionare. Segui una giornata qualunque, dalla sveglia al navigatore, dal 112 alla TV, e scopri quanto dipendiamo da loro senza accorgercene. Ogni affermazione ha la sua fonte."
