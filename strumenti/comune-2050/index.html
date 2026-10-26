@@ -1,0 +1,606 @@
+---
+layout: null
+title: "Il tuo comune nel 2050"
+description: "Scrivi il nome del tuo comune: quanto si è già scaldata la tua zona dal 1950, e quante giornate sopra i 30 °C e notti tropicali ci saranno nel 2050. Dati ERA5 e proiezioni climatiche CMIP6 della Banca Mondiale, per i 7.896 comuni italiani."
+permalink: /strumenti/comune-2050/
+---
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% seo %}
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/images/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAF6EF;
+  --surface: #FFFFFF;
+  --ink: #1E2A3A;
+  --muted: #566170;
+  --line: #E3DCCD;
+  --accent: #22408C;
+  --on-accent: #FFFFFF;
+  --accent-soft: #E3E9F7;
+  --focus: #A86B00;
+  --hot: #B3261E;
+  --hot-soft: rgba(179, 38, 30, 0.16);
+  --warn-bg: #FBEEDA;
+  --warn-ink: #6B4100;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+  box-sizing: border-box;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14181F;
+    --surface: #1C222C;
+    --ink: #ECE6DA;
+    --muted: #A9B1BD;
+    --line: #2E3644;
+    --accent: #8FA8F0;
+    --on-accent: #14181F;
+    --accent-soft: #24304A;
+    --focus: #E0A84A;
+    --hot: #FF8E84;
+    --hot-soft: rgba(255, 142, 132, 0.22);
+    --warn-bg: #3A2D18;
+    --warn-ink: #F3D49A;
+    color-scheme: dark;
+  }
+}
+*, *::before, *::after { box-sizing: inherit; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 1.125rem; line-height: 1.6; }
+main { max-width: 52rem; margin: 0 auto; padding: 0 1.25rem 4rem; padding-left: max(1.25rem, env(safe-area-inset-left)); padding-right: max(1.25rem, env(safe-area-inset-right)); }
+.narrow { max-width: 42rem; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(2.4rem, 8vw, 3.6rem); letter-spacing: -0.01em; }
+h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+h3 { font-size: 1.25rem; margin-bottom: 0.35rem; }
+p { margin: 0 0 1rem; }
+a { color: var(--accent); }
+.lead { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; }
+.small { font-size: 0.95rem; color: var(--muted); }
+strong { font-weight: 700; }
+sup.r { font-size: 0.72em; line-height: 0; }
+sup.r a { text-decoration: none; padding: 0 0.1em; }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.site-back{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:1.25rem 0 0;margin:0;font-size:.92rem;color:var(--muted)}
+.site-back a{color:var(--muted);font-weight:600;text-decoration:none}
+.site-back a:hover{color:var(--ink);text-decoration:underline}
+header.intro { padding: 2.5rem 0 1rem; }
+header.intro .kicker { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
+header.intro h1 { margin-bottom: 1rem; }
+
+/* Ricerca */
+.search { position: relative; margin: 0.5rem 0 0.75rem; }
+.search label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
+.search input {
+  width: 100%; font: inherit; font-size: 1.2rem; padding: 0.75rem 0.9rem; border-radius: 6px;
+  border: 2px solid var(--line); background: var(--surface); color: var(--ink);
+}
+.search input:focus { border-color: var(--accent); outline: none; }
+.search ul { list-style: none; margin: 0.25rem 0 0; padding: 0.25rem; position: absolute; left: 0; right: 0; z-index: 20; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); max-height: 22rem; overflow-y: auto; }
+.search ul[hidden] { display: none; }
+.search li { padding: 0.5rem 0.65rem; border-radius: 4px; cursor: pointer; display: flex; justify-content: space-between; gap: 0.75rem; }
+.search li[aria-selected="true"], .search li:hover { background: var(--accent-soft); }
+.search li .p { color: var(--muted); font-size: 0.92rem; white-space: nowrap; }
+.search .none { color: var(--muted); cursor: default; }
+.picks { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; font-size: 0.95rem; color: var(--muted); }
+.picks button { font: inherit; font-size: 0.95rem; color: var(--accent); background: transparent; border: 1px solid var(--line); border-radius: 99px; padding: 0.2rem 0.75rem; cursor: pointer; }
+.picks button:hover { border-color: var(--accent); }
+
+/* Risultato */
+#result { padding-top: 1.75rem; }
+#result[hidden] { display: none; }
+.place { border-top: 3px solid var(--ink); padding-top: 1rem; margin-bottom: 1rem; }
+.place h2 { font-size: clamp(2rem, 6vw, 2.6rem); margin-bottom: 0.2rem; }
+.place .where { color: var(--muted); font-size: 0.98rem; margin: 0; }
+.warn { background: var(--warn-bg); color: var(--warn-ink); border-radius: 6px; padding: 0.8rem 1rem; font-size: 1rem; margin: 0.75rem 0 0; }
+.warn p { margin: 0; }
+.warn p + p { margin-top: 0.5rem; }
+.block { margin-top: 2.25rem; }
+.block > h3 { font-size: 1.4rem; }
+.block > .sub { color: var(--muted); font-size: 0.98rem; margin-bottom: 0.9rem; }
+
+/* Strisce */
+.stripes { position: relative; }
+.stripes svg { display: block; width: 100%; height: auto; }
+.stripes .ax { fill: var(--muted); font-family: var(--sans); font-size: 12px; }
+.stripes .lab { fill: var(--ink); font-family: var(--sans); font-size: 12px; font-weight: 700; }
+.legend-grad { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.5rem; font-size: 0.88rem; color: var(--muted); margin-top: 0.4rem; }
+.legend-grad span.g { flex: 1 1 6rem; max-width: 16rem; height: 10px; border-radius: 3px; background: linear-gradient(90deg, #053061, #2166ac, #4393c3, #92c5de, #d1e5f0, #f7f7f7, #fddbc7, #f4a582, #d6604d, #b2182b, #67001f); }
+.big { font-family: var(--serif); font-size: 1.35rem; line-height: 1.45; margin: 1rem 0 0.5rem; }
+.big strong { color: var(--hot); }
+
+/* Scenari */
+fieldset.scen { border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
+fieldset.scen legend { font-weight: 700; padding: 0; margin-bottom: 0.45rem; }
+.scen-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
+.scen-opts label { position: relative; display: block; cursor: pointer; }
+.scen-opts input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.scen-opts span { display: block; height: 100%; padding: 0.5rem 0.65rem; border: 1.5px solid var(--line); border-radius: 6px; background: var(--surface); font-weight: 700; line-height: 1.25; font-size: 0.98rem; }
+.scen-opts span small { display: block; font-weight: 400; color: var(--muted); font-size: 0.82rem; margin-top: 0.15rem; }
+.scen-opts input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.scen-opts input:checked + span small { color: var(--on-accent); opacity: 0.85; }
+.scen-opts input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+@media (max-width: 520px) { .scen-opts { grid-template-columns: 1fr; } }
+
+/* Indicatori */
+.cards { display: grid; grid-template-columns: 1fr; gap: 0.9rem; }
+@media (min-width: 680px) { .cards { grid-template-columns: 1fr 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.1rem 0.9rem; }
+.card h4 { margin: 0; font-size: 1.02rem; font-weight: 700; }
+.card .def { font-size: 0.88rem; color: var(--muted); margin: 0.1rem 0 0.6rem; }
+.card .nums { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.card .from { font-family: var(--serif); font-size: 1.5rem; color: var(--muted); }
+.card .arrow { color: var(--muted); }
+.card .to { font-family: var(--serif); font-size: 2.3rem; font-weight: 600; color: var(--hot); line-height: 1; }
+.card .unit { font-size: 0.95rem; color: var(--muted); }
+.card .delta { font-size: 0.95rem; margin: 0.35rem 0 0.5rem; }
+.card svg { display: block; width: 100%; height: 34px; overflow: visible; }
+.card .track { fill: var(--line); }
+.card .band { fill: var(--hot-soft); }
+.card .mk-now { fill: var(--muted); }
+.card .mk-fut { fill: var(--hot); }
+.card .tick { fill: var(--muted); font-size: 10px; font-family: var(--sans); }
+.card .lg { font-size: 0.8rem; color: var(--muted); display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 0.2rem; }
+.card .lg i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 0.3rem; vertical-align: 0; }
+
+/* Scenari a confronto */
+.cmp { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
+.cmp th, .cmp td { text-align: left; padding: 0.45rem 0.5rem 0.45rem 0; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.cmp th { font-weight: 700; font-size: 0.88rem; color: var(--muted); }
+.cmp td.v { font-variant-numeric: tabular-nums; white-space: nowrap; width: 1%; }
+.cmp td.bar { width: 50%; }
+.cmp svg { display: block; width: 100%; height: 18px; }
+.cmp tr.sel td { font-weight: 700; }
+
+/* Mappa */
+.map-wrap { display: grid; grid-template-columns: 1fr; gap: 0.5rem; }
+.map-wrap svg { width: 100%; max-width: 30rem; height: auto; display: block; margin: 0 auto; }
+.map-toggle { display: flex; gap: 0.4rem; margin-bottom: 0.5rem; }
+.map-toggle button { font: inherit; font-size: 0.95rem; font-weight: 700; padding: 0.3rem 0.85rem; border-radius: 99px; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.map-toggle button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.map-legend { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--muted); justify-content: center; }
+.map-legend span.g { width: 12rem; height: 10px; border-radius: 3px; background: linear-gradient(90deg, #FFF5D6, #FDD38A, #F9A25A, #E8663A, #C4312A, #7F1020); }
+#map rect.sel { stroke: var(--ink); stroke-width: 2.2; }
+
+section.after { padding-top: 2.75rem; }
+.todo { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+.todo li { border-left: 3px solid var(--accent); padding: 0.15rem 0 0.15rem 0.9rem; }
+.todo li strong { display: block; }
+.todo li span { font-size: 0.98rem; color: var(--muted); }
+details.method { border-top: 1px solid var(--line); padding: 0.9rem 0; }
+details.method:last-of-type { border-bottom: 1px solid var(--line); }
+details.method summary { cursor: pointer; font-weight: 700; }
+details.method ul, details.method ol { padding-left: 1.3rem; margin: 0.75rem 0 0; }
+details.method li { margin-bottom: 0.55rem; font-size: 0.98rem; }
+ol.sources li:target { background: var(--accent-soft); border-radius: 4px; }
+.disclosure { margin-top: 1.5rem; font-size: 1rem; color: var(--muted); }
+.collab { margin-top: 1rem; font-size: 1rem; color: var(--muted); }
+.loading { color: var(--muted); }
+@media (max-width: 480px) { body { font-size: 1.0625rem; } h2 { font-size: 1.55rem; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<main>
+<nav class="site-back" aria-label="Percorso"><a href="/">Cristiano Fanelli</a><span aria-hidden="true">›</span><a href="/strumenti/">Strumenti</a></nav>
+
+<header class="intro narrow">
+  <p class="kicker">Clima</p>
+  <h1>Il tuo comune nel 2050</h1>
+  <p class="lead">Quanto si è già scaldata la zona in cui vivi? E quante giornate di caldo forte ci saranno tra venticinque anni?</p>
+  <p>Scrivi il nome del tuo comune. Vedrai com'è cambiata la temperatura dal 1950 a oggi e le proiezioni di fino a trenta modelli climatici per il 2050, in tre scenari di emissioni. Ci sono tutti i 7.896 comuni italiani, con i confini al 1° gennaio 2026.</p>
+</header>
+
+<div class="search narrow" id="search">
+  <label for="q">Il tuo comune</label>
+  <input id="q" type="text" autocomplete="off" spellcheck="false" placeholder="Per esempio: Bologna" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="sugg" disabled>
+  <ul id="sugg" role="listbox" aria-label="Comuni trovati" hidden></ul>
+</div>
+<p class="picks narrow" id="picks">Oppure prova: <button type="button" data-n="Bologna">Bologna</button><button type="button" data-n="Milano">Milano</button><button type="button" data-n="Roma">Roma</button><button type="button" data-n="Napoli">Napoli</button><button type="button" data-n="Bari">Bari</button><button type="button" data-n="Palermo">Palermo</button></p>
+<p class="loading narrow" id="loading" aria-live="polite">Sto caricando i dati di tutti i comuni…</p>
+
+<section id="result" hidden aria-live="polite">
+  <div class="place">
+    <h2 id="r-name"></h2>
+    <p class="where" id="r-where"></p>
+    <div id="r-warn"></div>
+  </div>
+
+  <div class="block">
+    <h3>Com'è già cambiato</h3>
+    <p class="sub">La temperatura media di ogni anno nella zona, dal 1950 al 2025: ogni striscia è un anno. A destra, la media prevista per il 2040-2059 nei tre scenari.</p>
+    <div class="stripes" id="stripes"></div>
+    <div class="legend-grad"><span>più freddo</span><span class="g" aria-hidden="true"></span><span>più caldo</span><span>della media 1961-1990 della zona. Nei riquadri del 2050: gradi in più rispetto a quella media.</span></div>
+    <p class="big" id="r-obs"></p>
+    <p class="small" id="r-obs2"></p>
+  </div>
+
+  <div class="block">
+    <h3>Nel 2050</h3>
+    <p class="sub">Media 2040-2059 a confronto con la media 1995-2014, il periodo di riferimento delle proiezioni. Il numero grande è il valore centrale tra i modelli; la fascia colorata va dal 10° al 90° percentile.</p>
+    <fieldset class="scen">
+      <legend>Scegli uno scenario di emissioni</legend>
+      <div class="scen-opts">
+        <label><input type="radio" name="scen" value="0"><span>In forte calo<small>SSP1-2.6</small></span></label>
+        <label><input type="radio" name="scen" value="1" checked><span>Intermedie<small>SSP2-4.5</small></span></label>
+        <label><input type="radio" name="scen" value="2"><span>Molto alte<small>SSP5-8.5</small></span></label>
+      </div>
+    </fieldset>
+    <div class="cards" id="cards"></div>
+  </div>
+
+  <div class="block">
+    <h3>Gli scenari, a confronto</h3>
+    <p class="sub">Di quanti gradi si scalda la zona al 2050, rispetto al 1995-2014.</p>
+    <table class="cmp" id="cmp"></table>
+    <p class="big" id="r-cmp"></p>
+  </div>
+
+  <div class="block">
+    <h3>Tutta l'Italia</h3>
+    <p class="sub">Giornate con almeno 30 °C in un anno, in ogni zona di circa 25 km. Il riquadro scuro è la zona del comune scelto.</p>
+    <div class="map-toggle" role="group" aria-label="Periodo della mappa">
+      <button type="button" id="m-now" aria-pressed="false">1995-2014</button>
+      <button type="button" id="m-fut" aria-pressed="true">2050</button>
+    </div>
+    <div class="map-wrap"><svg id="map" role="img" aria-label="Mappa dell'Italia con il numero di giornate oltre i 30 gradi in ogni zona"></svg>
+      <div class="map-legend"><span>0</span><span class="g" aria-hidden="true"></span><span>120 e oltre</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COSA VUOL DIRE -->
+<section class="after narrow" aria-labelledby="h-mean">
+  <h2 id="h-mean">Cosa vuol dire</h2>
+  <p><strong>Una parte importante del caldo del 2050 arriva comunque.</strong> Secondo l'IPCC la temperatura globale continuerà a salire almeno fino a metà secolo in tutti gli scenari di emissioni considerati.<sup class="r"><a href="#f5">5</a></sup> Lo vedi anche nella tua zona: già con emissioni in forte calo il riscaldamento al 2040-2059 è una buona parte di quello dello scenario peggiore.</p>
+  <p><strong>Le scelte di oggi contano, e contano sempre di più.</strong> A fine secolo (2081-2100) gli scenari si allontanano molto: per la temperatura media del pianeta, rispetto al 1850-1900, l'IPCC stima tra 2,1 e 3,5 °C in più con emissioni intermedie e tra 3,3 e 5,7 °C con emissioni molto alte.<sup class="r"><a href="#f5">5</a></sup></p>
+  <p>I tre scenari descrivono futuri diversi per le emissioni di gas serra: <strong>in forte calo</strong> (SSP1-2.6), <strong>intermedie</strong> (SSP2-4.5) e <strong>molto alte</strong> (SSP5-8.5).<sup class="r"><a href="#f5">5</a></sup> Non sono previsioni di quello che succederà, ma ipotesi su cosa farà il mondo.<sup class="r"><a href="#f5">5</a></sup></p>
+  <h3 style="margin-top:1.5rem">Due cose da fare insieme</h3>
+  <ul class="todo">
+    <li><strong>Adattarsi al caldo che arriva comunque</strong><span>Ombra e alberi nelle città, edifici che restano freschi, attenzione a chi soffre di più il caldo: anziani, malati, chi lavora all'aperto.</span></li>
+    <li><strong>Ridurre le emissioni per il dopo</strong><span>È la differenza tra gli scenari nella seconda metà del secolo, quella in cui vivranno i ragazzi di oggi.</span></li>
+  </ul>
+</section>
+
+<!-- METODO -->
+<section class="after narrow" aria-labelledby="h-method">
+  <h2 id="h-method">Per chi vuole sapere come funziona</h2>
+  <details class="method">
+    <summary>Da dove vengono i numeri</summary>
+    <ul>
+      <li><strong>Temperature osservate (1950-2025).</strong> Sono le medie annuali di ERA5, la «rianalisi» del servizio europeo Copernicus: una ricostruzione del clima passato che combina misure e modelli, su una griglia di 0,25 gradi (25-30 km).<sup class="r"><a href="#f2">2</a></sup> Le strisce mostrano la differenza di ogni anno dalla media 1961-1990 della stessa zona, con la stessa scala di colori per tutta Italia (da −3 a +3 °C; i valori oltre i limiti hanno il colore più scuro).</li>
+      <li><strong>Proiezioni (2040-2059).</strong> Vengono dal portale sul clima della Banca Mondiale (Climate Change Knowledge Portal): fino a trenta modelli climatici del progetto internazionale CMIP6 (il numero varia secondo scenario e indicatore), portati su una griglia di 0,25 gradi e corretti statisticamente perché nel passato (1961-2014) riproducano ERA5.<sup class="r"><a href="#f1">1</a></sup></li>
+      <li><strong>1995-2014 e 2050.</strong> Il 1995-2014 è il periodo di riferimento delle proiezioni CMIP6, ed è uno di quelli usati dall'IPCC.<sup class="r"><a href="#f1">1</a></sup><sup class="r"><a href="#f5">5</a></sup> Per giornate calde e notti tropicali il valore 1995-2014 è quello centrale dei modelli; per la temperatura media è la media ERA5, così è coerente con le strisce. Il valore 2050 è il valore 1995-2014 più il cambiamento centrale dei modelli (la mediana); la fascia va dal 10° al 90° percentile dei cambiamenti. Ogni numero è arrotondato una sola volta, e quelli mostrati si sommano esattamente.</li>
+      <li><strong>Le strisce del 2050</strong> sommano due pezzi: quanto la zona si era già scaldata tra il 1961-1990 e il 1995-2014 secondo ERA5, e il cambiamento centrale dei modelli dal 1995-2014 al 2040-2059.</li>
+      <li><strong>Definizioni.</strong> Giornate di caldo: giorni con temperatura massima di almeno 30 °C (o 35 °C). Notti tropicali: giorni in cui la minima resta almeno a 20 °C.<sup class="r"><a href="#f1">1</a></sup></li>
+    </ul>
+  </details>
+  <details class="method">
+    <summary>Come si sceglie la zona del comune</summary>
+    <ul>
+      <li>Per ogni comune si prende un punto al centro del suo territorio, dai confini ISTAT al 1° gennaio 2026.<sup class="r"><a href="#f3">3</a></sup> I dati sono quelli della cella di griglia il cui centro è più vicino: una cella di 0,25 gradi misura circa 28 km da nord a sud e circa 20 km da est a ovest. I comuni nati da fusioni dopo il 1° gennaio 2026 non sono ancora nell'elenco: cerca uno dei comuni da cui sono nati.</li>
+      <li>Se più di metà di quella cella è mare, si usa la cella più vicina con almeno metà di terra (372 comuni, quasi tutti sulla costa).<sup class="r"><a href="#f6">6</a></sup> Per Lampedusa e Linosa, Pantelleria e Ustica non c'è una cella di terra vicina: i valori descrivono soprattutto il mare intorno.</li>
+      <li><strong>Quota.</strong> I valori sono la media di tutta la cella. La quota media della cella è calcolata dalle quote medie dei comuni che ci cadono, pesate con la superficie, e confrontata con la quota della sede del municipio del comune scelto (ISTAT, da dati NASADEM).<sup class="r"><a href="#f4">4</a></sup> Se la differenza è di almeno 300 metri, la pagina lo segnala: più in basso di solito fa più caldo, più in alto più fresco.</li>
+    </ul>
+  </details>
+  <details class="method">
+    <summary>I limiti, detti chiaramente</summary>
+    <ul>
+      <li>Sono medie su zone di circa 25 km, non misure in un punto. Una città in pianura o in una valle, circondata da colline o montagne, ha di solito più giornate calde di quante ne dica la media della sua cella: per esempio la cella di Bolzano comprende molte montagne.</li>
+      <li>I valori sono calibrati su ERA5, non sulle stazioni meteo cittadine. Per questo possono essere diversi dai valori misurati in città, soprattutto per le giornate più calde, e non includono l'effetto «isola di calore» delle città.</li>
+      <li>Il cambiamento della temperatura media è il dato più solido: varia poco da un luogo all'altro. Il numero di giornate oltre una soglia dipende molto dal clima locale di partenza.</li>
+      <li>La fascia tra 10° e 90° percentile mostra quanto sono d'accordo i modelli, non tutte le incertezze possibili.</li>
+    </ul>
+  </details>
+  <details class="method">
+    <summary>Le fonti</summary>
+    <ol class="sources">
+      <li id="f1">World Bank, <a href="https://climateknowledgeportal.worldbank.org/">Climate Change Knowledge Portal</a>, collezione CMIP6 a 0,25 gradi (insieme di tutti i modelli; <a href="https://climateknowledgeportal.worldbank.org/metadata">metadati e metodo</a>; <a href="https://registry.opendata.aws/wbg-cckp/">archivio dei dati</a>). Indicatori annuali hd30, hd35, tr e tas: climatologia 1995-2014 e anomalie 2040-2059, mediana, 10° e 90° percentile. Licenza CC BY 4.0.</li>
+      <li id="f2">Copernicus Climate Change Service / ECMWF, rianalisi ERA5, temperatura media annuale 1950-2025 a 0,25 gradi, distribuita dal <a href="https://climateknowledgeportal.worldbank.org/">World Bank Climate Change Knowledge Portal</a>.</li>
+      <li id="f3">ISTAT, <a href="https://www.istat.it/it/archivio/222527">Confini delle unità amministrative a fini statistici</a> al 1° gennaio 2026, versione generalizzata.</li>
+      <li id="f4">ISTAT, <a href="https://www.istat.it/classificazione/principali-statistiche-geografiche-sui-comuni/">Principali statistiche geografiche sui comuni</a>: altimetria dei comuni al 31 dicembre 2021 (quota media e quota della sede del municipio, da NASADEM). Per 5 comuni nati da fusioni dopo il 2021 la quota non è disponibile.</li>
+      <li id="f5">IPCC, <a href="https://www.ipcc.ch/report/ar6/wg1/chapter/summary-for-policymakers/">Sesto rapporto di valutazione, Gruppo di lavoro I, Sintesi per i decisori politici</a>, 2021: punto B.1 e descrizione degli scenari SSP; periodo di riferimento 1995-2014.</li>
+      <li id="f6">Natural Earth, <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-land/">terre emerse alla scala 1:10 milioni</a> (pubblico dominio), usate per calcolare la parte di terra di ogni cella.</li>
+    </ol>
+  </details>
+  <p class="small" style="margin-top:1rem">Il codice e i passaggi per rifare i calcoli sono nella cartella del sito <code>strumenti/comune-2050/_sorgenti/</code>.</p>
+  <p class="disclosure">Le opinioni espresse su questo sito sono personali. Hai trovato un errore? <a href="/contatti/">Scrivimi</a>.</p>
+  <p class="collab"><strong>Hai un commento su questo strumento o un'idea per uno nuovo?</strong> <a href="/contatti/">Scrivimi</a>. Trovi gli altri strumenti in <a href="/strumenti/">Strumenti</a>.</p>
+</section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var DATA = null, COM = [], IDX = [];
+  var SCEN = ["SSP1-2.6", "SSP2-4.5", "SSP5-8.5"];
+  var SCEN_NAME = ["emissioni in forte calo", "emissioni intermedie", "emissioni molto alte"];
+  var scen = 1, current = null, mapMode = "fut";
+  var NS = "http://www.w3.org/2000/svg";
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- formattazione ---------- */
+  function f1(x) { var r = Math.round(x * 10) / 10; return (r < 0 ? "−" : "") + Math.abs(r).toLocaleString("it-IT", { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+  function add1(a, b) { return Math.round(a * 10 + b * 10) / 10; }
+  function f0(x) { return Math.round(x).toLocaleString("it-IT"); }
+  function sgn1(x) { var r = Math.round(x * 10) / 10; return (r > 0 ? "+" : r < 0 ? "−" : "") + f1(Math.abs(r)); }
+  function nDays(n, one, many) { return Math.abs(n) === 1 ? one : many; }
+  function sgn0(x) { var r = Math.round(x); return (r > 0 ? "+" : r < 0 ? "−" : "") + f0(Math.abs(r)); }
+  function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’']/g, "'").replace(/\s+/g, " ").trim(); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  /* ---------- colori ---------- */
+  var RDBU = ["#053061", "#2166ac", "#4393c3", "#92c5de", "#d1e5f0", "#f7f7f7", "#fddbc7", "#f4a582", "#d6604d", "#b2182b", "#67001f"];
+  var HEAT = ["#FFF5D6", "#FDD38A", "#F9A25A", "#E8663A", "#C4312A", "#7F1020"];
+  function hex(c) { return [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)]; }
+  function ramp(pal, t) {
+    t = Math.max(0, Math.min(1, t)); var x = t * (pal.length - 1), i = Math.min(pal.length - 2, Math.floor(x)), u = x - i;
+    var a = hex(pal[i]), b = hex(pal[i + 1]);
+    return "rgb(" + a.map(function (v, k) { return Math.round(v + (b[k] - v) * u); }).join(",") + ")";
+  }
+  function stripeColor(anom) { return ramp(RDBU, (anom + 3) / 6); }
+  function heatColor(days) { return ramp(HEAT, days / 120); }
+
+  /* ---------- dati della cella ---------- */
+  function yIdx(y) { return y - DATA.years[0]; }
+  // indicatore v: [oggi, m126, p10, p90, m245, p10, p90, m585, p10, p90]
+  function ind(cell, v, s) {
+    var a = cell[v], now = a[0], k = 1 + 3 * s;
+    return { now: now, d: a[k], lo: a[k + 1], hi: a[k + 2] };
+  }
+  // medie ERA5 calcolate sui valori originali (vedi elabora.py), arrotondate a 0,1\u00a0°C
+  function obs(cell) {
+    var o = cell.oss;
+    return { b6190: o[0], b9514: o[1], last10: o[2], hottest: o[3], hottestV: o[4] };
+  }
+
+  /* ---------- ricerca ---------- */
+  var input = $("q"), list = $("sugg"), active = -1, shown = [];
+  function search(q) {
+    q = norm(q); if (!q) return [];
+    var pre = [], mid = [];
+    for (var i = 0; i < COM.length && pre.length < 12; i++) {
+      var n = IDX[i];
+      if (n.a.indexOf(q) === 0 || (n.b && n.b.indexOf(q) === 0)) pre.push(i);
+    }
+    if (pre.length < 8) for (var j = 0; j < COM.length && pre.length + mid.length < 8; j++) {
+      var m = IDX[j];
+      if (pre.indexOf(j) < 0 && (m.a.indexOf(q) > 0 || (m.b && m.b.indexOf(q) > 0))) mid.push(j);
+    }
+    // a parità di inizio, prima i nomi esatti
+    pre.sort(function (x, y) { return (IDX[y].a === q) - (IDX[x].a === q); });
+    return pre.concat(mid).slice(0, 8);
+  }
+  function renderList() {
+    list.innerHTML = "";
+    if (!input.value.trim()) { list.hidden = true; input.setAttribute("aria-expanded", "false"); return; }
+    if (!shown.length) {
+      list.innerHTML = '<li class="none" role="option" aria-disabled="true">Nessun comune trovato</li>';
+    }
+    shown.forEach(function (ci, k) {
+      var c = COM[ci], li = document.createElement("li");
+      li.id = "opt-" + k; li.setAttribute("role", "option");
+      li.setAttribute("aria-selected", k === active ? "true" : "false");
+      li.innerHTML = "<span>" + esc(c[0]) + (c[1] && c[0].indexOf(c[1]) < 0 ? " <span class='p'>" + esc(c[1]) + "</span>" : "") + "</span><span class='p'>" + esc(c[2]) + " · " + esc(DATA.regioni[c[3]]) + "</span>";
+      li.addEventListener("mousedown", function (ev) { ev.preventDefault(); pick(ci); });
+      list.appendChild(li);
+    });
+    list.hidden = false; input.setAttribute("aria-expanded", "true");
+    if (active >= 0) input.setAttribute("aria-activedescendant", "opt-" + active); else input.removeAttribute("aria-activedescendant");
+  }
+  input.addEventListener("input", function () { shown = search(input.value); active = shown.length ? 0 : -1; renderList(); });
+  input.addEventListener("keydown", function (ev) {
+    if (ev.key === "ArrowDown") { if (shown.length) { active = (active + 1) % shown.length; renderList(); } ev.preventDefault(); }
+    else if (ev.key === "ArrowUp") { if (shown.length) { active = (active - 1 + shown.length) % shown.length; renderList(); } ev.preventDefault(); }
+    else if (ev.key === "Enter") { if (active >= 0 && shown[active] != null) { pick(shown[active]); ev.preventDefault(); } }
+    else if (ev.key === "Escape") { list.hidden = true; input.setAttribute("aria-expanded", "false"); }
+  });
+  input.addEventListener("blur", function () { setTimeout(function () { list.hidden = true; input.setAttribute("aria-expanded", "false"); }, 120); });
+  Array.prototype.forEach.call(document.querySelectorAll("#picks button"), function (b) {
+    b.addEventListener("click", function () { var i = findByName(b.getAttribute("data-n")); if (i >= 0) pick(i); });
+  });
+  function findByName(n) { var q = norm(n); for (var i = 0; i < COM.length; i++) if (IDX[i].a === q) return i; return -1; }
+  function findByCode(code) { for (var i = 0; i < COM.length; i++) if (COM[i][5] === code) return i; return -1; }
+
+  function pick(ci, noScroll) {
+    current = ci;
+    var c = COM[ci];
+    input.value = c[0]; list.hidden = true; input.setAttribute("aria-expanded", "false");
+    try { history.replaceState(null, "", "#" + c[5]); } catch (e) {}
+    render();
+    if (!noScroll) $("result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ---------- disegno ---------- */
+  function render() {
+    if (current == null) return;
+    var c = COM[current], cell = DATA.cells[c[4]];
+    $("result").hidden = false;
+    $("r-name").textContent = c[0] + (c[1] && c[0].indexOf(c[1]) < 0 ? " · " + c[1] : "");
+    $("r-where").textContent = "Provincia " + c[2] + ", " + DATA.regioni[c[3]] + " · zona di circa 25 km intorno a " +
+      f1fix(cell.lat, 2) + "° N, " + f1fix(cell.lon, 2) + "° E";
+    renderWarn(c, cell);
+    renderStripes(cell);
+    renderCards(cell);
+    renderCmp(cell);
+    renderMap(cell);
+  }
+  function f1fix(x, d) { return x.toLocaleString("it-IT", { minimumFractionDigits: d, maximumFractionDigits: d }); }
+
+  function renderWarn(c, cell) {
+    var w = [];
+    if (c[7] === 1) w.push("Il centro del comune cade in una zona in gran parte di mare: usiamo la zona di terra più vicina.");
+    if (c[7] === 2) w.push("Il comune è su una piccola isola: la zona di 25 km è quasi tutta mare, quindi i valori descrivono soprattutto il mare intorno all'isola.");
+    if (c[6] != null && cell.quota != null && c[7] !== 2) {
+      var d = c[6] - cell.quota;
+      if (d <= -300) w.push("La sede del municipio di " + esc(c[0]) + " è a " + f0(c[6]) + " m di quota, mentre la zona intorno è in media a " + f0(cell.quota) + " m. Il centro abitato è più in basso: " + (d <= -500 ? "quasi certamente" : "probabilmente") + " lì le giornate calde e le notti tropicali sono più di quelle indicate qui, che valgono per la media della zona.");
+      else if (d >= 300) w.push("La sede del municipio di " + esc(c[0]) + " è a " + f0(c[6]) + " m di quota, mentre la zona intorno è in media a " + f0(cell.quota) + " m. Il centro abitato è più in alto: probabilmente lì fa più fresco di quanto indicato qui.");
+    }
+    $("r-warn").innerHTML = w.length ? '<div class="warn">' + w.map(function (t) { return "<p>" + t + "</p>"; }).join("") + "</div>" : "";
+  }
+
+  function renderStripes(cell) {
+    var o = obs(cell), e = cell.era5, n = e.length;
+    var o6190 = obs(cell).b6190;
+    var W = Math.max(300, Math.round($("stripes").clientWidth || 760)), H = W < 500 ? 120 : 150, gap = W < 500 ? 10 : 18, top = 20, bot = 22;
+    var fw = Math.max(34, Math.min(46, Math.round(W * 0.06)));
+    var sw = (W - gap - 3 * fw - 6) / n;
+    var svg = '<svg viewBox="0 0 ' + W + " " + (H + top + bot) + '" role="img" aria-label="Strisce del riscaldamento: temperatura media annuale della zona dal 1950 al 2025 e proiezioni per il 2040-2059">';
+    for (var i = 0; i < n; i++) {
+      svg += '<rect x="' + (i * sw).toFixed(2) + '" y="' + top + '" width="' + (sw + 0.6).toFixed(2) + '" height="' + H + '" fill="' + stripeColor(e[i] - o6190) + '"><title>' + DATA.years[i] + ": " + f1(e[i]) + "\u00a0°C</title></rect>";
+    }
+    (W < 500 ? [1950, 1990, 2025] : [1950, 1975, 2000, 2025]).forEach(function (y) {
+      var x = (yIdx(y) + 0.5) * sw;
+      svg += '<text class="ax" x="' + x.toFixed(1) + '" y="' + (top + H + 16) + '" text-anchor="' + (y === 1950 ? "start" : y === 2025 ? "end" : "middle") + '">' + y + "</text>";
+    });
+    var x0 = n * sw + gap;
+    var labs = ["calo", "medie", "alte"];
+    for (var s = 0; s < 3; s++) {
+      var a = cell.s2050[s];
+      var x = x0 + s * (fw + 3);
+      svg += '<rect x="' + x + '" y="' + top + '" width="' + fw + '" height="' + H + '" fill="' + stripeColor(a) + '"' + (s === scen ? ' stroke="currentColor" stroke-width="2"' : "") + '><title>2040-2059, ' + SCEN_NAME[s] + ": " + sgn1(a) + "\u00a0°C rispetto al 1961-1990</title></rect>";
+      svg += '<text class="ax" x="' + (x + fw / 2) + '" y="' + (top + H + 16) + '" text-anchor="middle">' + labs[s] + "</text>";
+      svg += '<text x="' + (x + fw / 2) + '" y="' + (top + 16) + '" text-anchor="middle" fill="' + (a >= 2.2 ? "#fff" : "#1E2A3A") + '" font-size="11" font-weight="700" font-family="var(--sans)">' + sgn1(a) + "</text>";
+    }
+    svg += '<text class="lab" x="' + (x0 + (3 * fw + 6) / 2) + '" y="14" text-anchor="middle">2050</text>';
+    svg += '<text class="lab" x="0" y="14">Osservato</text>';
+    svg += "</svg>";
+    $("stripes").innerHTML = svg;
+    $("stripes").style.color = getComputedStyle(document.body).color;
+    var d = add1(o.last10, -o.b6190);
+    $("r-obs").innerHTML = "Negli ultimi dieci anni (2016-2025) la zona è stata in media <strong>" + sgn1(d) + "\u00a0°C</strong> più calda rispetto al 1961-1990.";
+    $("r-obs2").textContent = "Media 1961-1990: " + f1(o.b6190) + "\u00a0°C · media 2016-2025: " + f1(o.last10) + "\u00a0°C · anno più caldo: " + o.hottest + " (" + f1(o.hottestV) + "\u00a0°C). Dati osservati ERA5, media della zona.";
+  }
+
+  var CARDS = [
+    { v: "hd30", t: "Giornate con almeno 30\u00a0°C", def: "Giorni in un anno in cui la massima arriva ad almeno 30\u00a0°C.", unit: "giorni all'anno", unit1: "giorno all'anno", days: true },
+    { v: "tr", t: "Notti tropicali", def: "Giorni in un anno in cui la minima resta ad almeno 20\u00a0°C.", unit: "notti all'anno", unit1: "notte all'anno", days: true },
+    { v: "hd35", t: "Giornate con almeno 35\u00a0°C", def: "Giorni in un anno in cui la massima arriva ad almeno 35\u00a0°C.", unit: "giorni all'anno", unit1: "giorno all'anno", days: true },
+    { v: "tas", t: "Temperatura media annua", def: "Media di tutte le temperature dell'anno, giorno e notte.", unit: "°C", days: false }
+  ];
+  var lowBig = false;
+  function renderCards(cell) {
+    var html = "", c = COM[current];
+    lowBig = c[6] != null && cell.quota != null && c[7] !== 2 && c[6] - cell.quota <= -500;
+    CARDS.forEach(function (k) {
+      // i valori arrivano già arrotondati una sola volta (giorni interi, temperatura a 0,1\u00a0°C)
+      var x = ind(cell, k.v, scen), now = x.now, fut, lo, hi, txt;
+      if (k.days) {
+        fut = Math.max(0, now + x.d); lo = Math.max(0, now + x.lo); hi = Math.min(365, now + x.hi);
+        if (now === 0 && now + x.hi === 0) {
+          txt = lowBig ? "Quasi mai nella media della zona: ma il centro abitato è molto più in basso (vedi l'avviso in alto)." : "Praticamente mai, nel 1995-2014 come nel 2050.";
+        } else {
+          var unit1 = k.v === "tr" ? ["notte", "notti"] : ["giornata", "giornate"];
+          txt = x.d === 0 ? "Valore centrale invariato (tra " + sgn0(x.lo) + " e " + sgn0(x.hi) + ")"
+            : "<strong>" + sgn0(x.d) + "</strong> " + nDays(x.d, unit1[0], unit1[1]) + " (tra " + sgn0(x.lo) + " e " + sgn0(x.hi) + ")";
+        }
+        var kk = fut === 1 ? Object.assign({}, k, { unit: k.unit1 }) : k;
+        html += card(kk, f0(now), f0(fut), txt, now, fut, lo, hi, false);
+      } else {
+        fut = add1(now, x.d);
+        txt = "<strong>" + sgn1(x.d) + "\u00a0°C</strong> (tra " + sgn1(x.lo) + " e " + sgn1(x.hi) + ")";
+        var o = obs(cell);
+        if (fut <= o.last10) txt += '<br><span class="small">Gli ultimi dieci anni (2016-2025) sono già stati in media a ' + f1(o.last10) + "\u00a0°C.</span>";
+        html += card(k, f1(now), f1(fut), txt, now, fut, add1(now, x.lo), add1(now, x.hi), true);
+      }
+    });
+    $("cards").innerHTML = html;
+  }
+  function card(k, nowS, futS, txt, now, fut, lo, hi, temp) {
+    var dmin = temp ? Math.floor(Math.min(now, lo) - 1) : 0;
+    var dmax = temp ? Math.ceil(Math.max(hi, fut) + 1) : Math.max(10, Math.ceil(Math.max(hi, fut, now) / 10) * 10 + 5);
+    var X = function (v) { return 4 + (v - dmin) / (dmax - dmin) * 92; };
+    var svg = '<svg viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true">' +
+      '<rect class="track" x="4" y="12" width="92" height="4" rx="2"/>' +
+      '<rect class="band" x="' + X(lo) + '" y="8" width="' + Math.max(0.6, X(hi) - X(lo)) + '" height="12" rx="2"/>' +
+      '<rect class="mk-now" x="' + (X(now) - 0.6) + '" y="5" width="1.2" height="18"/>' +
+      '<rect class="mk-fut" x="' + (X(fut) - 0.9) + '" y="3" width="1.8" height="22"/>' +
+      "</svg>";
+    return '<div class="card"><h4>' + k.t + '</h4><p class="def">' + k.def + "</p>" +
+      '<div class="nums"><span class="from">' + nowS + '</span><span class="arrow" aria-hidden="true">→</span><span class="to">' + futS + '</span><span class="unit">' + k.unit + "</span></div>" +
+      '<p class="delta">' + txt + "</p>" + svg +
+      '<div class="lg"><span><i style="background:var(--muted)"></i>1995-2014</span><span><i style="background:var(--hot)"></i>2050 (2040-2059)</span></div></div>';
+  }
+
+  function renderCmp(cell) {
+    var rows = [], max = 0, min = 0;
+    for (var s = 0; s < 3; s++) { var x = ind(cell, "tas", s); rows.push(x); max = Math.max(max, x.hi); min = Math.min(min, x.lo); }
+    max = Math.ceil(max + 0.2);
+    var X = function (v) { return (v - 0) / max * 100; };
+    var html = "<thead><tr><th>Scenario</th><th>Valore centrale</th><th>Tra 10° e 90° percentile</th></tr></thead><tbody>";
+    rows.forEach(function (x, s) {
+      var svg = '<svg viewBox="0 0 100 18" preserveAspectRatio="none" aria-hidden="true"><rect x="0" y="8" width="100" height="2" fill="var(--line)"/>' +
+        '<rect x="' + X(x.lo) + '" y="4" width="' + (X(x.hi) - X(x.lo)) + '" height="10" rx="2" fill="var(--hot-soft)"/>' +
+        '<rect x="' + (X(x.d) - 0.8) + '" y="1" width="1.6" height="16" fill="var(--hot)"/></svg>';
+      html += '<tr class="' + (s === scen ? "sel" : "") + '"><td>' + SCEN_NAME[s].charAt(0).toUpperCase() + SCEN_NAME[s].slice(1) + ' <span class="small">(' + SCEN[s] + ')</span></td><td class="v">' + sgn1(x.d) + '\u00a0°C</td><td class="bar">' + svg + '<span class="small">' + sgn1(x.lo) + " / " + sgn1(x.hi) + "\u00a0°C</span></td></tr>";
+    });
+    html += "</tbody>";
+    $("cmp").innerHTML = html;
+    var lowD = rows[0].d, highD = rows[2].d;
+    var pct = highD > 0 ? Math.round(lowD / highD * 20) * 5 : null;
+    $("r-cmp").innerHTML = "Rispetto al 1995-2014, anche con emissioni in forte calo la zona si scalda di <strong>" + sgn1(lowD) + "\u00a0°C</strong> al 2050" +
+      (pct != null ? ": circa il " + pct + "% di quanto con emissioni molto alte (" + sgn1(highD) + "\u00a0°C)." : ".");
+  }
+
+  /* ---------- mappa ---------- */
+  var mapBuilt = false, rects = [];
+  var LON0 = 6.4, LAT1 = 47.2, KX = Math.cos(42 * Math.PI / 180), S = 40;
+  function buildMap() {
+    var svg = $("map"), minx = 1e9, maxx = -1e9, maxy = -1e9;
+    DATA.cells.forEach(function (c, i) {
+      var x = (c.lon - 0.125 - LON0) * KX * S, y = (LAT1 - c.lat - 0.125) * S;
+      var r = document.createElementNS(NS, "rect");
+      r.setAttribute("x", x.toFixed(1)); r.setAttribute("y", y.toFixed(1));
+      r.setAttribute("width", (0.25 * KX * S + 0.4).toFixed(2)); r.setAttribute("height", (0.25 * S + 0.4).toFixed(2));
+      svg.appendChild(r); rects.push(r);
+      minx = Math.min(minx, x); maxx = Math.max(maxx, x + 0.25 * KX * S); maxy = Math.max(maxy, y + 0.25 * S);
+    });
+    svg.setAttribute("viewBox", (minx - 4).toFixed(0) + " -4 " + (maxx - minx + 8).toFixed(0) + " " + (maxy + 8).toFixed(0));
+    mapBuilt = true;
+  }
+  function renderMap(cell) {
+    if (!mapBuilt) buildMap();
+    var sel = DATA.cells.indexOf(cell);
+    DATA.cells.forEach(function (c, i) {
+      var x = ind(c, "hd30", scen), v = mapMode === "now" ? x.now : Math.max(0, x.now + x.d);
+      rects[i].setAttribute("fill", heatColor(v));
+      rects[i].setAttribute("class", i === sel ? "sel" : "");
+    });
+    // la cella scelta sopra le altre
+    if (rects[sel]) rects[sel].parentNode.appendChild(rects[sel]);
+    $("m-now").setAttribute("aria-pressed", mapMode === "now"); $("m-fut").setAttribute("aria-pressed", mapMode === "fut");
+    $("m-fut").textContent = "2050 · " + SCEN_NAME[scen];
+  }
+  $("m-now").addEventListener("click", function () { mapMode = "now"; render(); });
+  $("m-fut").addEventListener("click", function () { mapMode = "fut"; render(); });
+  var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(function () { if (current != null) renderStripes(DATA.cells[COM[current][4]]); }, 150); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="scen"]'), function (r) {
+    r.addEventListener("change", function () { scen = +r.value; render(); });
+  });
+
+  /* ---------- avvio ---------- */
+  fetch("/strumenti/comune-2050/dati.json").then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
+    DATA = d; COM = d.comuni;
+    IDX = COM.map(function (c) { return { a: norm(c[0]), b: c[1] ? norm(c[1]) : "" }; });
+    $("loading").hidden = true; input.disabled = false;
+    var h = (location.hash || "").replace("#", ""), i = h ? findByCode(h) : -1;
+    pick(i >= 0 ? i : findByName("Bologna"), true);
+    if (i < 0) input.value = "";
+  }).catch(function () {
+    $("loading").textContent = "Non riesco a caricare i dati. Ricarica la pagina o riprova più tardi.";
+  });
+})();
+</script>
+</body>
+</html>

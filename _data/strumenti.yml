@@ -59,3 +59,10 @@
   status: "Racconto · 5 minuti"
   tagline: "Dalla sveglia alla sera: cosa continua, cosa peggiora e cosa si ferma."
   description: "Immagina che per 24 ore tutti i satelliti smettano di funzionare. Segui una giornata qualunque, dalla sveglia al navigatore, dal 112 alla TV, e scopri quanto dipendiamo da loro senza accorgercene. Ogni affermazione ha la sua fonte."
+
+- title: "Il tuo comune nel 2050"
+  url: "/strumenti/comune-2050/"
+  category: "Clima"
+  status: "Mappa e dati · tutti i comuni"
+  tagline: "Quanto si è già scaldata la tua zona, e quanto caldo farà nel 2050."
+  description: "Scrivi il nome del tuo comune: le strisce del riscaldamento dal 1950 a oggi, e giornate oltre i 30 °C, notti tropicali e temperatura media nel 2050 in tre scenari di emissioni. Dati ERA5 e proiezioni climatiche CMIP6 della Banca Mondiale, per i 7.896 comuni italiani."
