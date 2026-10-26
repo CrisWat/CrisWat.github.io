@@ -27,7 +27,7 @@ Nel frattempo ho lavorato al CINECA sul supercalcolo e sono entrato all'INAF: pr
 - **Spazio e sicurezza.** Studio come osservare e proteggere satelliti e infrastrutture spaziali.
 - **Analisi e formazione.** Sono analista e formatore su space economy, istituzioni e politiche spaziali, tecnologie emergenti e droni, teoria dell'intelligence e tecniche di analisi strutturata. Ho ideato il diploma in Space Intelligence della scuola DOMìNI, dove insegno geopolitica dello spazio, intelligence e Space Economy, e sono consigliere direttivo dell'AIAIG, dove ho fondato il gruppo Space Intelligence. [Leggi di più](/analisi-e-formazione/).
 - **Divulgazione.** Scrivo su Rivista Futura e HegoMag, faccio didattica all'Università di Bologna e divulgazione ambientale nelle scuole medie e superiori.
-- **Impegno politico.** Sono iscritto al Movimento 5 Stelle dal 2018. Alle elezioni del Consiglio nazionale di dicembre 2025 sono stato il candidato più votato in Emilia-Romagna. Ho contribuito a scrivere il documento finale di IDIA sull'intelligenza artificiale e coordino la task force su IA e tecnologie emergenti del Network Giovani. [Leggi di più](/impegno-pubblico/).
+- **Partecipazione.** Ho coordinato, come esperto, il tavolo su ricerca, sviluppo e investimenti di IDIA e contribuito a scriverne il documento finale sull'intelligenza artificiale. Sono stato facilitatore del percorso partecipativo NOVA a Bologna. [Leggi di più](/impegno-pubblico/).
 
 ## Fuori dal lavoro
 
@@ -35,9 +35,9 @@ Faccio volontariato dal 2008: prima con Special Olympics a Roma, poi alla Certos
 
 ## Perché mi impegno
 
-Mi impegno perché credo che la politica debba tornare a occuparsi delle persone e dei loro problemi reali. Da ricercatore, vedo ogni giorno quanto talento e quante opportunità sprechiamo per mancanza di una visione del futuro.
+Mi impegno perché credo che le scelte pubbliche debbano tornare a occuparsi delle persone e dei loro problemi reali. Da ricercatore, vedo ogni giorno quanto talento e quante opportunità sprechiamo per mancanza di una visione del futuro.
 
-Credo in un Paese che investa nella conoscenza, garantisca dignità al lavoro e non lasci indietro nessuno. Per me fare politica significa ascoltare, partecipare e provare a cambiare concretamente le cose, non limitarsi a criticarle.
+Credo in un Paese che investa nella conoscenza, garantisca dignità al lavoro e non lasci indietro nessuno. Per me impegnarsi significa ascoltare, partecipare e provare a cambiare concretamente le cose, non limitarsi a criticarle.
 
 ## I miei valori
 

@@ -5,19 +5,14 @@ permalink: /impegno-pubblico/
 redirect_from: /attivita-pubblica/
 section: /chi-sono/
 eyebrow: "Impegno pubblico"
-description: "L'impegno politico e civico di Cristiano Fanelli: attivista del Movimento 5 Stelle dal 2018, IDIA, Network Giovani, NOVA, rappresentanza e volontariato."
-intro: "Credo in una politica che non si limiti a parlare ai cittadini, ma che sappia ascoltarli, coinvolgerli e costruire proposte insieme a loro."
+description: "L'impegno civico di Cristiano Fanelli: proposte sull'intelligenza artificiale (IDIA), processi partecipativi (NOVA), attivismo per clima e ricerca, rappresentanza, volontariato e divulgazione."
+intro: "Credo nella partecipazione: le scelte pubbliche migliori nascono quando si ascoltano le persone, le si coinvolge e si costruiscono proposte insieme a loro."
 ---
 
-## Impegno politico
+## Partecipazione e proposte
 
-Sono iscritto al Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: partecipazione democratica, giustizia sociale, bene collettivo. Credo però che partiti e movimenti debbano essere strumenti al servizio delle persone, e non viceversa: militare significa anche contribuire a far crescere il proprio movimento, con le proprie competenze e, quando serve, con spirito critico.
-
-- **Consiglio nazionale (dicembre 2025).** Mi sono candidato alle elezioni del Consiglio nazionale del Movimento 5 Stelle. Non sono stato eletto, ma sono stato il più votato in Emilia-Romagna e il secondo della circoscrizione Nord-Est, dopo l'eurodeputato Gaetano Pedullà.
-- **Network Giovani (dal 2025).** Coordino la task force su intelligenza artificiale e tecnologie emergenti. Sono stato uno dei volti del Network Giovani nella campagna per il No al referendum sulla giustizia.
+- **IDIA, Dentro l'Intelligenza Artificiale (2023).** All'evento nazionale IDIA ho coordinato, come esperto, il gruppo di lavoro su ricerca, sviluppo e investimenti e ho contribuito a scrivere il documento finale, "Gli orizzonti dell'Intelligenza Artificiale", poi aperto alla consultazione pubblica. Alla seconda edizione, a Napoli, ho coordinato una task force che ha partecipato all'organizzazione e ho tenuto un intervento.
 - **NOVA.** Ho fatto parte del team che ha elaborato le prime fasi dei report del percorso partecipativo NOVA, sono stato nello staff in tutte le sue fasi e facilitatore centrale dell'incontro in Open Space Technology di NOVA a Bologna.
-- **IDIA, Dentro l'Intelligenza Artificiale (2023).** All'evento nazionale promosso dal Movimento 5 Stelle ho coordinato, come esperto, il gruppo di lavoro su ricerca, sviluppo e investimenti. Ho scritto il documento finale insieme a due deputati e a un'esperta ex senatrice: un documento di indirizzo politico poi aperto alla consultazione pubblica. [Leggi il documento "Gli orizzonti dell'Intelligenza Artificiale"](https://www.movimento5stelle.eu/Documento-finale-IDIA.pdf). Alla seconda edizione, a Napoli, ho coordinato una task force che ha partecipato all'organizzazione e ho tenuto un intervento per il Network Giovani.
-- **Referente giovani a Bologna (2022–2023).** Sono stato il primo referente giovani del gruppo territoriale di Bologna.
 
 <figure class="photo-gallery">
     <div class="photo-gallery-grid">
@@ -27,16 +22,6 @@ Sono iscritto al Movimento 5 Stelle dal 2018. Mi riconosco nei suoi valori: part
     </div>
     <figcaption>Da facilitatore all'incontro NOVA di Bologna in Open Space Technology: interventi, dialogo, lavoro nei gruppi.</figcaption>
 </figure>
-
-<figure class="photo-gallery photo-gallery-wide">
-    <div class="photo-gallery-grid">
-        <img src="{{ '/assets/images/summer-school-intervento.jpg' | relative_url }}" alt="Cristiano Fanelli interviene al microfono, con il mare sullo sfondo" width="1200" height="800" loading="lazy" decoding="async">
-        <img src="{{ '/assets/images/summer-school-gruppo.jpg' | relative_url }}" alt="Foto di gruppo dei partecipanti alla summer school, all'aperto" width="1200" height="800" loading="lazy" decoding="async">
-    </div>
-    <figcaption>Alla summer school del Movimento 5 Stelle a Diamante.</figcaption>
-</figure>
-
-Per me l'appartenenza politica non è un fine, ma un mezzo per trasformare le idee in cambiamenti concreti. Le competenze individuali acquistano valore quando vengono messe al servizio di un progetto collettivo.
 
 ## Attivismo civico
 

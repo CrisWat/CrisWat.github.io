@@ -23,3 +23,6 @@ _materiali/
 
 # Cartella creata dall'app Claude con le anteprime (non fa parte del sito)
 Claude outputs/
+
+# Pagina "Impegno politico" nascosta: resta solo su questo computer (il repository GitHub è pubblico)
+impegno-politico.md
