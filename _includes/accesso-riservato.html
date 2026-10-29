@@ -3,7 +3,7 @@
     Uso:  include accesso-riservato.html modo="pagina"      contenuto dentro la pagina
           include accesso-riservato.html modo="documento"   strumento a pagina intera
     Il contenuto cifrato va in <script type="application/json" id="contenuto-cifrato">.
-    Le pagine che lo usano sono generate da _materiali/insegnamenti/cifra.py.
+    Le pagine che lo usano sono generate da _materiali/didattica/cifra.py.
 {% endcomment %}
 <div id="accesso-riservato" class="accesso-riservato" data-modo="{{ include.modo | default: 'pagina' }}">
     <form id="accesso-form" class="accesso-form" hidden>

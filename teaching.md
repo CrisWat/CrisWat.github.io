@@ -1,12 +1,12 @@
 ---
 layout: page
-title: "Insegnamenti e divulgazione"
-permalink: /insegnamenti/
+title: "Didattica e divulgazione"
+permalink: /didattica/
 redirect_from:
-  - /didattica/
   - /teaching/
+  - /insegnamenti/
 section: /ricerca/
-eyebrow: "Insegnamenti e divulgazione"
+eyebrow: "Didattica e divulgazione"
 description: "Insegnamento all'Università di Bologna e in una scuola di geopolitica, divulgazione scientifica e seminari."
 intro: "Spiegare la scienza e la tecnologia a studenti, professionisti e cittadini è parte del mio lavoro, non un'aggiunta."
 ---
@@ -24,7 +24,7 @@ Per corsi e formazione su space economy, politiche spaziali, tecnologie emergent
 ## Materiali per gli studenti
 
 <div class="hub-grid">
-    <a class="hub-card" href="{{ '/insegnamenti/computational-statistical-astrophysics/' | relative_url }}">
+    <a class="hub-card" href="{{ '/didattica/computational-statistical-astrophysics/' | relative_url }}">
         <h3>Computational and Statistical Astrophysics</h3>
         <p>Laurea magistrale in Astrofisica e Cosmologia, Università di Bologna. Strumenti interattivi e materiali del laboratorio.</p>
         <span>Area riservata, con password →</span>

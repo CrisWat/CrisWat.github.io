@@ -3,7 +3,7 @@
  *
  * Il contenuto protetto NON è nel sito in chiaro: è cifrato con AES-GCM
  * (chiave ricavata dalla password con PBKDF2-SHA256) dallo script
- * _materiali/insegnamenti/cifra.py. Qui il browser ricava la chiave dalla
+ * _materiali/didattica/cifra.py. Qui il browser ricava la chiave dalla
  * password inserita e decifra. Con la password sbagliata la decifratura
  * fallisce: la password non è scritta da nessuna parte nel sito.
  *
