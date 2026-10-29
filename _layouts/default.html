@@ -12,6 +12,8 @@
 
     {% seo %}
 
+    {% if page.noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
+
     <!-- icone: Google usa quelle con lato multiplo di 48 px (48, 96, 192) -->
     <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="48x48">
     <link rel="icon" href="{{ '/assets/images/favicon-192.png' | relative_url }}" sizes="192x192" type="image/png">
